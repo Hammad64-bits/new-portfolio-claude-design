@@ -1,0 +1,101 @@
+---
+interface Props {
+  heroHoldMs?: number;
+}
+
+const { heroHoldMs = 4000 } = Astro.props;
+
+const lines = [
+  "Building products. Solving whatever breaks between idea and production.",
+  "I build software that has to actually work.",
+  "Polished interfaces, messy systems, production problems — I follow them wherever they lead.",
+];
+---
+
+<section
+  id="top"
+  class="mx-auto grid max-w-[1440px] grid-cols-[repeat(auto-fit,minmax(340px,1fr))] items-start gap-x-10 gap-y-16 px-5 py-14 sm:px-8 sm:py-24 lg:px-16 lg:py-28"
+>
+  <div class="min-w-0">
+    <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+      <span>Software Engineer · Frontend Edge</span>
+    </div>
+
+    <h1
+      data-hero-lines
+      data-hold-ms={heroHoldMs}
+      data-step="0"
+      class="relative mt-[26px] h-[280px] text-[clamp(30px,4.6vw,60px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty sm:h-[320px] lg:h-[344px]"
+    >
+      {lines.map((line, i) => (
+        <span class:list={["hero-line", `hero-line-${i}`]}>{line}</span>
+      ))}
+    </h1>
+
+    <p class="m-0 max-w-[52ch] text-[clamp(15px,1.2vw,17.5px)] leading-[1.65] text-[#a7a59e] text-wrap-pretty">
+      I'm Hammad, a software engineer with deep frontend experience. I work across product, architecture and systems to turn ideas into software people can actually use.
+    </p>
+
+    <div class="mt-[38px] flex flex-wrap gap-[14px]">
+      <a
+        href="#work"
+        class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[22px] py-[14px] text-[14.5px] font-medium text-ink hover:bg-accent"
+      >
+        Explore my work →
+      </a>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-[10px] rounded-[2px] border border-[#2b2b28] px-[22px] py-[14px] text-[14.5px] text-[#cfcdc6] hover:border-[#5a5a54] hover:text-paper"
+      >
+        Download CV ↓
+      </a>
+    </div>
+
+    <div class="mt-11 flex items-center gap-[10px] font-mono text-[11.5px] tracking-[.06em] text-[#8c8a84]">
+      <span class="block h-[6px] w-[6px] rounded-full bg-accent" style="animation: hh-blink 2.4s infinite"></span>
+      <span>Currently building at SolvoLab · Pakistan</span>
+    </div>
+  </div>
+
+  <div class="flex min-w-0 flex-col gap-3">
+    <div class="relative aspect-4/5 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+      <video
+        src="/videos/glowing_cubes.mp4"
+        poster="/videos/posters/glowing_cubes.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        class="absolute inset-0 h-full w-full object-cover opacity-85"
+        style="animation: hh-drift 22s ease-in-out infinite"
+      ></video>
+      <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,.35),rgba(10,10,10,.05)_40%,rgba(10,10,10,.6))]"></div>
+      <div class="absolute top-4 left-4 font-mono text-[10.5px] tracking-[.12em] text-[#cfcdc6] uppercase">
+        Video / loop_01 · particles
+      </div>
+      <div data-hero-dots data-step="0" class="absolute bottom-4 left-4 flex gap-[6px]">
+        <span class="hero-dot hero-dot-0"></span>
+        <span class="hero-dot hero-dot-1"></span>
+        <span class="hero-dot hero-dot-2"></span>
+      </div>
+    </div>
+    <div class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">
+      Motion supports the headline. It never covers it.
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-hero-lines]").forEach((el) => {
+    const hold = Number(el.dataset.holdMs) || 4000;
+    const dots = document.querySelector<HTMLElement>("[data-hero-dots]");
+    const setStep = (step: string) => {
+      el.dataset.step = step;
+      if (dots) dots.dataset.step = step;
+    };
+    setTimeout(() => setStep("1"), hold);
+    setTimeout(() => setStep("2"), hold * 2);
+  });
+</script>

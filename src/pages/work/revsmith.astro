@@ -1,0 +1,343 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const roleMeta = [
+  { label: "Primary role", title: "Software Engineer", body: "Frontend base, then APIs, realtime, auth, integrations, architecture." },
+  { label: "Secondary role", title: "Product Builder", body: "Shipped major support workflows through a product pivot." },
+  { label: "Period", title: "2023—2025", body: "Intern → Frontend Engineer → product-level ownership." },
+];
+
+const productSurfaces = [
+  "Embeddable chat widget",
+  "AI agent",
+  "WhatsApp / Messenger channels",
+  "Support inbox",
+  "Human takeover",
+  "Analytics, tags, knowledge",
+  "Auth & team management",
+];
+
+const built = [
+  {
+    letter: "A",
+    title: "Embeddable Support Widget",
+    body: "The product's main customer-facing surface. Configurable branding, iframe deployment, persistent conversations across page loads, visitor identification, media and microphone support, and preview behaviour that matched production instead of approximating it.",
+    caption: "Widget on a live storefront",
+    imageFirst: false,
+  },
+  {
+    letter: "B",
+    title: "Omnichannel Inbox",
+    body: "Where support actually happens. Realtime conversation updates, filtering, pagination, assignee views, human takeover, tags and sentiment, a media viewer, and a rewritten latest-message path once the obvious query stopped being affordable.",
+    caption: "Inbox — filters, assignees, takeover",
+    imageFirst: true,
+  },
+  {
+    letter: "C",
+    title: "AI Agent Configuration",
+    body: "Identity, persona and language; constraints, scenarios and escalation boundaries. Prompts were generated from that structure, with autosave, tags and subtags, and AI-generated suggestions — so store owners configured behaviour, not prompt text.",
+    caption: "Agent config — constraints & escalation",
+    imageFirst: false,
+  },
+  {
+    letter: "D",
+    title: "WhatsApp / Meta Integration",
+    body: "Meta OAuth, account and phone-number discovery, webhook verification, inbound message processing, routing into the AI agent, outbound replies, and persisted account data — a support channel customers already lived in.",
+    caption: "Meta connection flow",
+    imageFirst: true,
+  },
+];
+
+const supportingWork = [
+  "Knowledge-base ingestion",
+  "Analytics",
+  "Auth & team management",
+  "Shopify demo",
+  "Messenger prototype",
+  "Calendly & custom actions",
+  "Marketing site & SEO",
+];
+
+const problems = [
+  {
+    title: "Keeping a visitor's conversation alive across someone else's website",
+    reasoning: "The widget runs in an iframe on domains we don't control, and a reload or a page change can't read as a new customer. Identity had to survive the host page without depending on it.",
+    solution: "Persistent visitor identification tied to the conversation record, resolved on load before the thread renders, so history is restored rather than rebuilt.",
+    impact: "Returning visitors continue one thread instead of starting a new one, and agents see the whole history.",
+  },
+  {
+    title: "The latest-message query that got expensive",
+    reasoning: "Every inbox row needs the most recent message. Read naively, that's one query per conversation per render, and it degrades exactly as conversation volume grows.",
+    solution: "Restructured the read path so the latest message resolves at the data layer in one pass, with pagination and filtering pushed down instead of applied after the fact.",
+    impact: "Inbox load stopped scaling with conversation count.",
+  },
+  {
+    title: "Realtime that agents can trust mid-conversation",
+    reasoning: "Messages arrive from three channels and an AI agent, while a human may be taking over the same thread. Live updates that fight the agent's own typing are worse than none.",
+    solution: "Scoped subscriptions per conversation and per view, with takeover as explicit state so ownership of a thread is never ambiguous between the agent and the AI.",
+    impact: "Human handoff became a normal support action rather than a race condition.",
+  },
+  {
+    title: "Configurable AI behaviour without exposing prompt complexity",
+    reasoning: "Store owners know their policies, not prompt engineering. A raw text box would have produced agents nobody could reason about or support.",
+    solution: "A structured configuration model — identity, constraints, scenarios, escalation — compiled into prompts behind the scenes, with generated suggestions to start from.",
+    impact: "Non-technical users configured production agents; support could explain why an agent behaved as it did.",
+  },
+];
+
+const evolution = [
+  { label: "Joined", body: "Intern on a first AI lead-generation and outreach product." },
+  { label: "Pivot", body: "Company moved to ecommerce customer support. Most of the product was rebuilt around it." },
+  { label: "Frontend Engineer", body: "Owned the widget and inbox surfaces end to end." },
+  { label: "Product-level", body: "Integrations, realtime, auth, data access and architecture decisions." },
+];
+
+const outcomes = [
+  "The widget shipped as the product's principal customer-facing surface.",
+  "The support inbox ran real customer conversations in production.",
+  "AI agents were configured without touching prompt text or code.",
+  "WhatsApp became a working support channel end to end.",
+  "Customer analytics gave the team something to act on.",
+  "Performance and architecture work held up as volume grew.",
+];
+
+const gallery = [
+  { label: "Inbox", aspect: "aspect-16/10", grow: "flex-[2_1_420px]" },
+  { label: "Widget", aspect: "aspect-4/5", grow: "flex-1 basis-[220px]" },
+  { label: "Agent config", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+  { label: "Analytics", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+  { label: "Integrations", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+  { label: "Team & auth", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+];
+
+const fromLab = [
+  { tag: "AI / Agents", title: "WhatsApp AI booking agent →", body: "The same channel, pushed further: tool calls and real booking workflows.", href: "/labs/whatsapp-agent" },
+  { tag: "Automation", title: "Automation & analytics labs →", body: "Scheduled jobs, browser automation, reporting I got tired of doing by hand.", href: "/labs" },
+];
+---
+
+<Layout title="RevSmith — Hammad Habib" description="An AI customer-support SaaS for ecommerce. Frontend-first, then APIs, realtime, auth, integrations and architecture.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="work" />
+
+    <section class="mx-auto max-w-[1440px] px-5 pt-12 pb-8 sm:px-8 sm:pt-16 sm:pb-13 lg:px-16 lg:pt-22">
+      <a href="/work" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Work</a>
+      <h1 class="mt-6 max-w-[24ch] text-[clamp(30px,4.4vw,58px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">RevSmith</h1>
+      <p class="mt-5 max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+        An AI customer-support SaaS for ecommerce, built by a small startup engineering team. I joined frontend-first and left with a good deal of the system under my name.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-13">
+        {roleMeta.map((m) => (
+          <div class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[10px] bg-ink px-5 py-[22px]">
+            <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">{m.label}</span>
+            <span class="text-[17px] tracking-[-.015em]">{m.title}</span>
+            <span class="text-[13.5px] leading-[1.6] text-[#a7a59e]">{m.body}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="texture-hatch mt-7 flex aspect-video items-center justify-center border border-[#1e1e1c] lg:mt-11">
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-[#6e6c67] uppercase">Hero screenshot — inbox with a live conversation</span>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="flex flex-wrap items-start gap-7 lg:gap-18">
+        <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">02 / The Product</div>
+        <div class="flex min-w-0 flex-1 basis-[460px] flex-col gap-6">
+          <p class="m-0 max-w-[48ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+            A customer writes in from a website, WhatsApp or Messenger. An AI agent answers from the store's own knowledge. When it shouldn't answer, a human takes over in the same thread.
+          </p>
+          <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+            {productSurfaces.map((s) => (
+              <span class="flex-1 basis-[190px] bg-ink p-[18px] text-sm text-[#cfcdc6]">{s}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-16 lg:py-22">
+      <div class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-18 lg:px-16">
+        <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">03 / My Role</div>
+        <div class="flex min-w-0 flex-1 basis-[460px] flex-col gap-5">
+          <p class="m-0 max-w-[42ch] text-[clamp(18px,1.8vw,26px)] leading-[1.45] tracking-[-.022em] text-paper text-wrap-pretty">
+            I came in as the frontend person. The team was small enough that the boundary didn't hold for long.
+          </p>
+          <p class="m-0 max-w-[56ch] text-[15px] leading-[1.75] text-[#a7a59e]">
+            By the end I was writing the APIs behind my own screens, shaping the realtime flows the inbox depended on, wiring third-party OAuth and webhooks, working out data access and auth rules, and arguing about architecture with the people who owned it. Frontend stayed my strongest surface — it stopped being the whole job.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">04 / What I Built</span>
+        <span>Five surfaces</span>
+      </div>
+
+      <div class="mt-8 flex flex-col gap-10 lg:mt-14 lg:gap-18">
+        {built.map((b) => (
+          <div class:list={["flex flex-wrap items-start gap-7 lg:gap-16", b.imageFirst && "flex-wrap-reverse"]}>
+            <div class="flex min-w-0 flex-1 basis-[300px] flex-col gap-4">
+              <span class="font-mono text-[11px] tracking-[.12em] text-[#6e6c67] uppercase">{b.letter}</span>
+              <h3 class="m-0 text-[clamp(20px,2.2vw,30px)] leading-[1.15] font-medium tracking-[-.028em]">{b.title}</h3>
+              <p class="m-0 max-w-[44ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">{b.body}</p>
+            </div>
+            <div class="texture-hatch flex min-w-0 flex-1 basis-[380px] items-end border border-[#1e1e1c] p-[18px] aspect-16/10">
+              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{b.caption}</span>
+            </div>
+          </div>
+        ))}
+
+        <div class="flex flex-wrap items-start gap-6 border-t border-[#2b2b28] pt-6 lg:pt-9">
+          <div class="flex min-w-0 flex-1 basis-[260px] flex-col gap-[14px]">
+            <span class="font-mono text-[11px] tracking-[.12em] text-[#6e6c67] uppercase">E</span>
+            <h3 class="m-0 text-[clamp(18px,1.8vw,24px)] leading-[1.2] font-medium tracking-[-.025em]">Supporting Product Work</h3>
+          </div>
+          <div class="flex min-w-0 flex-[2_1_420px] flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+            {supportingWork.map((s) => (
+              <span class="flex-1 basis-[180px] bg-ink p-[18px] text-sm text-[#cfcdc6]">{s}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-16 lg:py-22">
+      <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
+        <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+          <span class="text-paper">05 / Engineering Problems</span>
+          <span>Problem → reasoning → solution → impact</span>
+        </div>
+
+        <div class="mt-7 flex max-w-[860px] flex-col lg:mt-12">
+          {problems.map((p, i) => (
+            <div class:list={["flex flex-col gap-[18px] border-t border-[#2b2b28] py-6 lg:py-9", i === problems.length - 1 && "border-b"]}>
+              <h3 class="m-0 max-w-[34ch] text-[clamp(19px,2vw,26px)] leading-[1.25] font-medium tracking-[-.025em] text-wrap-pretty">{p.title}</h3>
+              <div class="flex flex-wrap gap-x-8 gap-y-[14px]">
+                <div class="flex min-w-0 flex-1 basis-[240px] flex-col gap-2">
+                  <span class="font-mono text-[10.5px] tracking-[.12em] text-[#6e6c67] uppercase">Reasoning</span>
+                  <p class="m-0 text-[14.5px] leading-[1.7] text-[#a7a59e]">{p.reasoning}</p>
+                </div>
+                <div class="flex min-w-0 flex-1 basis-[240px] flex-col gap-2">
+                  <span class="font-mono text-[10.5px] tracking-[.12em] text-[#6e6c67] uppercase">Solution</span>
+                  <p class="m-0 text-[14.5px] leading-[1.7] text-[#a7a59e]">{p.solution}</p>
+                </div>
+              </div>
+              <div class="flex items-baseline gap-3 border-l border-[#2b2b28] pl-4">
+                <span class="flex-none font-mono text-[10.5px] tracking-[.12em] text-[#6e6c67] uppercase">Impact</span>
+                <span class="text-[14.5px] leading-[1.65] text-[#dedbd4]">{p.impact}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">06 / Architecture</span>
+        <span>Message path</span>
+      </div>
+      <div class="mt-7 flex flex-col gap-[22px] border border-[#1e1e1c] p-5 font-mono sm:p-10 lg:mt-11">
+        <div class="flex flex-wrap items-center gap-[14px]">
+          <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-paper">Customer</span>
+          <span class="text-xs text-[#3a3a36]">→</span>
+          <span class="flex flex-wrap gap-2">
+            <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-[#cfcdc6]">Web widget</span>
+            <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-[#cfcdc6]">WhatsApp</span>
+            <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-[#cfcdc6]">Messenger</span>
+          </span>
+        </div>
+        <div class="flex flex-wrap items-center gap-[14px]">
+          <span class="text-xs text-[#3a3a36]">↓</span>
+          <span class="border border-[#3a3a36] px-4 py-3 text-xs tracking-[.06em] text-paper">AI agent</span>
+          <span class="text-xs text-[#3a3a36]">→</span>
+          <span class="border border-[#3a3a36] px-4 py-3 text-xs tracking-[.06em] text-paper">Supabase / Postgres</span>
+          <span class="text-xs text-[#3a3a36]">→</span>
+          <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-[#cfcdc6]">Support inbox</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-[14px]">
+          <span class="text-xs text-[#3a3a36]">↳</span>
+          <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-[#cfcdc6]">Human takeover</span>
+          <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-[#cfcdc6]">Analytics</span>
+          <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-[#cfcdc6]">Knowledge</span>
+        </div>
+        <span class="text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Webhooks in, realtime out. Every channel lands in the same conversation record.</span>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">07 / Product Evolution</div>
+      <div class="mt-6 flex flex-col lg:mt-10">
+        {evolution.map((e, i) => (
+          <div class:list={["flex flex-wrap gap-x-8 gap-y-2 border-t border-[#1e1e1c] py-[18px]", i === evolution.length - 1 && "border-b"]}>
+            <span class="flex-none basis-[150px] font-mono text-[11.5px] tracking-[.06em] text-[#8c8a84]">{e.label}</span>
+            <span class="min-w-0 flex-1 basis-[300px] text-[14.5px] leading-[1.6] text-[#dedbd4]">{e.body}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-16 lg:py-22">
+      <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
+        <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">08 / Outcome</div>
+        <div class="mt-6 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
+          {outcomes.map((o) => (
+            <span class="flex-1 basis-[260px] bg-[#070707] p-5 text-[14.5px] leading-[1.6] text-[#dedbd4]">{o}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">09 / Gallery</div>
+      <div class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
+        {gallery.map((g) => (
+          <div class:list={["texture-hatch flex min-w-0 items-end border border-[#1e1e1c] p-4", g.aspect, g.grow]}>
+            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{g.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-10 sm:px-8 lg:px-16 lg:py-18">
+      <div class="flex flex-wrap items-baseline gap-8">
+        <span class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">10 / Tech</span>
+        <span class="min-w-0 flex-1 basis-[400px] font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">
+          Next.js · React · TypeScript · Supabase · Postgres · Meta Graph API · Tailwind · Recharts · OAuth · Webhooks
+        </span>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">From the Lab</div>
+      <div class="mt-[22px] flex flex-wrap gap-[14px]">
+        {fromLab.map((f) => (
+          <a href={f.href} class="flex min-w-0 flex-1 basis-[300px] flex-col gap-[10px] border border-[#1e1e1c] p-[22px] hover:border-[#5a5a54]">
+            <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">{f.tag}</span>
+            <span class="text-[16.5px] tracking-[-.015em]">{f.title}</span>
+            <span class="text-[13.5px] leading-[1.6] text-[#a7a59e]">{f.body}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <a href="/work/vigilant-security" class="flex flex-wrap items-end justify-between gap-6">
+        <span class="flex min-w-0 flex-col gap-[14px]">
+          <span class="font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">11 / Next project</span>
+          <span class="max-w-[22ch] text-[clamp(24px,3vw,42px)] leading-[1.12] font-medium tracking-[-.03em] text-wrap-pretty">Vigilant Security — diagnosis, incident, migration.</span>
+        </span>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Next →</span>
+      </a>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

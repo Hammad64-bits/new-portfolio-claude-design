@@ -1,0 +1,348 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+
+const colors = [
+  { swatch: "#eeece6", label: "Light panel — site off-white type color", code: "#EEECE6" },
+  { swatch: "#0a0a0a", label: "Dark panel — site background", code: "#0A0A0A" },
+  { swatch: "#8c8a84", label: "Counter — secondary mono text", code: "#8C8A84" },
+  { swatch: "#3a3a36", label: "Tick line — same rule as hero eyebrow", code: "#3A3A36" },
+];
+
+const keyframes = [
+  {
+    time: "t = 0ms · 0%",
+    panelWidth: "0%",
+    letterColor: "#0a0a0a",
+    bg: "#eeece6",
+    showCounter: false,
+    body: "Outgoing page is already gone. Off-white fills the frame, wordmark sits in near-black ink, counter has not entered.",
+  },
+  {
+    time: "t ≈ 210ms · 40%",
+    panelWidth: "40%",
+    bg: "#eeece6",
+    showCounter: true,
+    percent: "29%",
+    tickWidth: "max(0px,min(calc(100% - 4.6em),calc(38.9% - 4.6em)))",
+    body: "Divider is past the H, which has flipped to off-white. Counter reads 29%, tick line stretches from it to the divider edge.",
+  },
+  {
+    time: "t = 520ms · 100%",
+    bg: "#0a0a0a",
+    letterColor: "#eeece6",
+    showCounter: true,
+    percent: "100%",
+    tickWidth: "calc(100% - 5em)",
+    body: "Name fully resolved in off-white on near-black. Overlay unmounts on this frame — the incoming page is already underneath and interactive.",
+  },
+];
+
+const typeSpecs = [
+  { label: "Wordmark", value: "Instrument Sans 600 · letter-spacing −0.03em · clamp(28px, 5vw, 64px)" },
+  { label: "Counter", value: "IBM Plex Mono 400 · letter-spacing .08em · 13px" },
+];
+
+const timingSpecs = [
+  {
+    label: "Wipe — 520ms, cubic-bezier(.72, 0, .18, 1)",
+    value: "Slow-in, fast middle, hard settle. The divider covers most of its distance in the middle third, which is what makes it read as snap rather than travel.",
+  },
+  {
+    label: "Counter — snapped, not linear",
+    value: "Jumps 0 → 29 → 57 → 84 → 100. Stylized readout; it never pretends to track real load progress.",
+  },
+  {
+    label: "Letters — 60ms color step",
+    value: "Each glyph flips as the divider passes its center, so the name resolves left to right on its own rhythm.",
+  },
+  {
+    label: "Direction — consistent left to right",
+    value: "My recommendation: one direction every time. Alternating reads as a decision the user has to parse, and at this speed nobody sees enough of it to enjoy the variety.",
+  },
+];
+---
+
+<Layout title="Page Transition Loader — Interaction Spec" description="Split-panel wipe transition spec: live demo, keyframes, and timing/color reference.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <header class="border-b border-[#1e1e1c]">
+      <div class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-8 px-5 py-[18px] sm:px-8 lg:px-16">
+        <a href="/" class="text-[19px] font-semibold tracking-[-.02em]">Hammad<span class="text-accent">.</span></a>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase">Interaction spec · Page transition</span>
+      </div>
+    </header>
+
+    <section class="mx-auto max-w-[1440px] px-5 pt-11 pb-8 sm:px-8 sm:pt-16 sm:pb-10 lg:px-16 lg:pt-20 lg:pb-13">
+      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+        <span>Split-panel wipe</span>
+      </div>
+      <h1 class="mt-6 max-w-[26ch] text-[clamp(28px,3.8vw,52px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+        A divider sweeps the viewport, the name resolves behind it, and the page is already there.
+      </h1>
+      <p class="mt-5 max-w-[54ch] text-[15px] leading-[1.7] text-[#a7a59e]">
+        520ms end to end. The wipe finishes on the site's own near-black background, so removing the overlay is invisible — there is nothing to wait through and no hold at 100%.
+      </p>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] px-5 pb-14 sm:px-8 lg:px-16 lg:pb-24">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">01 / Live</span>
+        <span>Click a nav item to fire it</span>
+      </div>
+
+      <div data-loader-demo class="relative mt-6 aspect-video min-h-[320px] overflow-hidden border border-[#1e1e1c] bg-ink">
+        <div class="absolute inset-0 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-6 border-b border-[#1e1e1c] px-4 py-4 sm:px-8">
+            <span class="text-[17px] font-semibold tracking-[-.02em]">Hammad<span class="text-accent">.</span></span>
+            <div class="flex gap-[14px] text-[13.5px] sm:gap-7">
+              <button type="button" data-nav="work" class="cursor-pointer border-none bg-transparent p-0 text-[#eeece6]">Work</button>
+              <button type="button" data-nav="about" class="cursor-pointer border-none bg-transparent p-0 text-[#9c9a94]">About</button>
+              <button type="button" data-nav="contact" class="cursor-pointer border-none bg-transparent p-0 text-[#9c9a94]">Contact</button>
+            </div>
+          </div>
+          <div class="flex min-h-0 flex-1 flex-col justify-center gap-4 px-4 py-6 sm:px-8 sm:py-14">
+            <span data-route-kicker class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">01 / Selected Work</span>
+            <span data-route-title class="max-w-[22ch] text-[clamp(22px,3vw,40px)] leading-[1.1] tracking-[-.03em]">Building products. Two projects worth showing.</span>
+          </div>
+        </div>
+
+        <div data-overlay class="pointer-events-none absolute inset-0" style="display:none">
+          <div class="absolute inset-0 bg-paper"></div>
+          <div data-panel class="absolute top-0 bottom-0 bg-ink" style="left:0;right:auto;width:0%"></div>
+
+          <div class="absolute top-1/2 left-0 right-0 flex -translate-y-1/2 justify-center text-[clamp(28px,5vw,64px)] leading-none font-semibold tracking-[-.03em]">
+            {Array.from("Hammad.").map((ch) => (
+              <span data-letter class="transition-colors duration-[60ms]" style="color:#0a0a0a">{ch}</span>
+            ))}
+          </div>
+
+          <div data-counter-row class="absolute top-[66%] left-[5%] right-[5%] flex items-center gap-[14px] font-mono text-[clamp(11px,1.1vw,13px)] tracking-[.08em] text-[#8c8a84]" style="opacity:0">
+            <span data-percent class="flex-none">0%</span>
+            <span data-tick class="h-px flex-none bg-[#3a3a36]" style="width:0"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-[18px] flex flex-wrap items-center gap-6 font-mono text-[11px] tracking-[.08em] text-[#6e6c67] uppercase">
+        <span>Duration 520ms</span>
+        <span>Easing cubic-bezier(.72, 0, .18, 1)</span>
+        <span>Direction left → right</span>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">02 / Keyframes</span>
+        <span>0% · 40% · 100%</span>
+      </div>
+
+      <div class="mt-7 flex flex-wrap gap-4 lg:mt-11">
+        {keyframes.map((kf) => (
+          <div class="flex min-w-0 flex-1 basis-[280px] flex-col gap-3">
+            <div class="relative aspect-16/10 overflow-hidden border border-[#1e1e1c]" style={`background:${kf.bg}`}>
+              {kf.panelWidth && (
+                <div class="absolute top-0 bottom-0 left-0 bg-ink" style={`width:${kf.panelWidth}`}></div>
+              )}
+              <div
+                class="absolute top-1/2 left-0 right-0 flex -translate-y-1/2 justify-center text-[clamp(20px,3.4vw,34px)] leading-none font-semibold tracking-[-.03em]"
+                style={kf.letterColor ? `color:${kf.letterColor}` : ""}
+              >
+                {kf.time.includes("40%")
+                  ? Array.from("Hammad.").map((ch, i) => (
+                      <span style={`color:${i === 0 ? "#eeece6" : "#0a0a0a"}`}>{ch}</span>
+                    ))
+                  : Array.from("Hammad.").map((ch) => <span>{ch}</span>)}
+              </div>
+              {kf.showCounter && (
+                <div class="absolute top-[66%] left-[5%] right-[5%] flex items-center gap-3 font-mono text-[clamp(10px,1.1vw,12px)] tracking-[.08em] text-[#8c8a84]">
+                  <span class="flex-none">{kf.percent}</span>
+                  <span class="h-px flex-none bg-[#3a3a36]" style={`width:${kf.tickWidth}`}></span>
+                </div>
+              )}
+            </div>
+            <div class="flex flex-col gap-[6px]">
+              <span class="font-mono text-[11px] tracking-[.12em] text-paper uppercase">{kf.time}</span>
+              <span class="text-[13.5px] leading-[1.6] text-[#a7a59e]">{kf.body}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">03 / Spec</div>
+
+      <div class="mt-7 flex flex-wrap gap-8 lg:mt-11 lg:gap-16">
+        <div class="flex min-w-0 flex-1 basis-[300px] flex-col border-t border-[#2b2b28]">
+          <span class="pt-4 pb-3 font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">Colors — pulled from the site</span>
+          {colors.map((c, i) => (
+            <div
+              class:list={[
+                "flex items-center gap-[14px] border-t border-[#1e1e1c] py-[14px]",
+                i === colors.length - 1 && "border-b",
+              ]}
+            >
+              <span class="h-[26px] w-[26px] flex-none border border-[#2b2b28]" style={`background:${c.swatch}`}></span>
+              <span class="min-w-0 flex-1 text-sm text-[#dedbd4]">{c.label}</span>
+              <span class="font-mono text-[11.5px] text-[#8c8a84]">{c.code}</span>
+            </div>
+          ))}
+          <p class="mt-[18px] max-w-[44ch] text-[13.5px] leading-[1.65] text-[#a7a59e]">
+            No lime in the loader. The accent stays reserved for interaction states, so the transition reads as structure rather than decoration.
+          </p>
+        </div>
+
+        <div class="flex min-w-0 flex-1 basis-[300px] flex-col border-t border-[#2b2b28]">
+          <span class="pt-4 pb-3 font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">Type</span>
+          {typeSpecs.map((spec, i) => (
+            <div
+              class:list={[
+                "flex flex-col gap-2 border-t border-[#1e1e1c] py-[14px]",
+                i === typeSpecs.length - 1 && "border-b",
+              ]}
+            >
+              <span class="text-sm text-[#dedbd4]">{spec.label}</span>
+              <span class="font-mono text-[11.5px] leading-[1.6] text-[#8c8a84]">{spec.value}</span>
+            </div>
+          ))}
+
+          <span class="pt-7 pb-3 font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">Timing</span>
+          {timingSpecs.map((spec, i) => (
+            <div
+              class:list={[
+                "flex flex-col gap-2 border-t border-[#1e1e1c] py-[14px]",
+                i === timingSpecs.length - 1 && "border-b",
+              ]}
+            >
+              <span class="text-sm text-[#dedbd4]">{spec.label}</span>
+              <span class="font-mono text-[11.5px] leading-[1.6] text-[#8c8a84]">{spec.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>
+
+<script>
+  const ROUTES: Record<string, { kicker: string; title: string }> = {
+    work: { kicker: "01 / Selected Work", title: "Building products. Two projects worth showing." },
+    about: { kicker: "05 / About", title: "I like computers more than is strictly reasonable." },
+    contact: { kicker: "06 / Contact", title: "Got something worth building? Let's talk." },
+  };
+  const BAND_START = 38;
+  const BAND_END = 62;
+  const LETTERS = 7;
+  const STEPS = [0, 29, 57, 84, 100];
+  const DURATION_MS = 520;
+
+  function bez(t: number, p1: number, p2: number) {
+    const u = 1 - t;
+    return 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t;
+  }
+  function ease(x: number) {
+    let t = x;
+    for (let i = 0; i < 6; i++) {
+      const err = bez(t, 0.72, 0.18) - x;
+      const d =
+        3 * (1 - t) * (1 - t) * 0.72 +
+        6 * (1 - t) * t * (0.18 - 0.72) +
+        3 * t * t * (1 - 0.18);
+      if (Math.abs(d) < 1e-5) break;
+      t -= err / d;
+    }
+    return bez(Math.min(1, Math.max(0, t)), 0, 1);
+  }
+
+  const demo = document.querySelector<HTMLElement>("[data-loader-demo]");
+  if (demo) {
+    const overlay = demo.querySelector<HTMLElement>("[data-overlay]");
+    const panel = demo.querySelector<HTMLElement>("[data-panel]");
+    const letters = Array.from(demo.querySelectorAll<HTMLElement>("[data-letter]"));
+    const counterRow = demo.querySelector<HTMLElement>("[data-counter-row]");
+    const percentEl = demo.querySelector<HTMLElement>("[data-percent]");
+    const tickEl = demo.querySelector<HTMLElement>("[data-tick]");
+    const kickerEl = demo.querySelector<HTMLElement>("[data-route-kicker]");
+    const titleEl = demo.querySelector<HTMLElement>("[data-route-title]");
+    const navButtons = Array.from(demo.querySelectorAll<HTMLButtonElement>("[data-nav]"));
+
+    if (overlay && panel && counterRow && percentEl && tickEl && kickerEl && titleEl) {
+      let route = "work";
+      let playing = false;
+      let raf = 0;
+      let doneTimeout = 0;
+
+      const renderRoute = () => {
+        const r = ROUTES[route];
+        kickerEl.textContent = r.kicker;
+        titleEl.textContent = r.title;
+        navButtons.forEach((btn) => {
+          btn.style.color = btn.dataset.nav === route ? "#eeece6" : "#9c9a94";
+        });
+      };
+
+      const renderFrame = (p: number) => {
+        const pct = p * 100;
+        panel.style.left = "0";
+        panel.style.right = "auto";
+        panel.style.width = pct + "%";
+
+        letters.forEach((el, i) => {
+          const center = BAND_START + ((i + 0.5) * (BAND_END - BAND_START)) / LETTERS;
+          const covered = pct > center;
+          el.style.color = covered ? "#eeece6" : "#0a0a0a";
+        });
+
+        let snapped = 0;
+        for (const s of STEPS) if (pct >= s) snapped = s;
+        percentEl.textContent = snapped + "%";
+
+        counterRow.style.flexDirection = "row";
+        counterRow.style.opacity = String(Math.min(1, p * 12));
+        tickEl.style.width = `max(0px, min(calc(100% - 5em), calc(${((pct - 5) / 0.9).toFixed(2)}% - 5em)))`;
+      };
+
+      const go = (target: string) => {
+        if (playing) return;
+        playing = true;
+        overlay.style.display = "block";
+        renderFrame(0);
+        const start = performance.now();
+        const tick = (now: number) => {
+          const x = Math.min(1, (now - start) / DURATION_MS);
+          const p = ease(x);
+          if (x < 1) {
+            renderFrame(p);
+            raf = requestAnimationFrame(tick);
+          } else {
+            renderFrame(1);
+            route = target;
+            renderRoute();
+            doneTimeout = window.setTimeout(() => {
+              playing = false;
+              overlay.style.display = "none";
+            }, 16);
+          }
+        };
+        raf = requestAnimationFrame(tick);
+      };
+
+      navButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.nav;
+          if (target) go(target);
+        });
+      });
+
+      window.addEventListener("beforeunload", () => {
+        cancelAnimationFrame(raf);
+        clearTimeout(doneTimeout);
+      });
+
+      renderRoute();
+    }
+  }
+</script>

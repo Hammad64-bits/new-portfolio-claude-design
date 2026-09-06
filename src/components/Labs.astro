@@ -1,0 +1,80 @@
+---
+const labs = [
+  {
+    video: "iphone_blob",
+    driftSeconds: 26,
+    tag: "Lab 01 · Agents",
+    title: "WhatsApp AI agents with tool calling",
+    aspect: "aspect-video",
+    grow: "flex-[2_1_480px]",
+    opacity: "opacity-90",
+  },
+  {
+    video: "optical_illusion",
+    driftSeconds: 20,
+    tag: "Lab 02 · Networking",
+    title: "Packets, proxies, EC2 & S3",
+    aspect: "aspect-square",
+    grow: "flex-1 basis-[240px]",
+    opacity: "opacity-55",
+  },
+  {
+    video: "green_boxes",
+    driftSeconds: 24,
+    tag: "Lab 03 · Automation",
+    title: "Browser automation & a trading bot",
+    aspect: "aspect-square",
+    grow: "flex-1 basis-[240px]",
+    opacity: "opacity-75",
+  },
+  {
+    video: "orange_circit",
+    driftSeconds: 22,
+    tag: "Lab 04 · Security",
+    title: "Small tools for poking at hardening",
+    aspect: "aspect-square",
+    grow: "flex-1 basis-[240px]",
+    opacity: "opacity-70",
+  },
+];
+---
+
+<section id="labs" class="border-t border-[#1e1e1c] bg-[#070707] py-16 lg:py-28">
+  <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
+    <div class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <span class="text-paper">04 / Labs</span>
+      <span>Work = proof. Labs = curiosity.</span>
+    </div>
+
+    <h2 class="mt-7 max-w-[26ch] text-[clamp(24px,2.8vw,40px)] leading-[1.15] font-medium tracking-[-.03em] text-wrap-pretty lg:mt-10">
+      The same systems I use to solve real problems, poked at for fun.
+    </h2>
+
+    <div class="mt-9 flex flex-wrap gap-4 lg:mt-14">
+      {labs.map((lab) => (
+        <div class:list={["relative min-w-0 overflow-hidden border border-[#1e1e1c] bg-[#050505]", lab.aspect, lab.grow]}>
+          <video
+            src={`/videos/${lab.video}.mp4`}
+            poster={`/videos/posters/${lab.video}.jpg`}
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
+            style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
+          ></video>
+          <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,7,7,.9),rgba(7,7,7,.15))]"></div>
+          <div class="absolute bottom-4 left-[18px] flex flex-col gap-[6px]">
+            <span class="font-mono text-[10.5px] tracking-[.12em] text-[#9c9a94] uppercase">{lab.tag}</span>
+            <span class="text-[16px] tracking-[-.015em]">{lab.title}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <a href="/labs" class="mt-9 inline-block border-b border-[#2b2b28] pb-2 font-mono text-[11.5px] tracking-[.12em] text-accent uppercase lg:mt-11">
+      All experiments →
+    </a>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+---
+interface Props {
+  active?: "home" | "work" | "labs" | "about" | "contact";
+}
+
+const { active = "home" } = Astro.props;
+
+const navClass = (item: "home" | "work" | "labs" | "about" | "contact") =>
+  item === active
+    ? "text-paper"
+    : "text-[#9c9a94] hover:text-paper";
+
+const homeHref = active === "home" ? "#top" : "/";
+const workHref = active === "home" ? "#work" : active === "work" ? "#top" : "/work";
+const labsHref = active === "home" ? "#labs" : active === "labs" ? "#top" : "/labs";
+const aboutHref = active === "about" ? "#top" : "/about";
+const contactHref = active === "contact" ? "#top" : "/contact";
+---
+
+<header class="sticky top-0 z-50 border-b border-[#1e1e1c] bg-[#0a0a0a]/[.82] backdrop-blur-[14px]">
+  <nav class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-8 px-5 py-[18px] sm:px-8 lg:px-16">
+    <a href={homeHref} class="text-[19px] font-semibold tracking-[-.02em]">
+      Hammad<span class="text-accent">.</span>
+    </a>
+    <div class="flex gap-[18px] text-sm sm:gap-6 lg:gap-[38px]">
+      <a href={workHref} class={navClass("work")}>Work</a>
+      <a href={labsHref} class={navClass("labs")}>Labs</a>
+      <a href={aboutHref} class={navClass("about")}>About</a>
+      <a href={contactHref} class={navClass("contact")}>Contact</a>
+    </div>
+    <div class="flex gap-5 font-mono text-[11.5px] tracking-[.08em] text-[#9c9a94] uppercase">
+      <a href="#" class="text-[#9c9a94] hover:text-accent">GitHub ↗</a>
+      <a href="#" class="text-[#9c9a94] hover:text-accent">CV ↓</a>
+    </div>
+  </nav>
+</header>

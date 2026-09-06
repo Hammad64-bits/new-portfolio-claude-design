@@ -1,0 +1,37 @@
+---
+import ContactForm from "./ContactForm.astro";
+---
+
+<section id="contact" class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-18 sm:px-8 lg:px-16 lg:py-[140px]">
+  <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">06 / Contact</div>
+
+  <h2 class="mt-8 max-w-[22ch] text-[clamp(30px,4.4vw,62px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty lg:mt-11">
+    Hiring, building, or stuck on something that should work. Start there.
+  </h2>
+
+  <div class="mt-8 flex flex-wrap items-center gap-[14px] lg:mt-13">
+    <a
+      href="mailto:hello@hammad.dev"
+      class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[26px] py-4 text-[15.5px] font-medium text-ink hover:bg-accent"
+    >
+      hello@hammad.dev →
+    </a>
+    <a
+      href="/contact"
+      class="inline-flex items-center gap-[10px] rounded-[2px] border border-[#2b2b28] px-[26px] py-4 text-[15.5px] text-[#cfcdc6] hover:border-[#5a5a54] hover:text-paper"
+    >
+      Download CV ↓
+    </a>
+    <div class="ml-2 flex gap-5 font-mono text-[11.5px] tracking-[.1em] text-[#8c8a84] uppercase">
+      <a href="#" class="text-[#8c8a84] hover:text-accent">GitHub ↗</a>
+      <a href="#" class="text-[#8c8a84] hover:text-accent">LinkedIn ↗</a>
+    </div>
+  </div>
+
+  <ContactForm rows={5} class="mt-11 max-w-[760px] border-t border-[#1e1e1c] pt-8 lg:mt-18 lg:pt-12">
+    <div slot="before-fields" class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">
+      <span class="text-paper">Or send a message here</span>
+      <a href="/contact" class="text-[#8c8a84] hover:text-accent">Full contact page →</a>
+    </div>
+  </ContactForm>
+</section>

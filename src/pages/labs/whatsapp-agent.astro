@@ -1,0 +1,147 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const tools = ["list_availability(date)", "hold_slot(slot_id)", "confirm_booking(hold_id)", "cancel_booking(id)"];
+
+const brokeItems = [
+  {
+    title: "It double-booked before holds existed",
+    body: "The first version read availability, chatted for two more turns, then wrote the booking. Two people talking to it at once both got the same slot. Adding an explicit hold with a short expiry fixed it, and it's the part of the design I'd keep.",
+  },
+  {
+    title: "It was too willing to be helpful",
+    body: "Asked for something outside the tools — a discount, a different service — it would happily agree in principle. Narrowing the instructions helped; refusing to answer anything a tool couldn't back helped more.",
+  },
+  {
+    title: "Retries arrived as new conversations",
+    body: "Webhook redelivery is normal and I hadn't planned for it, so a retried message read as a fresh request. Idempotency keys on inbound message IDs, which I should have written first.",
+  },
+  {
+    title: "Timezones, obviously",
+    body: "The model is fine with dates and careless with offsets. All date maths moved into the tools; the agent only passes through what the database returned.",
+  },
+];
+---
+
+<Layout title="WhatsApp AI booking agent — Hammad Habib" description="An agent that holds a booking conversation on WhatsApp — checks real availability, makes the booking, and knows when to stop guessing.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="labs" />
+
+    <section class="mx-auto max-w-[1000px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
+      <a href="/labs" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Labs</a>
+      <div class="mt-6 flex flex-wrap items-center gap-[10px]">
+        <span class="rounded-full border border-accent px-[11px] py-[5px] font-mono text-[10px] tracking-[.1em] text-accent uppercase">Working</span>
+        <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">AI / Agents</span>
+        <a href="#" class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">GitHub ↗</a>
+      </div>
+      <h1 class="mt-[22px] max-w-[22ch] text-[clamp(28px,3.8vw,50px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">WhatsApp AI booking agent</h1>
+      <p class="mt-[18px] max-w-[48ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+        An agent that holds a booking conversation on WhatsApp — checks real availability, makes the booking, and knows when to stop guessing.
+      </p>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] px-5 pb-9 sm:px-8 lg:px-16 lg:pb-14">
+      <div class="relative aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+        <video
+          src="/videos/iphone_blob.mp4"
+          poster="/videos/posters/iphone_blob.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          class="absolute inset-0 h-full w-full object-cover opacity-90"
+          style="animation: hh-drift 18s ease-in-out infinite"
+        ></video>
+        <div class="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,10,10,.75),rgba(10,10,10,.05))]"></div>
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1000px] flex-col gap-9 px-5 pb-10 sm:px-8 lg:px-16 lg:gap-14 lg:pb-16">
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Why this got built</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          At work I'd wired WhatsApp into a support product, so I knew the channel worked for answering questions. What I didn't know was whether an agent could be trusted to <em class="text-[#dedbd4] italic">do</em> something — look up a slot, hold it, confirm it — instead of just talking convincingly about doing it. This was the smallest version of that question I could build in a weekend.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">What it does</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          A message arrives on the WhatsApp Cloud API webhook. The agent has four tools: list availability, hold a slot, confirm a booking, cancel one. It can't invent a time — if it wants to offer 3pm on Thursday, it has to ask the database first, and the database is the only thing that decides. Everything the customer sees is a normal chat thread.
+        </p>
+        <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+          {tools.map((tool) => (
+            <span class="flex-1 basis-[200px] bg-ink p-[16px_18px] font-mono text-xs tracking-[.04em] text-[#cfcdc6]">{tool}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Flow</span>
+        <div class="flex flex-col gap-4 border border-dashed border-[#2b2b28] p-5 font-mono text-xs tracking-[.04em] text-[#8c8a84] sm:p-8">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-paper">WhatsApp message</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Webhook</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#3a3a36] px-[14px] py-[10px] text-paper">Agent loop</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-[#3a3a36]">↳</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Tool call</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#3a3a36] px-[14px] py-[10px] text-paper">Supabase — slots, holds, bookings</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Reply</span>
+          </div>
+          <span class="text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">A hold expires on its own if confirmation never arrives. Sketch, not a spec.</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Stack</span>
+        <span class="font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">Node · TypeScript · WhatsApp Cloud API · Supabase / Postgres · LLM tool calling</span>
+      </div>
+
+      <div class="flex flex-col gap-[18px]">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">What broke</span>
+        <div class="flex flex-col">
+          {brokeItems.map((item, i) => (
+            <div class:list={["flex flex-col gap-2 border-t border-[#1e1e1c] py-[18px]", i === 0 && "border-[#2b2b28]", i === brokeItems.length - 1 && "border-b"]}>
+              <span class="text-[15.5px] tracking-[-.015em] text-paper">{item.title}</span>
+              <span class="max-w-[60ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">{item.body}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-[14px]">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Clips</span>
+        <div class="flex flex-wrap gap-[14px]">
+          <div class="texture-hatch flex min-w-0 max-h-[420px] flex-1 basis-[200px] items-end border border-[#1e1e1c] p-[14px] aspect-9/16">
+            <span class="font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">Screen recording — booking conversation</span>
+          </div>
+          <div class="texture-hatch flex min-w-0 flex-[2_1_300px] items-end border border-[#1e1e1c] p-[14px] aspect-16/10">
+            <span class="font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">Terminal clip — tool calls and holds</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] border-t border-[#1e1e1c] px-5 py-9 sm:px-8 lg:px-16 lg:py-16">
+      <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Related Work</span>
+      <a href="/work/revsmith" class="mt-5 flex flex-wrap items-end justify-between gap-5 border border-[#1e1e1c] p-5 hover:border-[#5a5a54] sm:p-7">
+        <span class="flex min-w-0 flex-col gap-[10px]">
+          <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">RevSmith · production</span>
+          <span class="max-w-[26ch] text-[clamp(18px,2vw,26px)] leading-[1.2] tracking-[-.025em] text-wrap-pretty">The same channel, built for real customers: WhatsApp / Meta integration and AI agent configuration.</span>
+        </span>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Case study →</span>
+      </a>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

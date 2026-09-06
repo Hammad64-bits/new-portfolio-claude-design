@@ -1,0 +1,277 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const meta = ["Vigilant Security · SolvoLab", "2023—2024", "Diagnosis · Incident · Migration", "Two regional production sites"];
+
+const startingPoint = [
+  "Heavy plugin and PHP footprint",
+  "Slow performance under normal traffic",
+  "Difficult to maintain or change safely",
+  "UK and Ireland sites drifting apart",
+];
+
+const incidentRows = [
+  { label: "Found", body: "Malicious files on disk and modified records in the database." },
+  { label: "Also found", body: "Administrator access created by the attacker, separate from the injected code." },
+  { label: "Did", body: "Removed the malicious code, isolated and revoked the attacker's access, verified the site's own content was intact." },
+  { label: "Result", body: "Control of the site returned to the client, and the migration continued on a known-clean baseline." },
+];
+
+const migrationSteps = [
+  { title: "Route inventory", body: "Every live URL enumerated before it could be lost." },
+  { title: "Redirect mapping", body: "Old path to new path, one to one, no silent 404s." },
+  { title: "Sitemap preservation", body: "Generated from the new routes, checked against the old." },
+  { title: "Metadata & SEO", body: "Titles, descriptions and structured data carried across." },
+  { title: "Structured content", body: "Pages modelled as content, not as page builders." },
+  { title: "Analytics & consent", body: "GTM/GA continuity with cookie consent handled properly." },
+  { title: "UK / Ireland parity", body: "Two regional sites kept consistent without duplicating work." },
+  { title: "Content migration", body: "Existing editorial moved into the new CMS intact." },
+];
+
+const rebuildPills = ["Astro frontend", "Sanity CMS", "UK + IE builds"];
+
+const performanceList = [
+  "Legacy plugin and PHP overhead removed",
+  "Frontend bloat cut back to what the pages need",
+  "Media and loading behaviour optimised",
+  "A far lighter rendering model overall",
+];
+
+const seoPills = ["Redirect mapping", "Sitemap work", "Robots & noindex controls", "Route normalisation", "CMS-driven SEO fields", "Structured metadata"];
+
+const gallery = [
+  { label: "Old vs new — homepage", aspect: "aspect-16/10", grow: "flex-1 basis-[300px]" },
+  { label: "Old vs new — service page", aspect: "aspect-16/10", grow: "flex-1 basis-[300px]" },
+  { label: "Redirect map", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+  { label: "IE site", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+  { label: "CMS structure", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+];
+
+const fromLab = [
+  { tag: "Linux / Systems", title: "Linux work automation →", body: "systemd timers for a workflow I refused to keep doing by hand." },
+  { tag: "Networking / Security", title: "Networking & security lab →", body: "Subnets, scanning and service discovery, in a lab I control." },
+  { tag: "Cloud / AWS", title: "AWS learning lab →", body: "S3, EC2, IAM and networking, learned by breaking them." },
+];
+---
+
+<Layout title="Vigilant Security — Hammad Habib" description="Modernising and migrating production UK + Ireland websites without throwing away years of SEO value — diagnosis, a real security incident, and a full migration.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="work" />
+
+    <section class="mx-auto max-w-[1440px] px-5 pt-12 pb-8 sm:px-8 sm:pt-16 sm:pb-13 lg:px-16 lg:pt-22">
+      <a href="/work" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Work</a>
+
+      <div class="mt-7 flex flex-wrap items-end gap-7 lg:mt-9 lg:gap-18">
+        <h1 class="m-0 min-w-0 flex-1 basis-[420px] text-[clamp(28px,3.8vw,52px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+          Modernising and migrating production UK + Ireland websites without throwing away years of SEO value.
+        </h1>
+        <div class="flex min-w-0 flex-none basis-[260px] flex-col gap-[14px] font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+          {meta.map((m, i) => <span class:list={[i === 0 && "text-paper", i === 3 && "text-[#6e6c67]"]}>{m}</span>)}
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-[14px] lg:mt-11">
+        <div class="texture-hatch flex min-w-0 flex-1 basis-[300px] items-end border border-[#1e1e1c] p-4 aspect-16/10">
+          <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Before — legacy WordPress</span>
+        </div>
+        <div class="texture-hatch-alt flex min-w-0 flex-1 basis-[300px] items-end border border-[#2b2b28] p-4 aspect-16/10">
+          <span class="font-mono text-[10.5px] tracking-[.1em] text-[#8c8a84] uppercase">After — Astro + Sanity</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="flex flex-wrap items-start gap-7 lg:gap-18">
+        <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">02 / The Starting Point</div>
+        <div class="flex min-w-0 flex-1 basis-[440px] flex-col gap-[22px]">
+          <p class="m-0 max-w-[46ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+            Two regional sites on a legacy WordPress setup that had accumulated more than it could carry — and years of search value nobody could afford to lose.
+          </p>
+          <div class="flex flex-col">
+            {startingPoint.map((s, i) => (
+              <span class:list={["border-t border-[#1e1e1c] py-[14px] text-[14.5px] leading-[1.6] text-[#a7a59e]", i === startingPoint.length - 1 && "border-b"]}>{s}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-[#1e1e1c] bg-[#070707] py-11 sm:py-14 lg:py-20">
+      <div class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-16 lg:px-16">
+        <div class="flex min-w-0 flex-1 basis-[380px] flex-col gap-5">
+          <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">03 / Diagnosis</div>
+          <p class="m-0 max-w-[50ch] text-[15px] leading-[1.75] text-[#a7a59e]">
+            I worked on the production server directly over SSH — reading what was installed, what was executing on every request, and where the time was actually going. Plugin by plugin, then PHP, then site behaviour under load. The Lighthouse and Core Web Vitals numbers followed from removing causes, not from chasing scores.
+          </p>
+        </div>
+        <div class="min-w-0 flex-1 basis-[340px] border border-[#1e1e1c] bg-[#050505] p-5 font-mono text-[12.5px] leading-[1.95] text-[#8c8a84] sm:p-7">
+          <span class="block text-[#6e6c67]">// what the investigation actually looked at</span>
+          <span class="block text-[#cfcdc6]">wp plugin list --status=active</span>
+          <span class="block">— inspect what runs on every request</span>
+          <span class="block text-[#cfcdc6]">tail -f error.log</span>
+          <span class="block">— read request-time errors</span>
+          <span class="block text-[#cfcdc6]">measure TTFB, then assets, then queries</span>
+          <span class="block text-accent">— the bottleneck was never the frontend</span>
+          <span class="mt-[14px] block text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Illustrative — not a session transcript</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">04 / Security Incident</span>
+        <span>Handled mid-project</span>
+      </div>
+      <p class="mt-7 max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty lg:mt-9">
+        The site was compromised by a ClickFix-style fake-CAPTCHA injection. It was a live production incident, and it was mine to deal with.
+      </p>
+      <div class="mt-7 flex max-w-[900px] flex-col lg:mt-10">
+        {incidentRows.map((r, i) => (
+          <div class:list={["flex flex-wrap gap-x-7 gap-y-2 border-t border-[#2b2b28] py-4", i === incidentRows.length - 1 && "border-b"]}>
+            <span class="flex-none basis-[130px] font-mono text-[11px] tracking-[.1em] text-[#6e6c67] uppercase">{r.label}</span>
+            <span class="min-w-0 flex-1 basis-[320px] text-[14.5px] leading-[1.65] text-[#dedbd4]">{r.body}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">05 / Migration Strategy</span>
+        <span>The hard part</span>
+      </div>
+      <p class="mt-7 max-w-[54ch] text-[15px] leading-[1.7] text-[#a7a59e] lg:mt-9">
+        Moving off a CMS-heavy stack is easy. Moving off it without losing rankings, URLs, metadata, redirects, analytics or the client's editorial workflow is the actual project. Every item below had to be inventoried before anything shipped.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
+        {migrationSteps.map((s, i) => (
+          <div class="flex min-w-0 flex-1 basis-[240px] flex-col gap-2 bg-ink p-5">
+            <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
+            <span class="text-[15px] tracking-[-.01em]">{s.title}</span>
+            <span class="text-[13.5px] leading-[1.6] text-[#a7a59e]">{s.body}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="border-t border-[#1e1e1c] bg-[#070707] py-11 sm:py-14 lg:py-20">
+      <div class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-16 lg:px-16">
+        <div class="flex min-w-0 flex-1 basis-[340px] flex-col gap-5">
+          <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">06 / The Rebuild</div>
+          <p class="m-0 max-w-[48ch] text-[15px] leading-[1.75] text-[#a7a59e]">
+            Astro on the frontend, a component architecture the client's team could actually extend, and a responsive redesign that didn't reinvent the brand. Editorial content and SEO fields moved into Sanity, so the people who own the copy own the copy. UK and Ireland ship from the same foundation.
+          </p>
+          <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+            {rebuildPills.map((p) => (
+              <span class="flex-1 basis-[150px] bg-[#070707] p-4 font-mono text-[11px] tracking-[.06em] text-[#cfcdc6]">{p}</span>
+            ))}
+          </div>
+        </div>
+        <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[14px]">
+          <div class="texture-hatch flex aspect-16/10 items-end border border-[#1e1e1c] p-4">
+            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">New site — UK</span>
+          </div>
+          <div class="texture-hatch flex aspect-16/10 items-end border border-[#1e1e1c] p-4">
+            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Sanity editorial view</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="flex flex-wrap items-start gap-7 lg:gap-16">
+        <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[18px]">
+          <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">07 / Performance</div>
+          <div class="flex flex-col">
+            {performanceList.map((p, i) => (
+              <span class:list={["border-t border-[#1e1e1c] py-[14px] text-[14.5px] leading-[1.6] text-[#a7a59e]", i === performanceList.length - 1 && "border-b"]}>{p}</span>
+            ))}
+          </div>
+        </div>
+        <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[14px]">
+          <div class="flex flex-wrap gap-[14px]">
+            <div class="texture-hatch flex aspect-square min-w-0 flex-1 basis-[140px] items-end border border-[#1e1e1c] p-[14px]">
+              <span class="font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">Lighthouse — before</span>
+            </div>
+            <div class="texture-hatch-alt flex aspect-square min-w-0 flex-1 basis-[140px] items-end border border-[#2b2b28] p-[14px]">
+              <span class="font-mono text-[10px] tracking-[.1em] text-[#8c8a84] uppercase">Lighthouse — after</span>
+            </div>
+          </div>
+          <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Real report screenshots go here — no invented numbers.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="flex flex-wrap items-start gap-7 lg:gap-18">
+        <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">08 / SEO</div>
+        <div class="flex min-w-0 flex-1 basis-[440px] flex-col gap-5">
+          <p class="m-0 max-w-[44ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+            SEO wasn't a phase at the end. It was a constraint on every routing and content decision.
+          </p>
+          <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+            {seoPills.map((p) => (
+              <span class="flex-1 basis-[200px] bg-ink p-[18px] text-sm text-[#cfcdc6]">{p}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-15 lg:py-21">
+      <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
+        <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">09 / Outcome</div>
+        <p class="mt-7 max-w-[48ch] text-[clamp(18px,1.8vw,26px)] leading-[1.45] tracking-[-.022em] text-paper text-wrap-pretty lg:mt-9">
+          A legacy production system was progressively stabilised, secured, modernised and rebuilt — while keeping the business value already attached to it.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-10 sm:px-8 lg:px-16 lg:py-18">
+      <div class="flex flex-wrap items-baseline gap-8">
+        <span class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">10 / Tech</span>
+        <span class="min-w-0 flex-1 basis-[400px] font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">
+          Astro · TypeScript · Sanity · WordPress/PHP · Linux/SSH · SEO · GTM/GA · Cookie Consent · Google APIs
+        </span>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">11 / Gallery</div>
+      <div class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
+        {gallery.map((g) => (
+          <div class:list={["texture-hatch flex min-w-0 items-end border border-[#1e1e1c] p-4", g.aspect, g.grow]}>
+            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{g.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
+      <div class="font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">From the Lab</div>
+      <div class="mt-[22px] flex flex-wrap gap-[14px]">
+        {fromLab.map((f) => (
+          <a href="/labs" class="flex min-w-0 flex-1 basis-[240px] flex-col gap-[10px] border border-[#1e1e1c] p-[22px] hover:border-[#5a5a54]">
+            <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">{f.tag}</span>
+            <span class="text-[16.5px] tracking-[-.015em]">{f.title}</span>
+            <span class="text-[13.5px] leading-[1.6] text-[#a7a59e]">{f.body}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <a href="/work/revsmith" class="flex flex-wrap items-end justify-between gap-6">
+        <span class="flex min-w-0 flex-col gap-[14px]">
+          <span class="font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">Next project</span>
+          <span class="max-w-[22ch] text-[clamp(24px,3vw,42px)] leading-[1.12] font-medium tracking-[-.03em] text-wrap-pretty">RevSmith — product engineering in a small team.</span>
+        </span>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Next →</span>
+      </a>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

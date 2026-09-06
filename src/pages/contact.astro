@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import ContactForm from "../components/ContactForm.astro";
+import Footer from "../components/Footer.astro";
+
+const links = [
+  { label: "Direct email", value: "hello@hammad.dev", href: "mailto:hello@hammad.dev", arrow: "→" },
+  { label: "Code", value: "GitHub", href: "#", arrow: "↗" },
+  { label: "Professional", value: "LinkedIn", href: "#", arrow: "↗" },
+  { label: "Résumé", value: "Download CV", href: "#", arrow: "↓" },
+];
+---
+
+<Layout title="Contact — Hammad Habib" description="Hiring, a freelance build, or a production problem that should be simple and isn't. Get in touch.">
+  <div class="flex min-h-screen flex-col overflow-x-hidden bg-ink">
+    <Header active="contact" />
+
+    <main id="top" class="mx-auto box-border w-full max-w-[1440px] flex-1 px-5 pt-12 pb-14 sm:px-8 sm:pt-16 sm:pb-20 lg:px-16 lg:pt-24 lg:pb-26">
+      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+        <span>Contact</span>
+      </div>
+
+      <h1 class="mt-[26px] max-w-[22ch] text-[clamp(30px,4.2vw,56px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+        Got something worth building? Let's talk.
+      </h1>
+
+      <p class="mt-[22px] max-w-[50ch] text-[clamp(15px,1.2vw,17.5px)] leading-[1.65] text-[#a7a59e] text-wrap-pretty">
+        Hiring, a freelance build, or a production problem that should be simple and isn't. Tell me what you're working on and I'll reply within a day or two.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-start gap-8 lg:mt-18 lg:gap-[72px]">
+        <ContactForm rows={7} submitLabel="Send it over" class="min-w-0 flex-1 basis-[480px] lg:flex-[2]" />
+
+        <aside class="flex min-w-0 flex-1 basis-[260px] flex-col border-t border-[#2b2b28]">
+          {links.map((link) => (
+            <a
+              href={link.href}
+              class="flex items-baseline justify-between gap-4 border-b border-[#1e1e1c] py-5 hover:text-accent"
+            >
+              <span class="flex flex-col gap-[6px]">
+                <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">{link.label}</span>
+                <span class="text-[16px] tracking-[-.01em]">{link.value}</span>
+              </span>
+              <span class="font-mono text-xs text-[#6e6c67]">{link.arrow}</span>
+            </a>
+          ))}
+          <div class="flex items-center gap-[10px] pt-[22px] font-mono text-[11px] tracking-[.06em] text-[#8c8a84]">
+            <span class="block h-[6px] w-[6px] rounded-full bg-accent" style="animation: hh-blink 2.4s infinite"></span>
+            <span>Pakistan · replies within 1—2 days</span>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</Layout>

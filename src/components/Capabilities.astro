@@ -1,0 +1,42 @@
+---
+const items = [
+  {
+    title: "Product Engineering",
+    body: "Building complete user-facing systems, not isolated screens.",
+    stack: "Next.js · Supabase · Postgres",
+  },
+  {
+    title: "Frontend & Interaction",
+    body: "Complex UI, responsive systems, design implementation, interaction.",
+    stack: "React · TypeScript · Motion",
+  },
+  {
+    title: "Systems & Architecture",
+    body: "Data flow, API boundaries, architecture, breaking points.",
+    stack: "REST · Realtime · Auth · Queues",
+  },
+  {
+    title: "Performance & Debugging",
+    body: "Following problems through browsers, applications, servers, databases.",
+    stack: "Linux · Nginx · Profiling · SEO",
+  },
+];
+---
+
+<section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
+  <div class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+    <span class="text-paper">02 / Capabilities</span>
+    <span>Engineering domains</span>
+  </div>
+
+  <div class="mt-9 grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-6 lg:mt-14 lg:gap-11">
+    {items.map((item, i) => (
+      <div class="flex flex-col gap-3 border-t border-[#2b2b28] pt-[22px]">
+        <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
+        <span class="text-[clamp(17px,1.5vw,21px)] tracking-[-.02em]">{item.title}</span>
+        <p class="m-0 text-sm leading-[1.65] text-[#a7a59e]">{item.body}</p>
+        <span class="mt-1 font-mono text-[10.5px] tracking-[.06em] text-[#6e6c67]">{item.stack}</span>
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,102 @@
+---
+const widgets = [
+  "Embeddable Widget",
+  "Omnichannel Inbox",
+  "AI Agent Configuration",
+  "WhatsApp / Meta Integration",
+];
+
+const shots = ["Widget in situ", "Agent config screen", "Realtime handoff"];
+
+const steps = [
+  "Diagnosed bloated legacy stack over SSH",
+  "Rebuilt performance and Lighthouse scores",
+  "Handled a malicious compromise and cleanup",
+  "Technical SEO, then migration with rankings intact",
+];
+---
+
+<section id="work" class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
+  <div class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+    <span class="text-paper">01 / Selected Work</span>
+    <span>Two projects · 2023—2025</span>
+  </div>
+
+  <article class="mt-10 flex flex-wrap items-start gap-8 lg:mt-16 lg:gap-[72px]">
+    <div class="flex min-w-0 max-w-[340px] flex-1 basis-[240px] flex-col gap-[22px]">
+      <div class="text-[clamp(26px,2.6vw,38px)] leading-[1.1] font-medium tracking-[-.03em]">RevSmith</div>
+      <div class="flex flex-col gap-[10px] font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+        <span>2024—2025</span>
+        <span>Software Engineer · Product</span>
+        <span class="text-[#6e6c67]">Next.js · React · TypeScript</span>
+        <span class="text-[#6e6c67]">Supabase · Postgres · Meta APIs</span>
+      </div>
+      <p class="m-0 max-w-[34ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">
+        Started frontend-heavy, grew into APIs, realtime systems, architecture, integrations, data access and auth — product-level engineering inside a small startup team.
+      </p>
+    </div>
+
+    <div class="flex min-w-0 flex-1 basis-[420px] flex-col gap-6 lg:flex-[3] lg:gap-10">
+      <h2 class="m-0 max-w-[24ch] text-[clamp(28px,3.6vw,52px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
+        Building an AI customer-support platform inside a small startup team.
+      </h2>
+
+      <div class="texture-hatch flex aspect-video items-center justify-center border border-[#1e1e1c]">
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-[#6e6c67] uppercase">Product screenshot — inbox, full width</span>
+      </div>
+
+      <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+        {widgets.map((label, i) => (
+          <div class="flex min-w-0 flex-1 basis-[150px] flex-col gap-[10px] bg-ink px-5 py-[22px] hover:bg-[#101010]">
+            <span class="font-mono text-[11px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
+            <span class="text-[15.5px] tracking-[-.01em]">{label}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+        {shots.map((label) => (
+          <div class="texture-hatch flex aspect-4/3 items-center justify-center border border-[#1e1e1c] p-3 text-center">
+            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{label}</span>
+          </div>
+        ))}
+      </div>
+
+      <a href="/work/revsmith" class="self-start border-b border-[#2b2b28] pb-2 font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">
+        Read the case study →
+      </a>
+    </div>
+  </article>
+
+  <article class="mt-18 border-t border-[#1e1e1c] pt-8 lg:mt-[132px] lg:pt-14">
+    <div class="flex flex-wrap items-start gap-7 lg:gap-16">
+      <div class="min-w-0 max-w-[340px] flex-1 basis-[240px]">
+        <div class="text-[clamp(22px,2.2vw,30px)] font-medium tracking-[-.025em]">SolvoLab / Vigilant Security</div>
+        <div class="mt-[14px] flex flex-wrap gap-4 font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+          <span>2023—2024</span>
+          <span>UK / Ireland</span>
+          <span class="text-[#6e6c67]">WordPress → Modern Framework · SEO · Linux</span>
+        </div>
+      </div>
+
+      <div class="min-w-0 flex-1 basis-[420px] lg:flex-[3]">
+        <h3 class="m-0 max-w-[26ch] text-[clamp(22px,2.4vw,34px)] leading-[1.2] font-medium tracking-[-.028em] text-[#dedbd4] text-wrap-pretty">
+          Modernising and migrating production websites without throwing away years of SEO value.
+        </h3>
+
+        <div class="mt-7 flex flex-wrap gap-px border-t border-b border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
+          {steps.map((label, i) => (
+            <div class="flex min-w-0 flex-1 basis-[110px] flex-col gap-2 bg-ink px-4 pt-5 pb-[22px]">
+              <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
+              <span class="text-[13.5px] leading-[1.5] text-[#cfcdc6]">{label}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="texture-hatch mt-7 flex aspect-21/9 items-center justify-center border border-[#1e1e1c]">
+          <span class="font-mono text-[11px] tracking-[.12em] text-[#6e6c67] uppercase">Before / after — performance + site screenshot</span>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

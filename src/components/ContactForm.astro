@@ -1,0 +1,137 @@
+---
+interface Props {
+  rows?: number;
+  submitLabel?: string;
+  class?: string;
+}
+
+const { rows = 5, submitLabel = "Send it over", class: className = "" } = Astro.props;
+---
+
+<form data-contact-form data-phase="idle" class:list={["flex flex-col gap-6", className]}>
+  <slot name="before-fields" />
+
+  <div class="flex flex-wrap gap-5">
+    <label class="flex min-w-0 flex-1 basis-[200px] flex-col gap-[10px]">
+      <span class="font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">Name</span>
+      <input
+        type="text"
+        name="name"
+        required
+        placeholder="Your name"
+        class="box-border w-full rounded-[2px] border border-[#2b2b28] bg-[#0d0d0c] px-[15px] py-[14px] text-[15px] transition-colors duration-[180ms] hover:bg-[#111110]"
+      />
+    </label>
+    <label class="flex min-w-0 flex-1 basis-[200px] flex-col gap-[10px]">
+      <span class="font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">Email</span>
+      <input
+        type="email"
+        name="email"
+        required
+        placeholder="you@company.com"
+        class="box-border w-full rounded-[2px] border border-[#2b2b28] bg-[#0d0d0c] px-[15px] py-[14px] text-[15px] transition-colors duration-[180ms] hover:bg-[#111110]"
+      />
+    </label>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <span class="font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">Project type</span>
+    <div class="flex flex-wrap gap-px overflow-hidden rounded-[2px] border border-[#2b2b28] bg-[#2b2b28]">
+      <button
+        type="button"
+        data-type="freelance"
+        data-active="false"
+        class="contact-tab min-w-0 flex-1 basis-[150px] cursor-pointer border-none bg-[#0d0d0c] px-4 py-[14px] text-left text-sm text-[#cfcdc6] transition-colors duration-150"
+      >
+        Freelance work
+      </button>
+      <button
+        type="button"
+        data-type="product"
+        data-active="true"
+        class="contact-tab min-w-0 flex-1 basis-[150px] cursor-pointer border-none bg-paper px-4 py-[14px] text-left text-sm text-ink transition-colors duration-150"
+      >
+        Product engineering
+      </button>
+      <button
+        type="button"
+        data-type="general"
+        data-active="false"
+        class="contact-tab min-w-0 flex-1 basis-[150px] cursor-pointer border-none bg-[#0d0d0c] px-4 py-[14px] text-left text-sm text-[#cfcdc6] transition-colors duration-150"
+      >
+        General inquiry
+      </button>
+    </div>
+  </div>
+
+  <label class="flex flex-col gap-[10px]">
+    <span class="font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">Message</span>
+    <textarea
+      name="message"
+      rows={rows}
+      required
+      placeholder="What are you building, and where does it stand right now?"
+      class="box-border w-full resize-y rounded-[2px] border border-[#2b2b28] bg-[#0d0d0c] px-[15px] py-[14px] text-[15px] leading-[1.6] transition-colors duration-[180ms] hover:bg-[#111110]"
+    ></textarea>
+  </label>
+
+  <div class="flex min-h-[52px] flex-wrap items-center gap-[18px]">
+    <button
+      type="submit"
+      data-submit
+      class="inline-flex items-center gap-3 rounded-[2px] border-none bg-paper px-[26px] py-4 text-[15.5px] font-medium text-ink transition-colors duration-[180ms] hover:bg-accent disabled:cursor-default"
+    >
+      <span data-submit-label>{submitLabel}</span>
+      <span data-submit-spinner class="hidden h-[13px] w-[13px] rounded-full border-[1.5px] border-[rgba(10,10,10,.25)] border-t-ink" style="animation: hh-spin .7s linear infinite"></span>
+    </button>
+    <span data-status class="font-mono text-[11px] tracking-[.08em] text-[#8c8a84] opacity-0 transition-opacity duration-300"></span>
+  </div>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>("[data-contact-form]").forEach((form) => {
+    const tabs = form.querySelectorAll<HTMLButtonElement>("[data-type]");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => {
+          t.dataset.active = "false";
+          t.classList.remove("bg-paper", "text-ink");
+          t.classList.add("bg-[#0d0d0c]", "text-[#cfcdc6]");
+        });
+        tab.dataset.active = "true";
+        tab.classList.remove("bg-[#0d0d0c]", "text-[#cfcdc6]");
+        tab.classList.add("bg-paper", "text-ink");
+      });
+    });
+
+    const submitBtn = form.querySelector<HTMLButtonElement>("[data-submit]");
+    const submitLabelEl = form.querySelector<HTMLElement>("[data-submit-label]");
+    const spinner = form.querySelector<HTMLElement>("[data-submit-spinner]");
+    const status = form.querySelector<HTMLElement>("[data-status]");
+    if (!submitBtn || !submitLabelEl || !spinner || !status) return;
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (form.dataset.phase === "busy") return;
+
+      form.dataset.phase = "busy";
+      submitBtn.disabled = true;
+      submitBtn.classList.remove("bg-paper");
+      spinner.classList.remove("hidden");
+      spinner.classList.add("block");
+      status.textContent = "Sending…";
+      status.classList.remove("opacity-0");
+      status.classList.add("opacity-100");
+
+      setTimeout(() => {
+        form.dataset.phase = "sent";
+        submitLabelEl.textContent = "Message sent";
+        submitBtn.classList.add("bg-accent");
+        spinner.classList.add("hidden");
+        spinner.classList.remove("block");
+        status.textContent = "Sent. I'll be in touch.";
+        status.classList.add("text-accent");
+      }, 900);
+    });
+  });
+</script>

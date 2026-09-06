@@ -1,0 +1,249 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const categories = ["All", "AI / Agents", "Automation", "Linux / Systems", "Networking / Security", "Cloud / AWS", "Browser / Extensions"];
+
+const labs = [
+  {
+    cat: "AI / Agents",
+    status: "Working",
+    statusStyle: "accent",
+    href: "/labs/whatsapp-agent",
+    video: "iphone_blob",
+    driftSeconds: 18,
+    opacity: "opacity-90",
+    aspect: "aspect-video",
+    grow: "flex-[2_1_460px]",
+    title: "WhatsApp AI booking agent",
+    body: "Could an agent hold a real booking conversation on WhatsApp — check availability, make the booking, and know when to stop guessing?",
+    stack: "Node · Supabase · WhatsApp Cloud API · tool calls",
+    big: true,
+  },
+  {
+    cat: "Linux / Systems",
+    status: "Ongoing",
+    statusStyle: "neutral",
+    video: "green_boxes",
+    driftSeconds: 22,
+    opacity: "opacity-75",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[280px]",
+    title: "Linux work automation",
+    body: "A morning routine of browser checks and reports, handed over to systemd timers.",
+    stack: "Bash · systemd · Playwright",
+  },
+  {
+    cat: "Automation",
+    status: "Experiment",
+    statusStyle: "neutral",
+    video: "orange_circit",
+    driftSeconds: 26,
+    opacity: "opacity-70",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[280px]",
+    title: "Trading bot",
+    body: "Scheduled market checks and paper trades. Dry-run only, deliberately.",
+    stack: "Python · Lambda · EventBridge",
+  },
+  {
+    cat: "Cloud / AWS",
+    status: "Ongoing",
+    statusStyle: "neutral",
+    video: "optical_illusion",
+    driftSeconds: 20,
+    opacity: "opacity-60",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[280px]",
+    title: "AWS learning lab",
+    body: "S3, EC2, IAM and VPC networking, learned by building and breaking them.",
+    stack: "AWS CLI · EC2 · S3 · IAM",
+  },
+  {
+    cat: "Networking / Security",
+    status: "Ongoing",
+    statusStyle: "neutral",
+    hatch: true,
+    hatchCaption: "Terminal clip — scan output",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[280px]",
+    title: "Networking & security lab",
+    body: "Subnetting, service discovery and Wi-Fi tooling — on equipment I own.",
+    stack: "Linux · Nmap · VLSM",
+  },
+  {
+    cat: "Browser / Extensions",
+    status: "Archived",
+    statusStyle: "faint",
+    hatch: true,
+    hatchCaption: "Demo video — gesture scroll",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[280px]",
+    title: "Gesture scroll extension",
+    body: "Scrolling a page with hand gestures. Fun, and a bad idea for daily use.",
+    stack: "MediaPipe · Chrome APIs",
+  },
+];
+
+const statusClasses: Record<string, string> = {
+  accent: "border-accent text-accent",
+  neutral: "border-[#2b2b28] text-[#cfcdc6]",
+  faint: "border-[#3a3a36] text-[#8c8a84]",
+};
+---
+
+<Layout title="Labs — Hammad Habib" description="Small systems, experiments, automations and rabbit holes — built to understand how something worked, or because repeating a task manually got annoying.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="labs" />
+
+    <section id="top" class="mx-auto max-w-[1440px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
+      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+        <span>Labs</span>
+      </div>
+      <div class="mt-6 flex flex-wrap items-end justify-between gap-8">
+        <h1 class="m-0 min-w-0 flex-1 basis-[400px] text-[clamp(28px,4vw,54px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">Work is proof. Labs are curiosity.</h1>
+        <p class="m-0 min-w-0 flex-1 basis-[320px] max-w-[44ch] text-[15px] leading-[1.7] text-[#a7a59e] text-wrap-pretty">
+          Small systems, experiments, automations and rabbit holes — usually built because I wanted to understand how something worked, or because repeating a task manually annoyed me.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1440px] px-5 pb-[22px] sm:px-8 lg:px-16">
+      <div data-lab-filters class="flex flex-wrap gap-2 border-t border-[#1e1e1c] pt-5">
+        {categories.map((cat, i) => (
+          <button
+            type="button"
+            data-filter={cat}
+            data-active={i === 0 ? "true" : "false"}
+            class:list={[
+              "cursor-pointer rounded-full border px-[15px] py-[9px] font-mono text-[11px] tracking-[.08em] uppercase transition-all duration-150",
+              i === 0 ? "border-paper bg-paper text-ink" : "border-[#2b2b28] bg-transparent text-[#9c9a94]",
+            ]}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-4 px-5 pt-[22px] pb-14 sm:px-8 lg:px-16 lg:pb-25">
+      {labs.map((lab) => (
+        <div data-lab-card data-cat={lab.cat} class:list={["min-w-0 overflow-hidden border border-[#1e1e1c]", lab.grow]}>
+          {lab.big ? (
+            <a href={lab.href} class="block hover:border-[#5a5a54]">
+              <span class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
+                <video
+                  src={`/videos/${lab.video}.mp4`}
+                  poster={`/videos/posters/${lab.video}.jpg`}
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
+                  style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
+                ></video>
+                <span class="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.05))]"></span>
+                <span class="absolute top-4 left-4 flex items-center gap-2">
+                  <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
+                  <span class="font-mono text-[10px] tracking-[.12em] text-[#cfcdc6] uppercase">{lab.cat}</span>
+                </span>
+              </span>
+              <span class="flex flex-col gap-3 p-[22px]">
+                <span class="text-[clamp(19px,2vw,26px)] leading-[1.2] tracking-[-.025em]">{lab.title}</span>
+                <span class="max-w-[48ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">{lab.body}</span>
+                <span class="mt-1 flex flex-wrap items-baseline justify-between gap-[14px] font-mono text-[10.5px] tracking-[.08em] text-[#6e6c67]">
+                  <span>{lab.stack}</span>
+                  <span class="text-accent">Read →</span>
+                </span>
+              </span>
+            </a>
+          ) : (
+            <>
+              <span class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
+                {lab.hatch ? (
+                  <span class="texture-hatch flex h-full items-end p-4">
+                    <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{lab.hatchCaption}</span>
+                  </span>
+                ) : (
+                  <>
+                    <video
+                      src={`/videos/${lab.video}.mp4`}
+                      poster={`/videos/posters/${lab.video}.jpg`}
+                      autoplay
+                      muted
+                      loop
+                      playsinline
+                      preload="metadata"
+                      class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
+                      style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
+                    ></video>
+                    <span class="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.1))]"></span>
+                  </>
+                )}
+                <span class="absolute top-[14px] left-[14px] flex items-center gap-2">
+                  <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
+                  {!lab.hatch && <span class="font-mono text-[10px] tracking-[.12em] text-[#cfcdc6] uppercase">{lab.cat}</span>}
+                </span>
+              </span>
+              <div class="flex flex-col gap-[10px] p-5">
+                {lab.hatch && (
+                  <span class="flex items-center gap-2">
+                    <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
+                    <span class="font-mono text-[10px] tracking-[.12em] text-[#8c8a84] uppercase">{lab.cat}</span>
+                  </span>
+                )}
+                <span class="text-[17px] tracking-[-.02em]">{lab.title}</span>
+                <span class="text-[13.5px] leading-[1.65] text-[#a7a59e]">{lab.body}</span>
+                <span class="mt-1 font-mono text-[10.5px] tracking-[.08em] text-[#6e6c67]">{lab.stack}</span>
+              </div>
+            </>
+          )}
+        </div>
+      ))}
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+      <div class="flex flex-wrap items-end justify-between gap-8">
+        <h2 class="m-0 max-w-[26ch] flex-1 basis-[400px] text-[clamp(22px,2.6vw,36px)] leading-[1.15] font-medium tracking-[-.03em] text-wrap-pretty">
+          The professional version of most of this lives one page over.
+        </h2>
+        <a href="/work" class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[22px] py-[14px] text-[14.5px] font-medium text-ink hover:bg-accent">
+          See the Work →
+        </a>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>
+
+<script>
+  const filterBar = document.querySelector<HTMLElement>("[data-lab-filters]");
+  if (filterBar) {
+    const buttons = Array.from(filterBar.querySelectorAll<HTMLButtonElement>("[data-filter]"));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-lab-card]"));
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cat = btn.dataset.filter ?? "All";
+        buttons.forEach((b) => {
+          const on = b === btn;
+          b.dataset.active = on ? "true" : "false";
+          b.classList.toggle("border-paper", on);
+          b.classList.toggle("bg-paper", on);
+          b.classList.toggle("text-ink", on);
+          b.classList.toggle("border-[#2b2b28]", !on);
+          b.classList.toggle("bg-transparent", !on);
+          b.classList.toggle("text-[#9c9a94]", !on);
+        });
+        cards.forEach((card) => {
+          const show = cat === "All" || card.dataset.cat === cat;
+          card.style.display = show ? "" : "none";
+        });
+      });
+    });
+  }
+</script>
