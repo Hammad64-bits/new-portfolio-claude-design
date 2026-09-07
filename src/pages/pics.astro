@@ -1,0 +1,179 @@
+---
+// Astro runs this frontmatter at build time; the project does not otherwise
+// need Node types in its browser-focused TypeScript configuration.
+// @ts-expect-error Node's built-in module is available in Astro's build runtime.
+import { readdirSync } from "node:fs";
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const supportedExtensions = /\.(avif|gif|jpe?g|png|webp)$/i;
+
+const preferredOrder = [
+  "kumrat-milkyway.jpg",
+  "wheat.jpg",
+  "pal-bridge.jpg",
+  "bhimber-shooting-star.jpg",
+  "sahmani.jpg",
+  "kumrat-river.JPG",
+  "khi-clifton.jpg",
+  "parachinar-sky.jpg",
+  "ganga-2.jpg",
+  "wil-moon.jpg",
+  "pal-zilzal-lake.jpg",
+  "lightning.JPG",
+];
+
+const allFiles = (readdirSync("public/images/my_images") as string[])
+  .filter((file) => supportedExtensions.test(file))
+  .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+const photos = [
+  ...preferredOrder.filter((file) => allFiles.includes(file)),
+  ...allFiles.filter((file) => !preferredOrder.includes(file)),
+].map((file, index) => {
+  const label = file
+    .replace(/\.[^.]+$/, "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+  const tile = index % 17 === 0
+    ? "hero"
+    : index % 11 === 0
+      ? "tall"
+      : index % 7 === 0
+        ? "wide"
+        : "standard";
+
+  return {
+    src: `/images/my_images/${encodeURIComponent(file)}`,
+    label,
+    tile,
+  };
+});
+---
+
+<Layout
+  title="Photography — Hammad Habib"
+  description="A visual archive of landscapes, streets, weather, and the places Hammad has carried a camera."
+>
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="pics" />
+
+    <main id="top">
+      <header class="mx-auto grid max-w-[1440px] gap-8 px-5 pt-12 pb-10 sm:px-8 sm:pt-16 sm:pb-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:px-16 lg:pt-22 lg:pb-16">
+        <div>
+          <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+            <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+            <a href="/about" class="hover:text-paper">About</a>
+            <span aria-hidden="true">/</span>
+            <span class="text-paper">Photography</span>
+          </div>
+          <h1 class="mt-[26px] max-w-[16ch] text-[clamp(42px,7.5vw,108px)] leading-[.88] font-semibold tracking-[-.065em] text-wrap-balance">
+            Things worth stopping for.
+          </h1>
+        </div>
+
+        <div class="max-w-[340px] border-l border-[#30302c] pl-5 lg:mb-1">
+          <p class="m-0 text-[14.5px] leading-[1.65] text-[#a7a59e]">
+            Landscapes, streets, weather, and whatever made me reach for a camera. Select any frame to see it without the grid.
+          </p>
+          <div class="mt-5 font-mono text-[10.5px] tracking-[.12em] text-[#6e6c67] uppercase">
+            {String(photos.length).padStart(2, "0")} frames · personal archive
+          </div>
+        </div>
+      </header>
+
+      <section class="border-y border-[#1e1e1c] bg-[#11110f]" aria-label="Photography archive">
+        <div class="pics-grid" data-photo-grid>
+          {photos.map((photo, index) => (
+            <button
+              type="button"
+              class:list={["pics-card", `pics-card--${photo.tile}`]}
+              data-photo-index={index}
+              data-photo-src={photo.src}
+              data-photo-label={photo.label}
+              aria-label={`Open photograph ${index + 1}: ${photo.label}`}
+            >
+              <img
+                src={photo.src}
+                alt={photo.label}
+                loading={index < 6 ? "eager" : "lazy"}
+                fetchpriority={index === 0 ? "high" : "auto"}
+                decoding="async"
+              />
+              <span class="pics-card__meta" aria-hidden="true">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <span>{photo.label}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <div class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-6 px-5 py-10 sm:px-8 lg:px-16 lg:py-14">
+        <span class="font-mono text-[10.5px] tracking-[.12em] text-[#6e6c67] uppercase">End of contact sheet</span>
+        <a href="/about" class="font-mono text-[11.5px] tracking-[.1em] text-paper uppercase hover:text-accent">← Back to about</a>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+
+  <dialog class="photo-viewer" data-photo-viewer aria-label="Photo viewer">
+    <div class="photo-viewer__bar">
+      <span class="photo-viewer__count" data-viewer-count>01 / {String(photos.length).padStart(2, "0")}</span>
+      <span class="photo-viewer__label" data-viewer-label></span>
+      <button type="button" class="photo-viewer__close" data-viewer-close aria-label="Close photo viewer">Close <span aria-hidden="true">×</span></button>
+    </div>
+    <div class="photo-viewer__stage">
+      <button type="button" class="photo-viewer__nav photo-viewer__nav--prev" data-viewer-prev aria-label="Previous photograph">←</button>
+      <img src="" alt="" data-viewer-image />
+      <button type="button" class="photo-viewer__nav photo-viewer__nav--next" data-viewer-next aria-label="Next photograph">→</button>
+    </div>
+    <div class="photo-viewer__hint">Arrow keys to browse · Esc to close</div>
+  </dialog>
+</Layout>
+
+<script>
+  const grid = document.querySelector<HTMLElement>("[data-photo-grid]");
+  const viewer = document.querySelector<HTMLDialogElement>("[data-photo-viewer]");
+  const viewerImage = viewer?.querySelector<HTMLImageElement>("[data-viewer-image]");
+  const viewerLabel = viewer?.querySelector<HTMLElement>("[data-viewer-label]");
+  const viewerCount = viewer?.querySelector<HTMLElement>("[data-viewer-count]");
+  const cards = Array.from(grid?.querySelectorAll<HTMLButtonElement>("[data-photo-index]") ?? []);
+  let currentIndex = 0;
+
+  const showPhoto = (index: number) => {
+    if (!viewerImage || !viewerLabel || !viewerCount || !cards.length) return;
+    currentIndex = (index + cards.length) % cards.length;
+    const card = cards[currentIndex];
+    const src = card.dataset.photoSrc ?? "";
+    const label = card.dataset.photoLabel ?? "Photograph";
+    viewerImage.src = src;
+    viewerImage.alt = label;
+    viewerLabel.textContent = label;
+    viewerCount.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")}`;
+  };
+
+  cards.forEach((card, index) => {
+    card.addEventListener("click", () => {
+      if (!viewer) return;
+      showPhoto(index);
+      viewer.showModal();
+    });
+  });
+
+  viewer?.querySelector("[data-viewer-close]")?.addEventListener("click", () => viewer.close());
+  viewer?.querySelector("[data-viewer-prev]")?.addEventListener("click", () => showPhoto(currentIndex - 1));
+  viewer?.querySelector("[data-viewer-next]")?.addEventListener("click", () => showPhoto(currentIndex + 1));
+
+  viewer?.addEventListener("click", (event) => {
+    if (event.target === viewer) viewer.close();
+  });
+
+  viewer?.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") showPhoto(currentIndex - 1);
+    if (event.key === "ArrowRight") showPhoto(currentIndex + 1);
+  });
+</script>

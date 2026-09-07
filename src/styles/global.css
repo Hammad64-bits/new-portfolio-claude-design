@@ -126,3 +126,210 @@ textarea:focus {
 .texture-hatch-alt {
   background-image: repeating-linear-gradient(135deg, #141413 0 10px, #0f0f0e 10px 20px);
 }
+
+/* Photography archive — a tight contact sheet with deliberately irregular
+   scale. The viewer restores every uncropped frame when selected. */
+.pics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: 1px;
+  max-width: 1800px;
+  margin-inline: auto;
+  background: #242420;
+}
+
+.pics-card {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #080808;
+  color: var(--color-paper);
+  cursor: zoom-in;
+}
+
+.pics-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.002);
+  transition: transform .5s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
+}
+
+.pics-card__meta {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2.5rem .8rem .7rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .78));
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .08em;
+  text-align: left;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.pics-card:hover img,
+.pics-card:focus-visible img {
+  transform: scale(1.035);
+  opacity: .88;
+}
+
+.pics-card:hover .pics-card__meta,
+.pics-card:focus-visible .pics-card__meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pics-card:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.pics-card--hero,
+.pics-card--wide {
+  grid-column: span 2;
+  aspect-ratio: 16 / 10;
+}
+
+.pics-card--tall {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+.photo-viewer {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(5, 5, 5, .98);
+  color: var(--color-paper);
+}
+
+.photo-viewer::backdrop {
+  background: #050505;
+}
+
+.photo-viewer[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.photo-viewer__bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  min-height: 58px;
+  padding-inline: 1rem;
+  border-bottom: 1px solid #242420;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.photo-viewer__count { color: var(--color-accent); }
+.photo-viewer__label {
+  overflow: hidden;
+  color: #8c8a84;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.photo-viewer__close,
+.photo-viewer__nav {
+  border: 1px solid #343430;
+  background: #0a0a0a;
+  color: var(--color-paper);
+  cursor: pointer;
+}
+
+.photo-viewer__close {
+  padding: .55rem .75rem;
+  font: inherit;
+  text-transform: uppercase;
+}
+
+.photo-viewer__stage {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  padding: 1rem 3.5rem;
+}
+
+.photo-viewer__stage img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.photo-viewer__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  width: 40px;
+  height: 64px;
+  place-items: center;
+  transform: translateY(-50%);
+  font-size: 20px;
+}
+
+.photo-viewer__nav--prev { left: .75rem; }
+.photo-viewer__nav--next { right: .75rem; }
+.photo-viewer__close:hover,
+.photo-viewer__nav:hover,
+.photo-viewer__close:focus-visible,
+.photo-viewer__nav:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  outline: none;
+}
+
+.photo-viewer__hint {
+  padding: .65rem 1rem;
+  border-top: 1px solid #242420;
+  color: #5f5d58;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (min-width: 640px) {
+  .pics-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pics-card--hero { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+  .pics-card--wide { grid-column: span 2; }
+}
+
+@media (min-width: 1024px) {
+  .pics-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pics-card img,
+  .pics-card__meta {
+    transition: none;
+  }
+}

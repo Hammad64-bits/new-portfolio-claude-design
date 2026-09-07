@@ -1,12 +1,12 @@
 ---
 interface Props {
-  active?: "home" | "work" | "labs" | "about" | "contact";
+  active?: "home" | "work" | "labs" | "about" | "pics" | "contact";
 }
 
 const { active = "home" } = Astro.props;
 
 const navClass = (item: "home" | "work" | "labs" | "about" | "contact") =>
-  item === active
+  item === active || (item === "about" && active === "pics")
     ? "text-paper"
     : "text-[#9c9a94] hover:text-paper";
 
@@ -25,7 +25,7 @@ const contactHref = active === "contact" ? "#top" : "/contact";
     <div data-nav-links class="relative flex gap-[18px] text-sm sm:gap-6 lg:gap-[38px]">
       <a href={workHref} data-nav-link data-nav-active={active === "work"} class={navClass("work")}>Work</a>
       <a href={labsHref} data-nav-link data-nav-active={active === "labs"} class={navClass("labs")}>Labs</a>
-      <a href={aboutHref} data-nav-link data-nav-active={active === "about"} class={navClass("about")}>About</a>
+      <a href={aboutHref} data-nav-link data-nav-active={active === "about" || active === "pics"} class={navClass("about")}>About</a>
       <a href={contactHref} data-nav-link data-nav-active={active === "contact"} class={navClass("contact")}>Contact</a>
       <span data-nav-indicator aria-hidden="true" class="nav-indicator"></span>
     </div>
