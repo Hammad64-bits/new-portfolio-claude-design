@@ -25,7 +25,7 @@ const labs = [
     cat: "Linux / Systems",
     status: "Ongoing",
     statusStyle: "neutral",
-    video: "green_boxes",
+    video: "orange_boxes",
     driftSeconds: 22,
     opacity: "opacity-75",
     aspect: "aspect-4/3",
@@ -64,8 +64,9 @@ const labs = [
     cat: "Networking / Security",
     status: "Ongoing",
     statusStyle: "neutral",
-    hatch: true,
-    hatchCaption: "Terminal clip — scan output",
+    video: "static_tv",
+    driftSeconds: 24,
+    opacity: "opacity-85",
     aspect: "aspect-4/3",
     grow: "flex-1 basis-[280px]",
     title: "Networking & security lab",
@@ -76,8 +77,9 @@ const labs = [
     cat: "Browser / Extensions",
     status: "Archived",
     statusStyle: "faint",
-    hatch: true,
-    hatchCaption: "Demo video — gesture scroll",
+    video: "static_screen",
+    driftSeconds: 30,
+    opacity: "opacity-70",
     aspect: "aspect-4/3",
     grow: "flex-1 basis-[280px]",
     title: "Gesture scroll extension",
@@ -163,38 +165,24 @@ const statusClasses: Record<string, string> = {
           ) : (
             <>
               <span class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
-                {lab.hatch ? (
-                  <span class="texture-hatch flex h-full items-end p-4">
-                    <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{lab.hatchCaption}</span>
-                  </span>
-                ) : (
-                  <>
-                    <video
-                      src={`/videos/${lab.video}.mp4`}
-                      poster={`/videos/posters/${lab.video}.jpg`}
-                      autoplay
-                      muted
-                      loop
-                      playsinline
-                      preload="metadata"
-                      class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
-                      style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
-                    ></video>
-                    <span class="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.1))]"></span>
-                  </>
-                )}
+                <video
+                  src={`/videos/${lab.video}.mp4`}
+                  poster={`/videos/posters/${lab.video}.jpg`}
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
+                  style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
+                ></video>
+                <span class="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.1))]"></span>
                 <span class="absolute top-[14px] left-[14px] flex items-center gap-2">
                   <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
-                  {!lab.hatch && <span class="font-mono text-[10px] tracking-[.12em] text-[#cfcdc6] uppercase">{lab.cat}</span>}
+                  <span class="font-mono text-[10px] tracking-[.12em] text-[#cfcdc6] uppercase">{lab.cat}</span>
                 </span>
               </span>
               <div class="flex flex-col gap-[10px] p-5">
-                {lab.hatch && (
-                  <span class="flex items-center gap-2">
-                    <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
-                    <span class="font-mono text-[10px] tracking-[.12em] text-[#8c8a84] uppercase">{lab.cat}</span>
-                  </span>
-                )}
                 <span class="text-[17px] tracking-[-.02em]">{lab.title}</span>
                 <span class="text-[13.5px] leading-[1.65] text-[#a7a59e]">{lab.body}</span>
                 <span class="mt-1 font-mono text-[10.5px] tracking-[.08em] text-[#6e6c67]">{lab.stack}</span>

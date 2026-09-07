@@ -4,9 +4,9 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
 const photoRow2 = [
-  { label: "Photo 04 — portrait" },
-  { label: "Photo 05 — offset frame", offset: true },
-  { label: "Photo 06" },
+  { label: "Photo 04 — portrait", src: "/images/photography/photo-04-kumrat.jpg" },
+  { label: "Photo 05 — offset frame", offset: true, src: "/images/photography/photo-05-kumrat.jpg" },
+  { label: "Photo 06", src: "/images/photography/photo-06-astro.jpg" },
 ];
 ---
 
@@ -89,15 +89,15 @@ const photoRow2 = [
 
       <div class="mt-9 px-5 sm:px-8 lg:mt-14 lg:px-16">
         <div class="mx-auto flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
-          <div class="texture-hatch flex min-w-0 flex-1 basis-[440px] items-end border border-[#1e1e1c] p-[18px] aspect-3/2 lg:flex-[2]">
-            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Photo 01 — lead frame, landscape</span>
+          <div class="relative flex min-w-0 flex-1 basis-[440px] items-end overflow-hidden border border-[#1e1e1c] p-[18px] aspect-3/2 lg:flex-[2]">
+            <img src="/images/photography/photo-01-wheat.jpg" alt="Wheat field at golden hour" class="absolute inset-0 h-full w-full object-cover" />
           </div>
           <div class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[14px]">
-            <div class="texture-hatch flex min-h-[130px] flex-1 items-end border border-[#1e1e1c] p-4">
-              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Photo 02</span>
+            <div class="relative flex min-h-[130px] flex-1 items-end overflow-hidden border border-[#1e1e1c] p-4">
+              <img src="/images/photography/photo-02-sahmani.jpg" alt="Mountain valley overlook" class="absolute inset-0 h-full w-full object-cover" />
             </div>
-            <div class="texture-hatch flex min-h-[130px] flex-1 items-end border border-[#1e1e1c] p-4">
-              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Photo 03</span>
+            <div class="relative flex min-h-[130px] flex-1 items-end overflow-hidden border border-[#1e1e1c] p-4">
+              <img src="/images/photography/photo-03-peacock.jpg" alt="Peacock on a porch bench" class="absolute inset-0 h-full w-full object-cover" />
             </div>
           </div>
         </div>
@@ -106,11 +106,11 @@ const photoRow2 = [
           {photoRow2.map((photo) => (
             <div
               class:list={[
-                "texture-hatch flex min-w-0 flex-1 basis-[200px] items-end border border-[#1e1e1c] p-4 aspect-4/5",
+                "relative flex min-w-0 flex-1 basis-[200px] items-end overflow-hidden border border-[#1e1e1c] p-4 aspect-4/5",
                 photo.offset && "mt-0 lg:mt-10",
               ]}
             >
-              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{photo.label}</span>
+              <img src={photo.src} alt={photo.label} class="absolute inset-0 h-full w-full object-cover" />
             </div>
           ))}
         </div>

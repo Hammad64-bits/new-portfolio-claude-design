@@ -5,7 +5,7 @@ import ContactForm from "../components/ContactForm.astro";
 import Footer from "../components/Footer.astro";
 
 const links = [
-  { label: "Direct email", value: "hello@hammad.dev", href: "mailto:hello@hammad.dev", arrow: "→" },
+  { label: "Direct email", value: "hammadhb225@gmail.com", href: "mailto:hammadhb225@gmail.com", arrow: "→" },
   { label: "Code", value: "GitHub", href: "#", arrow: "↗" },
   { label: "Professional", value: "LinkedIn", href: "#", arrow: "↗" },
   { label: "Résumé", value: "Download CV", href: "#", arrow: "↓" },
@@ -34,6 +34,20 @@ const links = [
         <ContactForm rows={7} submitLabel="Send it over" class="min-w-0 flex-1 basis-[480px] lg:flex-[2]" />
 
         <aside class="flex min-w-0 flex-1 basis-[260px] flex-col border-t border-[#2b2b28]">
+          <div class="relative mt-6 aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+            <video
+              src="/videos/hear.mp4"
+              poster="/videos/posters/hear.jpg"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              class="absolute inset-0 h-full w-full object-cover"
+              style="animation: hh-drift 26s ease-in-out infinite"
+            ></video>
+            <span class="absolute bottom-[10px] left-3 font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">Video / all ears</span>
+          </div>
           {links.map((link) => (
             <a
               href={link.href}

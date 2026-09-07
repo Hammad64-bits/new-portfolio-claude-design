@@ -121,11 +121,33 @@ const brokeItems = [
       <div class="flex flex-col gap-[14px]">
         <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Clips</span>
         <div class="flex flex-wrap gap-[14px]">
-          <div class="texture-hatch flex min-w-0 max-h-[420px] flex-1 basis-[200px] items-end border border-[#1e1e1c] p-[14px] aspect-9/16">
-            <span class="font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">Screen recording — booking conversation</span>
+          <div class="relative min-w-0 max-h-[420px] flex-1 basis-[200px] overflow-hidden border border-[#1e1e1c] bg-[#050505] aspect-9/16">
+            <video
+              src="/videos/music_bot.mp4"
+              poster="/videos/posters/music_bot.jpg"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              class="absolute inset-0 h-full w-full object-cover"
+              style="animation: hh-drift 20s ease-in-out infinite"
+            ></video>
+            <span class="absolute bottom-[14px] left-[14px] font-mono text-[10px] tracking-[.1em] text-paper uppercase">Screen recording — booking conversation</span>
           </div>
-          <div class="texture-hatch flex min-w-0 flex-[2_1_300px] items-end border border-[#1e1e1c] p-[14px] aspect-16/10">
-            <span class="font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">Terminal clip — tool calls and holds</span>
+          <div class="relative min-w-0 flex-[2_1_300px] overflow-hidden border border-[#1e1e1c] bg-[#050505] aspect-16/10">
+            <video
+              src="/videos/face.mp4"
+              poster="/videos/posters/face.jpg"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              class="absolute inset-0 h-full w-full object-cover"
+              style="animation: hh-drift 22s ease-in-out infinite"
+            ></video>
+            <span class="absolute bottom-[14px] left-[14px] font-mono text-[10px] tracking-[.1em] text-paper uppercase">Terminal clip — tool calls and holds</span>
           </div>
         </div>
       </div>
