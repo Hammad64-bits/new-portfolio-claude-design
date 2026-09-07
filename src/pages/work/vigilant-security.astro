@@ -42,11 +42,17 @@ const performanceList = [
 const seoPills = ["Redirect mapping", "Sitemap work", "Robots & noindex controls", "Route normalisation", "CMS-driven SEO fields", "Structured metadata"];
 
 const gallery = [
-  { label: "Old vs new — homepage", aspect: "aspect-16/10", grow: "flex-1 basis-[300px]" },
-  { label: "Old vs new — service page", aspect: "aspect-16/10", grow: "flex-1 basis-[300px]" },
-  { label: "Redirect map", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
-  { label: "IE site", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
-  { label: "CMS structure", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+  {
+    label: "Old vs new — service page",
+    aspect: "aspect-16/10",
+    grow: "flex-1 basis-[300px]",
+    split: ["/vigilant/services-old.png", "/vigilant/new-service-page.png"],
+  },
+  { label: "Legacy homepage — UK", aspect: "aspect-16/10", grow: "flex-1 basis-[300px]", image: "/vigilant/legacy-uk.png" },
+  { label: "Redirect map", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: null },
+  { label: "IE site", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: null },
+  { label: "CMS structure", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: "/vigilant/cms-sanity.png" },
+  { label: "New sitemap", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: "/vigilant/sitemap-new.png" },
 ];
 
 const fromLab = [
@@ -73,11 +79,15 @@ const fromLab = [
       </div>
 
       <div class="mt-8 flex flex-wrap gap-[14px] lg:mt-11">
-        <div class="texture-hatch flex min-w-0 flex-1 basis-[300px] items-end border border-[#1e1e1c] p-4 aspect-16/10">
-          <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Before — legacy WordPress</span>
+        <div class="relative min-w-0 flex-1 basis-[300px] overflow-hidden border border-[#1e1e1c] bg-[#050505] aspect-16/10">
+          <img src="/vigilant/legacy-uk.png" alt="Legacy Vigilant Security WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+          <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+          <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.1em] text-[#9c9a94] uppercase">Before — legacy WordPress</span>
         </div>
-        <div class="texture-hatch-alt flex min-w-0 flex-1 basis-[300px] items-end border border-[#2b2b28] p-4 aspect-16/10">
-          <span class="font-mono text-[10.5px] tracking-[.1em] text-[#8c8a84] uppercase">After — Astro + Sanity</span>
+        <div class="relative min-w-0 flex-1 basis-[300px] overflow-hidden border border-[#2b2b28] bg-[#050505] aspect-16/10">
+          <img src="/vigilant/new-service-page.png" alt="Rebuilt Vigilant Security site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+          <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+          <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">After — Astro + Sanity</span>
         </div>
       </div>
     </section>
@@ -170,11 +180,15 @@ const fromLab = [
           </div>
         </div>
         <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[14px]">
-          <div class="texture-hatch flex aspect-16/10 items-end border border-[#1e1e1c] p-4">
-            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">New site — UK</span>
+          <div class="relative aspect-16/10 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+            <img src="/vigilant/new-service-page.png" alt="New Vigilant Security site — UK" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+            <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">New site — UK</span>
           </div>
-          <div class="texture-hatch flex aspect-16/10 items-end border border-[#1e1e1c] p-4">
-            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Sanity editorial view</span>
+          <div class="relative aspect-16/10 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+            <img src="/vigilant/cms-sanity.png" alt="Sanity Studio content structure" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+            <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">Sanity Studio — content structure</span>
           </div>
         </div>
       </div>
@@ -192,14 +206,18 @@ const fromLab = [
         </div>
         <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[14px]">
           <div class="flex flex-wrap gap-[14px]">
-            <div class="texture-hatch flex aspect-square min-w-0 flex-1 basis-[140px] items-end border border-[#1e1e1c] p-[14px]">
-              <span class="font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">Lighthouse — before</span>
+            <div class="relative aspect-square min-w-0 flex-1 basis-[140px] overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+              <img src="/vigilant/lighthouse-old-uk.png" alt="Lighthouse report before — 62 performance" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+              <span class="absolute bottom-[14px] left-[14px] font-mono text-[10px] tracking-[.1em] text-[#9c9a94] uppercase">Lighthouse — before</span>
             </div>
-            <div class="texture-hatch-alt flex aspect-square min-w-0 flex-1 basis-[140px] items-end border border-[#2b2b28] p-[14px]">
-              <span class="font-mono text-[10px] tracking-[.1em] text-[#8c8a84] uppercase">Lighthouse — after</span>
+            <div class="relative aspect-square min-w-0 flex-1 basis-[140px] overflow-hidden border border-[#2b2b28] bg-[#050505]">
+              <img src="/vigilant/lighthouse-new-uk.png" alt="Lighthouse report after — 100 performance" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+              <span class="absolute bottom-[14px] left-[14px] font-mono text-[10px] tracking-[.1em] text-[#cfcdc6] uppercase">Lighthouse — after</span>
             </div>
           </div>
-          <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Real report screenshots go here — no invented numbers.</span>
+          <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Real Lighthouse runs — UK homepage. Performance 62 → 100.</span>
         </div>
       </div>
     </section>
@@ -241,11 +259,29 @@ const fromLab = [
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
       <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">11 / Gallery</div>
       <div class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
-        {gallery.map((g) => (
-          <div class:list={["texture-hatch flex min-w-0 items-end border border-[#1e1e1c] p-4", g.aspect, g.grow]}>
-            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{g.label}</span>
-          </div>
-        ))}
+        {gallery.map((g) =>
+          g.split ? (
+            <div class:list={["relative flex min-w-0 gap-px overflow-hidden border border-[#1e1e1c] bg-[#1e1e1c]", g.aspect, g.grow]}>
+              <div class="relative min-w-0 flex-1 bg-[#050505]">
+                <img src={g.split[0]} alt={`${g.label} — before`} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              </div>
+              <div class="relative min-w-0 flex-1 bg-[#050505]">
+                <img src={g.split[1]} alt={`${g.label} — after`} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              </div>
+              <span class="pointer-events-none absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase [text-shadow:0_1px_4px_rgba(0,0,0,.8)]">{g.label}</span>
+            </div>
+          ) : g.image ? (
+            <div class:list={["relative min-w-0 overflow-hidden border border-[#1e1e1c] bg-[#050505]", g.aspect, g.grow]}>
+              <img src={g.image} alt={g.label} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+              <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">{g.label}</span>
+            </div>
+          ) : (
+            <div class:list={["texture-hatch flex min-w-0 items-end border border-[#1e1e1c] p-4", g.aspect, g.grow]}>
+              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{g.label}</span>
+            </div>
+          )
+        )}
       </div>
     </section>
 

@@ -39,8 +39,10 @@ const capabilities = [
         <h2 class="mt-5 max-w-[26ch] text-[clamp(26px,3.6vw,50px)] leading-[1.1] font-medium tracking-[-.035em] text-wrap-pretty lg:mt-9">
           An AI customer-support platform, built inside a small startup team.
         </h2>
-        <div class="texture-hatch mt-6 flex aspect-video items-center justify-center border border-[#1e1e1c] lg:mt-10">
-          <span class="font-mono text-[11.5px] tracking-[.12em] text-[#6e6c67] uppercase">Product screenshot — support inbox, full bleed</span>
+        <div class="relative mt-6 aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505] lg:mt-10">
+          <img src="/revsmith/revsmith-6.png" alt="RevSmith support inbox" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+          <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_60%,rgba(5,5,5,.85))]"></div>
+          <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.12em] text-[#cfcdc6] uppercase">Support inbox — full bleed</span>
         </div>
         <div class="mt-[22px] flex flex-wrap items-baseline justify-between gap-6">
           <p class="m-0 max-w-[52ch] text-[15px] leading-[1.7] text-[#a7a59e]">
@@ -75,11 +77,15 @@ const capabilities = [
           </div>
 
           <div class="flex min-w-0 flex-1 basis-[300px] flex-col gap-3">
-            <div class="texture-hatch flex aspect-4/3 items-end border border-[#1e1e1c] p-4">
-              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">New site — UK</span>
+            <div class="relative aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+              <img src="/vigilant/new-service-page.png" alt="New Vigilant Security site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+              <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">New site — UK</span>
             </div>
-            <div class="texture-hatch flex aspect-video items-end border border-[#1e1e1c] p-4">
-              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Legacy WordPress — before</span>
+            <div class="relative aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+              <img src="/vigilant/legacy-uk.png" alt="Legacy Vigilant Security WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+              <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">Legacy WordPress — before</span>
             </div>
           </div>
         </div>

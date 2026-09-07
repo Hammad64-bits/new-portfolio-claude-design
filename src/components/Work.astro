@@ -6,7 +6,11 @@ const widgets = [
   "WhatsApp / Meta Integration",
 ];
 
-const shots = ["Widget in situ", "Agent config screen", "Realtime handoff"];
+const shots = [
+  { label: "Widget in situ", src: "/revsmith/revsmith-demo-widget.png" },
+  { label: "Agent config screen", src: "/revsmith/revsmith-4.png" },
+  { label: "Realtime handoff", src: "/revsmith/revsmith-5.png" },
+];
 
 const steps = [
   "Diagnosed bloated legacy stack over SSH",
@@ -17,7 +21,7 @@ const steps = [
 ---
 
 <section id="work" class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
-  <div class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+  <div data-reveal class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
     <span class="text-paper">01 / Selected Work</span>
     <span>Two projects · 2023—2025</span>
   </div>
@@ -37,27 +41,31 @@ const steps = [
     </div>
 
     <div class="flex min-w-0 flex-1 basis-[420px] flex-col gap-6 lg:flex-[3] lg:gap-10">
-      <h2 class="m-0 max-w-[24ch] text-[clamp(28px,3.6vw,52px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
+      <h2 data-reveal class="m-0 max-w-[24ch] text-[clamp(28px,3.6vw,52px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
         Building an AI customer-support platform inside a small startup team.
       </h2>
 
-      <div class="texture-hatch flex aspect-video items-center justify-center border border-[#1e1e1c]">
-        <span class="font-mono text-[11.5px] tracking-[.12em] text-[#6e6c67] uppercase">Product screenshot — inbox, full width</span>
+      <div data-reveal class="relative aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+        <img src="/revsmith/revsmith-6.png" alt="RevSmith support inbox with a live conversation" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+        <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_60%,rgba(5,5,5,.85))]"></div>
+        <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.12em] text-[#cfcdc6] uppercase">Support inbox — full width</span>
       </div>
 
-      <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+      <div data-reveal-group class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
         {widgets.map((label, i) => (
-          <div class="flex min-w-0 flex-1 basis-[150px] flex-col gap-[10px] bg-ink px-5 py-[22px] hover:bg-[#101010]">
+          <div data-reveal-item class="flex min-w-0 flex-1 basis-[150px] flex-col gap-[10px] bg-ink px-5 py-[22px] hover:bg-[#101010]">
             <span class="font-mono text-[11px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
             <span class="text-[15.5px] tracking-[-.01em]">{label}</span>
           </div>
         ))}
       </div>
 
-      <div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-        {shots.map((label) => (
-          <div class="texture-hatch flex aspect-4/3 items-center justify-center border border-[#1e1e1c] p-3 text-center">
-            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{label}</span>
+      <div data-reveal-group class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+        {shots.map((shot) => (
+          <div data-reveal-item class="relative aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+            <img src={shot.src} alt={shot.label} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+            <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">{shot.label}</span>
           </div>
         ))}
       </div>
@@ -80,21 +88,30 @@ const steps = [
       </div>
 
       <div class="min-w-0 flex-1 basis-[420px] lg:flex-[3]">
-        <h3 class="m-0 max-w-[26ch] text-[clamp(22px,2.4vw,34px)] leading-[1.2] font-medium tracking-[-.028em] text-[#dedbd4] text-wrap-pretty">
+        <h3 data-reveal class="m-0 max-w-[26ch] text-[clamp(22px,2.4vw,34px)] leading-[1.2] font-medium tracking-[-.028em] text-[#dedbd4] text-wrap-pretty">
           Modernising and migrating production websites without throwing away years of SEO value.
         </h3>
 
-        <div class="mt-7 flex flex-wrap gap-px border-t border-b border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
+        <div data-reveal-group class="mt-7 flex flex-wrap gap-px border-t border-b border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
           {steps.map((label, i) => (
-            <div class="flex min-w-0 flex-1 basis-[110px] flex-col gap-2 bg-ink px-4 pt-5 pb-[22px]">
+            <div data-reveal-item class="flex min-w-0 flex-1 basis-[110px] flex-col gap-2 bg-ink px-4 pt-5 pb-[22px]">
               <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
               <span class="text-[13.5px] leading-[1.5] text-[#cfcdc6]">{label}</span>
             </div>
           ))}
         </div>
 
-        <div class="texture-hatch mt-7 flex aspect-21/9 items-center justify-center border border-[#1e1e1c]">
-          <span class="font-mono text-[11px] tracking-[.12em] text-[#6e6c67] uppercase">Before / after — performance + site screenshot</span>
+        <div data-reveal-group class="mt-7 flex flex-wrap gap-4">
+          <div data-reveal-item class="relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+            <img src="/vigilant/legacy-uk.png" alt="Vigilant Security — legacy WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+            <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#9c9a94] uppercase">Before — legacy WordPress</span>
+          </div>
+          <div data-reveal-item class="relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#2b2b28] bg-[#050505]">
+            <img src="/vigilant/new-service-page.png" alt="Vigilant Security — rebuilt site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+            <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">After — Astro + Sanity</span>
+          </div>
         </div>
       </div>
     </div>

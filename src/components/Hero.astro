@@ -86,16 +86,3 @@ const lines = [
     </div>
   </div>
 </section>
-
-<script>
-  document.querySelectorAll<HTMLElement>("[data-hero-lines]").forEach((el) => {
-    const hold = Number(el.dataset.holdMs) || 4000;
-    const dots = document.querySelector<HTMLElement>("[data-hero-dots]");
-    const setStep = (step: string) => {
-      el.dataset.step = step;
-      if (dots) dots.dataset.step = step;
-    };
-    setTimeout(() => setStep("1"), hold);
-    setTimeout(() => setStep("2"), hold * 2);
-  });
-</script>

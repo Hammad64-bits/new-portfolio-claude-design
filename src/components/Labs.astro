@@ -41,18 +41,18 @@ const labs = [
 
 <section id="labs" class="border-t border-[#1e1e1c] bg-[#070707] py-16 lg:py-28">
   <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
-    <div class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+    <div data-reveal class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
       <span class="text-paper">04 / Labs</span>
       <span>Work = proof. Labs = curiosity.</span>
     </div>
 
-    <h2 class="mt-7 max-w-[26ch] text-[clamp(24px,2.8vw,40px)] leading-[1.15] font-medium tracking-[-.03em] text-wrap-pretty lg:mt-10">
+    <h2 data-reveal class="mt-7 max-w-[26ch] text-[clamp(24px,2.8vw,40px)] leading-[1.15] font-medium tracking-[-.03em] text-wrap-pretty lg:mt-10">
       The same systems I use to solve real problems, poked at for fun.
     </h2>
 
-    <div class="mt-9 flex flex-wrap gap-4 lg:mt-14">
+    <div data-reveal-group class="mt-9 flex flex-wrap gap-4 lg:mt-14">
       {labs.map((lab) => (
-        <div class:list={["relative min-w-0 overflow-hidden border border-[#1e1e1c] bg-[#050505]", lab.aspect, lab.grow]}>
+        <div data-reveal-item class:list={["relative min-w-0 overflow-hidden border border-[#1e1e1c] bg-[#050505]", lab.aspect, lab.grow]}>
           <video
             src={`/videos/${lab.video}.mp4`}
             poster={`/videos/posters/${lab.video}.jpg`}

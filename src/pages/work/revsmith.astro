@@ -25,6 +25,7 @@ const built = [
     title: "Embeddable Support Widget",
     body: "The product's main customer-facing surface. Configurable branding, iframe deployment, persistent conversations across page loads, visitor identification, media and microphone support, and preview behaviour that matched production instead of approximating it.",
     caption: "Widget on a live storefront",
+    image: "/revsmith/revsmith-demo-widget.png",
     imageFirst: false,
   },
   {
@@ -32,6 +33,7 @@ const built = [
     title: "Omnichannel Inbox",
     body: "Where support actually happens. Realtime conversation updates, filtering, pagination, assignee views, human takeover, tags and sentiment, a media viewer, and a rewritten latest-message path once the obvious query stopped being affordable.",
     caption: "Inbox — filters, assignees, takeover",
+    image: "/revsmith/revsmith-5.png",
     imageFirst: true,
   },
   {
@@ -39,6 +41,7 @@ const built = [
     title: "AI Agent Configuration",
     body: "Identity, persona and language; constraints, scenarios and escalation boundaries. Prompts were generated from that structure, with autosave, tags and subtags, and AI-generated suggestions — so store owners configured behaviour, not prompt text.",
     caption: "Agent config — constraints & escalation",
+    image: "/revsmith/revsmith-4.png",
     imageFirst: false,
   },
   {
@@ -46,6 +49,7 @@ const built = [
     title: "WhatsApp / Meta Integration",
     body: "Meta OAuth, account and phone-number discovery, webhook verification, inbound message processing, routing into the AI agent, outbound replies, and persisted account data — a support channel customers already lived in.",
     caption: "Meta connection flow",
+    image: null,
     imageFirst: true,
   },
 ];
@@ -104,12 +108,12 @@ const outcomes = [
 ];
 
 const gallery = [
-  { label: "Inbox", aspect: "aspect-16/10", grow: "flex-[2_1_420px]" },
-  { label: "Widget", aspect: "aspect-4/5", grow: "flex-1 basis-[220px]" },
-  { label: "Agent config", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
-  { label: "Analytics", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
-  { label: "Integrations", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
-  { label: "Team & auth", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]" },
+  { label: "Inbox", aspect: "aspect-16/10", grow: "flex-[2_1_420px]", image: "/revsmith/revsmith-6.png" },
+  { label: "Widget", aspect: "aspect-4/5", grow: "flex-1 basis-[220px]", image: "/revsmith/revsmith-demo-widget.png" },
+  { label: "Agent config", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: "/revsmith/revsmith-4.png" },
+  { label: "Analytics", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: null },
+  { label: "Integrations", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: null },
+  { label: "Team & auth", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: null },
 ];
 
 const fromLab = [
@@ -139,8 +143,15 @@ const fromLab = [
         ))}
       </div>
 
-      <div class="texture-hatch mt-7 flex aspect-video items-center justify-center border border-[#1e1e1c] lg:mt-11">
-        <span class="font-mono text-[11.5px] tracking-[.12em] text-[#6e6c67] uppercase">Hero screenshot — inbox with a live conversation</span>
+      <div class="relative mt-7 aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505] lg:mt-11">
+        <video
+          src="/revsmith/revsmith-demo.mp4"
+          poster="/revsmith/posters/revsmith-demo.jpg"
+          controls
+          preload="none"
+          playsinline
+          class="absolute inset-0 h-full w-full object-cover"
+        ></video>
       </div>
     </section>
 
@@ -188,9 +199,17 @@ const fromLab = [
               <h3 class="m-0 text-[clamp(20px,2.2vw,30px)] leading-[1.15] font-medium tracking-[-.028em]">{b.title}</h3>
               <p class="m-0 max-w-[44ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">{b.body}</p>
             </div>
-            <div class="texture-hatch flex min-w-0 flex-1 basis-[380px] items-end border border-[#1e1e1c] p-[18px] aspect-16/10">
-              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{b.caption}</span>
-            </div>
+            {b.image ? (
+              <div class="relative min-w-0 flex-1 basis-[380px] overflow-hidden border border-[#1e1e1c] bg-[#050505] aspect-16/10">
+                <img src={b.image} alt={b.caption} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+                <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+                <span class="absolute bottom-[18px] left-[18px] font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">{b.caption}</span>
+              </div>
+            ) : (
+              <div class="texture-hatch flex min-w-0 flex-1 basis-[380px] items-end border border-[#1e1e1c] p-[18px] aspect-16/10">
+                <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{b.caption}</span>
+              </div>
+            )}
           </div>
         ))}
 
@@ -298,11 +317,19 @@ const fromLab = [
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
       <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">09 / Gallery</div>
       <div class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
-        {gallery.map((g) => (
-          <div class:list={["texture-hatch flex min-w-0 items-end border border-[#1e1e1c] p-4", g.aspect, g.grow]}>
-            <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{g.label}</span>
-          </div>
-        ))}
+        {gallery.map((g) =>
+          g.image ? (
+            <div class:list={["relative min-w-0 overflow-hidden border border-[#1e1e1c] bg-[#050505]", g.aspect, g.grow]}>
+              <img src={g.image} alt={g.label} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+              <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">{g.label}</span>
+            </div>
+          ) : (
+            <div class:list={["texture-hatch flex min-w-0 items-end border border-[#1e1e1c] p-4", g.aspect, g.grow]}>
+              <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{g.label}</span>
+            </div>
+          )
+        )}
       </div>
     </section>
 

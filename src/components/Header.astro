@@ -17,16 +17,17 @@ const aboutHref = active === "about" ? "#top" : "/about";
 const contactHref = active === "contact" ? "#top" : "/contact";
 ---
 
-<header class="sticky top-0 z-50 border-b border-[#1e1e1c] bg-[#0a0a0a]/[.82] backdrop-blur-[14px]">
+<header data-site-header class="sticky top-0 z-50 border-b border-[#1e1e1c] bg-[#0a0a0a]/[.82] backdrop-blur-[14px]">
   <nav class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-8 px-5 py-[18px] sm:px-8 lg:px-16">
     <a href={homeHref} class="text-[19px] font-semibold tracking-[-.02em]">
       Hammad<span class="text-accent">.</span>
     </a>
-    <div class="flex gap-[18px] text-sm sm:gap-6 lg:gap-[38px]">
-      <a href={workHref} class={navClass("work")}>Work</a>
-      <a href={labsHref} class={navClass("labs")}>Labs</a>
-      <a href={aboutHref} class={navClass("about")}>About</a>
-      <a href={contactHref} class={navClass("contact")}>Contact</a>
+    <div data-nav-links class="relative flex gap-[18px] text-sm sm:gap-6 lg:gap-[38px]">
+      <a href={workHref} data-nav-link data-nav-active={active === "work"} class={navClass("work")}>Work</a>
+      <a href={labsHref} data-nav-link data-nav-active={active === "labs"} class={navClass("labs")}>Labs</a>
+      <a href={aboutHref} data-nav-link data-nav-active={active === "about"} class={navClass("about")}>About</a>
+      <a href={contactHref} data-nav-link data-nav-active={active === "contact"} class={navClass("contact")}>Contact</a>
+      <span data-nav-indicator aria-hidden="true" class="nav-indicator"></span>
     </div>
     <div class="flex gap-5 font-mono text-[11.5px] tracking-[.08em] text-[#9c9a94] uppercase">
       <a href="#" class="text-[#9c9a94] hover:text-accent">GitHub ↗</a>

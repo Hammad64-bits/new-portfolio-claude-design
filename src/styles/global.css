@@ -47,11 +47,54 @@ textarea:focus {
   100% { transform: scale(1.04) translate3d(0, 0, 0); }
 }
 
-/* Hero headline cycler: three absolutely-stacked lines swapped via data-step */
+@media (prefers-reduced-motion: reduce) {
+  [style*="hh-drift"],
+  [style*="hh-blink"],
+  [style*="hh-spin"] {
+    animation: none !important;
+  }
+}
+
+/* Nav underline indicator — JS (motion.ts) sets --nav-x/--nav-w/--nav-o per
+   hover/active link; CSS owns the actual motion via transform, so it stays
+   compositor-only. Base width is 1px, scaleX stretches it to the link width. */
+[data-nav-indicator] {
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 1px;
+  height: 2px;
+  background: var(--color-accent);
+  transform-origin: left center;
+  transform: translateX(var(--nav-x, 0)) scaleX(var(--nav-w, 1));
+  opacity: var(--nav-o, 0);
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), opacity .2s ease;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-nav-indicator] {
+    transition-duration: 0s, .2s;
+  }
+}
+
+/* Sticky header density change on scroll — plain class toggle, no JS tween */
+[data-site-header] {
+  transition: background-color .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+}
+[data-site-header].is-scrolled {
+  background-color: rgba(10, 10, 10, .94);
+  border-color: #26262289;
+}
+
+/* Hero headline cycler: three absolutely-stacked lines.
+   GSAP (src/scripts/motion.ts) drives the timed cycle via inline styles when
+   motion is allowed. The data-step rules below are the static fallback for
+   prefers-reduced-motion and no-JS — no transition here, GSAP owns the tween
+   and a CSS transition on the same properties would fight its per-frame writes. */
 [data-hero-lines] .hero-line {
   position: absolute;
   inset: 0;
-  transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
 }
 [data-hero-lines][data-step="0"] .hero-line-0 { opacity: 1; transform: translateY(0); }
 [data-hero-lines][data-step="0"] .hero-line-1 { opacity: 0; transform: translateY(26px); }
@@ -67,7 +110,6 @@ textarea:focus {
   width: 26px;
   height: 2px;
   background: #25251f;
-  transition: background .3s ease;
 }
 [data-hero-dots][data-step="0"] .hero-dot-0 { background: #b9ff4d; }
 [data-hero-dots][data-step="1"] .hero-dot-0 { background: #3a3a36; }
