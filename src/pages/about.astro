@@ -78,9 +78,17 @@ const photoRow2 = [
 
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-14 sm:py-20 lg:py-26">
       <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
-        <div class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
-          <span class="text-paper">Photography</span>
-          <span>My own photographs · not decoration</span>
+        <div class="flex flex-wrap items-center justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+          <div class="flex flex-wrap items-baseline gap-x-8 gap-y-2">
+            <span class="text-paper">Photography</span>
+            <span>My own photographs · not decoration</span>
+          </div>
+          <a
+            href="/pics"
+            class="inline-flex items-center gap-3 border border-[#353531] px-4 py-3 text-paper transition-colors hover:border-accent hover:bg-accent hover:text-ink focus-visible:border-accent focus-visible:outline-none"
+          >
+            See more <span aria-hidden="true">→</span>
+          </a>
         </div>
         <p class="mt-[22px] max-w-[48ch] text-[15px] leading-[1.7] text-[#a7a59e]">
           Shooting is how I practise looking at things properly. It's the same attention I bring to an interface: what's in frame, what got left out, where the eye lands first.

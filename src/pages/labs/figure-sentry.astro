@@ -1,0 +1,101 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<Layout title="Figure Sentry — Hammad Habib" description="A monitoring experiment for AmiAmi and Good Smile product pages — remembers the last state, sends a Discord notification on change, and a daily heartbeat when nothing does.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="labs" />
+
+    <section class="mx-auto max-w-[1000px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
+      <a href="/labs" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Labs</a>
+      <div class="mt-6 flex flex-wrap items-center gap-[10px]">
+        <span class="rounded-full border border-accent px-[11px] py-[5px] font-mono text-[10px] tracking-[.1em] text-accent uppercase">Prototype</span>
+        <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">Monitoring / Automation</span>
+      </div>
+      <h1 class="mt-[22px] max-w-[22ch] text-[clamp(28px,3.8vw,50px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">Figure Sentry</h1>
+      <p class="mt-[18px] max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+        A tiny sentry for anime figures that are annoyingly easy to miss. A monitoring experiment for product pages on AmiAmi and Good Smile.
+      </p>
+      <p class="mt-4 max-w-[52ch] text-[15px] leading-[1.7] text-[#a7a59e]">
+        Each URL keeps a small memory of its previous state. When that state changes, Figure Sentry sends a Discord notification.
+      </p>
+      <span class="mt-6 block font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">TypeScript · Apify · Playwright · Discord</span>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] px-5 pb-9 sm:px-8 lg:px-16 lg:pb-14">
+      <div class="texture-hatch flex aspect-video items-end border border-[#1e1e1c] p-4">
+        <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Discord notification — status change alert (asset needed)</span>
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1000px] flex-col gap-9 px-5 pb-10 sm:px-8 lg:px-16 lg:gap-14 lg:pb-16">
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Why</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          Collectible releases have an irritating property: nothing happens for days, then the thing you wanted changes status while you are doing something useful with your life. Refreshing product pages manually seemed like work suitable for a machine.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Flow</span>
+        <div class="flex flex-col gap-4 border border-dashed border-[#2b2b28] p-5 font-mono text-xs tracking-[.04em] text-[#8c8a84] sm:p-8">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-paper">Scheduled Actor run</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Product URLs</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#3a3a36] px-[14px] py-[10px] text-paper">Site-specific Playwright checks</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-[#3a3a36]">↳</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Normalize current status</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#3a3a36] px-[14px] py-[10px] text-paper">Compare with persisted state</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-[#3a3a36]">↳</span>
+            <span class="border border-accent px-[14px] py-[10px] text-accent">Changed → Discord alert</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Unchanged → stay quiet</span>
+          </div>
+          <span class="text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">A separate daily heartbeat says "nothing changed, but I am still alive." That distinction matters in monitoring.</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Two sites, two realities</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          AmiAmi and Good Smile do not expose identical page structures. The monitor keeps site-specific extraction logic while presenting one common idea to the rest of the system: what is this product's current status? That keeps notification/change logic separate from DOM-specific selectors.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">State matters more than scraping</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          Reading a page once is scraping. Monitoring means remembering yesterday. Persisted per-URL state lets the system distinguish <span class="text-[#cfcdc6]">"in stock"</span> from <span class="text-[#cfcdc6]">"was out of stock → now in stock."</span> The transition is what deserves a notification.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">What I learned</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          A monitor that only tells you about changes needs one extra feature: proof that silence is healthy. The heartbeat exists because "no alert" and "dead crawler" otherwise look exactly the same from the outside.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] border-t border-[#1e1e1c] px-5 py-9 sm:px-8 lg:px-16 lg:py-16">
+      <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Related Work</span>
+      <a href="/labs/waqas-work-bot" class="mt-5 flex flex-wrap items-end justify-between gap-5 border border-[#1e1e1c] p-5 hover:border-[#5a5a54] sm:p-7">
+        <span class="flex min-w-0 flex-col gap-[10px]">
+          <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">Waqas Work Bot · lab</span>
+          <span class="max-w-[26ch] text-[clamp(18px,2vw,26px)] leading-[1.2] tracking-[-.025em] text-wrap-pretty">Another scheduled watcher — same instinct that reports and state should exist before any notification does.</span>
+        </span>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Open lab →</span>
+      </a>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

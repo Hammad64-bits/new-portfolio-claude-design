@@ -49,8 +49,8 @@ const gallery = [
     split: ["/vigilant/services-old.png", "/vigilant/new-service-page.png"],
   },
   { label: "Legacy homepage — UK", aspect: "aspect-16/10", grow: "flex-1 basis-[300px]", image: "/vigilant/legacy-uk.png" },
-  { label: "Redirect map", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: null },
-  { label: "IE site", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: null },
+  { label: "Redirect map", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: "/vigilant/redirect-map.png" },
+  { label: "IE site", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: "/vigilant/vss-ie-site.png" },
   { label: "CMS structure", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: "/vigilant/cms-sanity.png" },
   { label: "New sitemap", aspect: "aspect-4/3", grow: "flex-1 basis-[220px]", image: "/vigilant/sitemap-new.png" },
 ];
@@ -194,10 +194,53 @@ const fromLab = [
       </div>
     </section>
 
+    <section class="border-t border-[#1e1e1c] bg-[#070707] py-11 sm:py-14 lg:py-20">
+      <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
+        <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+          <span class="text-paper">07 / Production Data Recovery</span>
+          <span>Knowing when not to retry</span>
+        </div>
+        <p class="mt-7 max-w-[54ch] text-[15px] leading-[1.75] text-[#a7a59e] lg:mt-9">
+          During the CMS migration work, I also built a controlled recovery workflow for production SEO data across the UK and Ireland datasets. The process treated destructive changes as something to prove before executing:
+        </p>
+        <div class="mt-7 flex flex-col gap-[2px] border border-dashed border-[#2b2b28] p-5 font-mono text-[11.5px] leading-[1.6] text-[#8c8a84] sm:p-8 lg:mt-9">
+          <span class="text-paper">backup validation</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">evidence classification</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">deterministic route/content checks</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">quarantine ambiguous records</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">generate explicit mutation inputs</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">preflight live state</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">mutate narrowly</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-paper">verify</span>
+        </div>
+        <div class="mt-7 flex max-w-[900px] flex-col lg:mt-10">
+          <div class="flex flex-wrap gap-x-7 gap-y-2 border-t border-[#2b2b28] py-4">
+            <span class="flex-none basis-[130px] font-mono text-[11px] tracking-[.1em] text-[#6e6c67] uppercase">Ireland import</span>
+            <span class="min-w-0 flex-1 basis-[320px] text-[14.5px] leading-[1.65] text-[#dedbd4]">Completed with 25 expected records and no missing routes, duplicate normalised routes or content mismatches.</span>
+          </div>
+          <div class="flex flex-wrap gap-x-7 gap-y-2 border-t border-[#2b2b28] py-4 border-b">
+            <span class="flex-none basis-[130px] font-mono text-[11px] tracking-[.1em] text-[#6e6c67] uppercase">UK deletion</span>
+            <span class="min-w-0 flex-1 basis-[320px] text-[14.5px] leading-[1.65] text-[#dedbd4]">Partially failed after deleting 24 of 25 requested records. The tooling stopped immediately — no blind retry, compensating mutation or cleanup was attempted until the live state could be audited again.</span>
+          </div>
+        </div>
+        <p class="mt-7 max-w-[54ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty lg:mt-9">
+          The useful engineering result was not "the script deleted things." It was that the process had a failure boundary.
+        </p>
+        <p class="mt-4 font-mono text-[11.5px] tracking-[.08em] text-[#6e6c67] uppercase">Automation should make risky work more controlled, not merely faster.</p>
+      </div>
+    </section>
+
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
       <div class="flex flex-wrap items-start gap-7 lg:gap-16">
         <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[18px]">
-          <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">07 / Performance</div>
+          <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">08 / Performance</div>
           <div class="flex flex-col">
             {performanceList.map((p, i) => (
               <span class:list={["border-t border-[#1e1e1c] py-[14px] text-[14.5px] leading-[1.6] text-[#a7a59e]", i === performanceList.length - 1 && "border-b"]}>{p}</span>
@@ -224,7 +267,7 @@ const fromLab = [
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
       <div class="flex flex-wrap items-start gap-7 lg:gap-18">
-        <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">08 / SEO</div>
+        <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">09 / SEO</div>
         <div class="flex min-w-0 flex-1 basis-[440px] flex-col gap-5">
           <p class="m-0 max-w-[44ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
             SEO wasn't a phase at the end. It was a constraint on every routing and content decision.
@@ -240,7 +283,7 @@ const fromLab = [
 
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-15 lg:py-21">
       <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
-        <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">09 / Outcome</div>
+        <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">10 / Outcome</div>
         <p class="mt-7 max-w-[48ch] text-[clamp(18px,1.8vw,26px)] leading-[1.45] tracking-[-.022em] text-paper text-wrap-pretty lg:mt-9">
           A legacy production system was progressively stabilised, secured, modernised and rebuilt — while keeping the business value already attached to it.
         </p>
@@ -249,7 +292,7 @@ const fromLab = [
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-10 sm:px-8 lg:px-16 lg:py-18">
       <div class="flex flex-wrap items-baseline gap-8">
-        <span class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">10 / Tech</span>
+        <span class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">11 / Tech</span>
         <span class="min-w-0 flex-1 basis-[400px] font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">
           Astro · TypeScript · Sanity · WordPress/PHP · Linux/SSH · SEO · GTM/GA · Cookie Consent · Google APIs
         </span>
@@ -257,7 +300,7 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
-      <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">11 / Gallery</div>
+      <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">12 / Gallery</div>
       <div class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
         {gallery.map((g) =>
           g.split ? (

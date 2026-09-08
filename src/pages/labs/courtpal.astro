@@ -1,0 +1,178 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const capabilities = [
+  { title: "Search real availability", body: "Availability is read from local Supabase data rather than invented from a prompt or static JSON." },
+  { title: "Quote from real court data", body: "Pricing comes from the booking domain. The model is not allowed to invent a price because it sounds plausible." },
+  { title: "Hold a slot", body: "A hold is persisted with expiry/session information so a conversation can reserve a slot before final confirmation." },
+  { title: "Find and cancel bookings", body: "Existing bookings can be retrieved and cancelled through the booking lifecycle rather than deleting or pretending." },
+];
+
+const problems = [
+  {
+    n: "01",
+    title: "Double booking is a database problem",
+    body: "Checking availability in JavaScript is not enough. Two requests can both read “available” before either writes. The local production-equivalent schema preserves PostgreSQL overlap protection, and integration testing verified that two overlapping holds cannot both commit.",
+    diagram: [
+      "request A ─┐",
+      "           ├─→ same court / same period",
+      "request B ─┘",
+      "",
+      "PostgreSQL",
+      "   ↓",
+      "one succeeds",
+      "one gets slot_no_longer_available",
+    ],
+    note: "The database is the concurrency authority.",
+  },
+  {
+    n: "02",
+    title: "The model wanted to sound helpful before doing the work",
+    body: "A conversational model can produce something like “Sure, I’m checking that for you” and then finish the turn without actually calling the required tool. The agent loop was hardened so tool-backed intents can force the needed action and retry progress-only responses instead of treating them as completion. A useful agent has to do the thing, not narrate its intention to do the thing.",
+  },
+  {
+    n: "03",
+    title: "Mutation truth has to come from tools",
+    body: "The model is not allowed to claim that a hold, booking or cancellation succeeded merely because that response sounds natural. Mutation success can only be stated after the corresponding tool reports success. The same rule applies to deterministic business facts such as pricing.",
+  },
+  {
+    n: "04",
+    title: "Two WhatsApp users must not become one conversation",
+    body: "Session state is isolated per sender so separate phone numbers cannot share conversation history, pending holds or booking context. The obvious bug here would be horrifying, which made it worth testing explicitly.",
+  },
+  {
+    n: "05",
+    title: "“Tomorrow” depends on where the business exists",
+    body: "Relative dates are resolved using the business timezone rather than assuming the host machine or UTC date. Date logic is kept deterministic and tested separately from model phrasing.",
+  },
+];
+---
+
+<Layout title="CourtPal — Hammad Habib" description="A WhatsApp booking-agent prototype for padel courts. The model handles conversation and intent; deterministic tools and the database own availability, pricing and booking state.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="labs" />
+
+    <section class="mx-auto max-w-[1000px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
+      <a href="/labs" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Labs</a>
+      <div class="mt-6 flex flex-wrap items-center gap-[10px]">
+        <span class="rounded-full border border-accent px-[11px] py-[5px] font-mono text-[10px] tracking-[.1em] text-accent uppercase">Prototype</span>
+        <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">AI / Agents · Booking Systems</span>
+      </div>
+      <h1 class="mt-[22px] max-w-[22ch] text-[clamp(28px,3.8vw,50px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">CourtPal</h1>
+      <p class="mt-[18px] max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+        Making an AI agent prove a booking happened before it says it did. CourtPal is a WhatsApp booking-agent prototype for padel courts — the model handles conversation, deterministic tools and the database handle everything that has to be true.
+      </p>
+      <p class="mt-4 max-w-[52ch] text-[15px] leading-[1.7] text-[#a7a59e]">
+        Availability, pricing, holds, confirmation and cancellation are backed by the booking system rather than model memory. PostgreSQL remains the final authority on whether an overlapping booking can exist.
+      </p>
+      <span class="mt-6 block font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">TypeScript · Node.js · Express · Supabase / Postgres · Twilio WhatsApp · LLM tool calling</span>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] px-5 pb-9 sm:px-8 lg:px-16 lg:pb-14">
+      <div class="texture-hatch flex aspect-video items-end border border-[#1e1e1c] p-4">
+        <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Screen recording — booking conversation on WhatsApp (asset needed)</span>
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1000px] flex-col gap-9 px-5 pb-10 sm:px-8 lg:px-16 lg:gap-14 lg:pb-16">
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Why this got built</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          I had already worked with AI agents and WhatsApp in customer-support products. Booking is a nastier problem. A support bot can give a bad answer and be corrected. A booking agent can tell two people they own the same court at the same time. So the question became: how much authority should the model actually have? My answer was very little — it can understand language, decide which capability it needs and phrase a response. Business operations happen through narrow tools backed by real data.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Architecture</span>
+        <div class="flex flex-col gap-4 border border-dashed border-[#2b2b28] p-5 font-mono text-xs tracking-[.04em] text-[#8c8a84] sm:p-8">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-paper">WhatsApp</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Twilio webhook</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#3a3a36] px-[14px] py-[10px] text-paper">Express / TypeScript agent</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-[#3a3a36]">↳</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">LLM decides which tool is needed</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#3a3a36] px-[14px] py-[10px] text-paper">Deterministic booking tools</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Supabase / PostgreSQL</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-[#3a3a36]">↳</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">Tool result</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">LLM explains the real result</span>
+            <span class="text-[#3a3a36]">→</span>
+            <span class="border border-[#2b2b28] px-[14px] py-[10px] text-[#cfcdc6]">WhatsApp reply</span>
+          </div>
+          <span class="text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">The LLM is not the booking system. PostgreSQL is.</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">What it can do</span>
+        <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+          {capabilities.map((c) => (
+            <div class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[10px] bg-ink p-5">
+              <span class="text-[15px] tracking-[-.01em] text-paper">{c.title}</span>
+              <span class="text-[13.5px] leading-[1.65] text-[#a7a59e]">{c.body}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-[18px]">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">The important problems</span>
+        <div class="flex flex-col">
+          {problems.map((p, i) => (
+            <div class:list={["flex flex-col gap-3 border-t border-[#1e1e1c] py-[18px]", i === 0 && "border-[#2b2b28]", i === problems.length - 1 && "border-b"]}>
+              <div class="flex items-baseline gap-3">
+                <span class="font-mono text-[10.5px] text-[#6e6c67]">{p.n}</span>
+                <span class="text-[15.5px] tracking-[-.015em] text-paper">{p.title}</span>
+              </div>
+              <p class="m-0 max-w-[62ch] text-[14.5px] leading-[1.75] text-[#a7a59e]">{p.body}</p>
+              {p.diagram && (
+                <div class="mt-1 flex flex-col gap-[2px] border border-dashed border-[#2b2b28] p-4 font-mono text-[11.5px] leading-[1.6] text-[#8c8a84] sm:p-5">
+                  {p.diagram.map((line) => <span>{line || " "}</span>)}
+                </div>
+              )}
+              {p.note && <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">{p.note}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Testing</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          The project includes local Supabase integration testing around the persisted booking lifecycle — availability → hold → confirm → lookup → cancel, exercised end to end. It was also exposed through HTTPS locally and tested through a real WhatsApp Sandbox path.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">What I learned</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          The safest agent architecture I found is not "give the model the database and hope the prompt is good." It is: the LLM supplies language and intent, tools supply permitted actions, and the database supplies business truth. The more consequential the action, the less authority I want living inside generated text.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] border-t border-[#1e1e1c] px-5 py-9 sm:px-8 lg:px-16 lg:py-16">
+      <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Related Work</span>
+      <a href="/work/revsmith" class="mt-5 flex flex-wrap items-end justify-between gap-5 border border-[#1e1e1c] p-5 hover:border-[#5a5a54] sm:p-7">
+        <span class="flex min-w-0 flex-col gap-[10px]">
+          <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">RevSmith · production</span>
+          <span class="max-w-[26ch] text-[clamp(18px,2vw,26px)] leading-[1.2] tracking-[-.025em] text-wrap-pretty">At RevSmith I worked on production WhatsApp integration and configurable AI-agent behavior. CourtPal pushes the same ideas further into transactional workflows.</span>
+        </span>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Case study →</span>
+      </a>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

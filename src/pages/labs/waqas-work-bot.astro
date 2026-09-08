@@ -1,0 +1,136 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const senderGuards = [
+  "restricted config/state permissions",
+  "retries",
+  "masked recipient logging",
+  "checksums",
+  "sent-state tracking",
+  "duplicate-send prevention",
+];
+---
+
+<Layout title="Waqas Work Bot — Hammad Habib" description="A Linux-hosted browser automation pipeline with persistent sessions, structured extraction, scheduled execution, generated reports and a durable notification queue.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="labs" />
+
+    <section class="mx-auto max-w-[1000px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
+      <a href="/labs" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Labs</a>
+      <div class="mt-6 flex flex-wrap items-center gap-[10px]">
+        <span class="rounded-full border border-accent px-[11px] py-[5px] font-mono text-[10px] tracking-[.1em] text-accent uppercase">Working / Operational</span>
+        <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">Linux / Automation</span>
+      </div>
+      <h1 class="mt-[22px] max-w-[24ch] text-[clamp(28px,3.8vw,50px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">Waqas Work Bot</h1>
+      <p class="mt-[18px] max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+        Automating a boring morning workflow so the computer could be bored instead. This started as a simple requirement: open a few work tools and check what changed.
+      </p>
+      <p class="mt-4 max-w-[52ch] text-[15px] leading-[1.7] text-[#a7a59e]">
+        It became a Linux-hosted automation pipeline with persistent browser sessions, structured extraction, scheduled execution, generated reports and a durable notification queue.
+      </p>
+      <span class="mt-6 block font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">Node.js · Selenium · Firefox · systemd · KDE Connect · Linux</span>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] px-5 pb-9 sm:px-8 lg:px-16 lg:pb-14">
+      <div class="texture-hatch flex aspect-video items-end border border-[#1e1e1c] p-4">
+        <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Terminal / systemd unit status — collector and queue timers (asset needed)</span>
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1000px] flex-col gap-9 px-5 pb-10 sm:px-8 lg:px-16 lg:gap-14 lg:pb-16">
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">The manual workflow</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          The original routine involved opening authenticated work dashboards, checking the right inboxes/notifications and figuring out whether anything needed attention. Repeating it manually was the bug.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">System flow</span>
+        <div class="flex flex-col gap-[2px] border border-dashed border-[#2b2b28] p-5 font-mono text-[11.5px] leading-[1.6] text-[#8c8a84] sm:p-8">
+          <span class="text-paper">systemd timer</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">collector service</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">persistent Firefox profile</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">Selenium</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">authenticated support tools</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">structured reports</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">daily digest</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-[#cfcdc6]">SMS queue</span>
+          <span class="text-[#3a3a36]">↓</span>
+          <span class="text-paper">KDE Connect</span>
+          <span class="mt-3 text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">The scheduled workflow produced hundreds of report/digest artifacts during its active period.</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Why use a real browser?</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          These were existing authenticated web applications, not clean public APIs. The automation had to deal with the thing users actually deal with — DOM changes, iframes, loading states, authenticated sessions and browser behaviour. Persisting the Firefox profile meant the workflow could reuse legitimate logged-in sessions instead of trying to recreate authentication on every run.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Reports before notifications</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          The collector writes structured output first — collection, then report, then digest, then notification. That was intentional. If SMS delivery is unavailable, the useful data still exists. If the browser collector fails, its logs and partial outputs still make the failure diagnosable. Notifications are the last mile, not the source of truth.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Durable SMS delivery</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          The notification path uses a queue rather than assuming the phone is always reachable. The sender includes:
+        </p>
+        <div class="flex flex-col">
+          {senderGuards.map((g, i) => (
+            <span class:list={["border-t border-[#1e1e1c] py-[14px] text-[14.5px] leading-[1.6] text-[#a7a59e]", i === senderGuards.length - 1 && "border-b"]}>{g}</span>
+          ))}
+        </div>
+        <p class="m-0 max-w-[62ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">Successful delivery writes a state record containing the digest checksum so the same digest does not need to be sent repeatedly.</p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Scheduling</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          The workflow runs through user-level systemd services/timers rather than cron. That gives the automation named units, observable state, logs and explicit retry/scheduling behaviour. A separate queue timer can continue retrying notification delivery independently of the main collector.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Failure is part of the project</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          A workstation audit caught the system in a degraded state: browser collection had a Firefox/Marionette issue while the notification queue was still processing independently. That is more interesting than pretending it was always green — the useful lesson was that the system had become modular enough for one broken dependency not to erase every artifact around it.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">What I learned</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          Browser automation is basically integration engineering with an API that was never designed for you. And once an automation becomes scheduled and relied upon, the interesting work moves away from "can Selenium click this button?" and toward "what happens when Firefox crashes, the phone disappears, the DOM changes, or the same result is processed twice?"
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] border-t border-[#1e1e1c] px-5 py-9 sm:px-8 lg:px-16 lg:py-16">
+      <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Related Work</span>
+      <a href="/work/vigilant-security" class="mt-5 flex flex-wrap items-end justify-between gap-5 border border-[#1e1e1c] p-5 hover:border-[#5a5a54] sm:p-7">
+        <span class="flex min-w-0 flex-col gap-[10px]">
+          <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">Vigilant Security · production</span>
+          <span class="max-w-[26ch] text-[clamp(18px,2vw,26px)] leading-[1.2] tracking-[-.025em] text-wrap-pretty">Diagnosing a production system over SSH, one service at a time — the same instinct that keeps this bot's failures diagnosable instead of silent.</span>
+        </span>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Case study →</span>
+      </a>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>
