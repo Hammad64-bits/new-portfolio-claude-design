@@ -1,179 +1,235 @@
 ---
-// Astro runs this frontmatter at build time; the project does not otherwise
-// need Node types in its browser-focused TypeScript configuration.
-// @ts-expect-error Node's built-in module is available in Astro's build runtime.
-import { readdirSync } from "node:fs";
+import fs from "node:fs";
+import path from "node:path";
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-const supportedExtensions = /\.(avif|gif|jpe?g|png|webp)$/i;
+const picsDir = path.join(process.cwd(), "public/images/pics");
+const files = fs
+  .readdirSync(picsDir)
+  .filter((f) => /\.(jpe?g|png)$/i.test(f))
+  .sort((a, b) => a.localeCompare(b));
 
-const preferredOrder = [
-  "kumrat-milkyway.jpg",
-  "wheat.jpg",
-  "pal-bridge.jpg",
-  "bhimber-shooting-star.jpg",
-  "sahmani.jpg",
-  "kumrat-river.JPG",
-  "khi-clifton.jpg",
-  "parachinar-sky.jpg",
-  "ganga-2.jpg",
-  "wil-moon.jpg",
-  "pal-zilzal-lake.jpg",
-  "lightning.JPG",
-];
-
-const allFiles = (readdirSync("public/images/my_images") as string[])
-  .filter((file) => supportedExtensions.test(file))
-  .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-
-const photos = [
-  ...preferredOrder.filter((file) => allFiles.includes(file)),
-  ...allFiles.filter((file) => !preferredOrder.includes(file)),
-].map((file, index) => {
-  const label = file
-    .replace(/\.[^.]+$/, "")
+function labelFor(filename: string) {
+  const base = filename.replace(/\.[^.]+$/, "");
+  const words = base
     .replace(/[-_]+/g, " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    .replace(/\d+/g, "")
+    .trim();
+  const title = words
+    .split(" ")
+    .filter(Boolean)
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+  return title || "Photograph";
+}
 
-  const tile = index % 17 === 0
-    ? "hero"
-    : index % 11 === 0
-      ? "tall"
-      : index % 7 === 0
-        ? "wide"
-        : "standard";
+const photos = files.map((f, i) => ({
+  src: `/images/pics/${f}`,
+  label: labelFor(f),
+  index: i,
+}));
 
-  return {
-    src: `/images/my_images/${encodeURIComponent(file)}`,
-    label,
-    tile,
-  };
-});
+function spanClass(i: number) {
+  const m = i % 13;
+  if (m === 0) return "span-2x2";
+  if (m === 6) return "span-2x1";
+  if (m === 9) return "span-1x2";
+  return "";
+}
 ---
 
 <Layout
-  title="Photography — Hammad Habib"
-  description="A visual archive of landscapes, streets, weather, and the places Hammad has carried a camera."
+  title="Pics — Hammad Habib"
+  description={`${photos.length} photographs — the full set, not the curated six.`}
 >
   <div class="min-h-screen overflow-x-hidden bg-ink">
     <Header active="pics" />
 
-    <main id="top">
-      <header class="mx-auto grid max-w-[1440px] gap-8 px-5 pt-12 pb-10 sm:px-8 sm:pt-16 sm:pb-14 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:px-16 lg:pt-22 lg:pb-16">
-        <div>
-          <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
-            <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
-            <a href="/about" class="hover:text-paper">About</a>
-            <span aria-hidden="true">/</span>
-            <span class="text-paper">Photography</span>
-          </div>
-          <h1 class="mt-[26px] max-w-[16ch] text-[clamp(42px,7.5vw,108px)] leading-[.88] font-semibold tracking-[-.065em] text-wrap-balance">
-            Things worth stopping for.
-          </h1>
-        </div>
-
-        <div class="max-w-[340px] border-l border-[#30302c] pl-5 lg:mb-1">
-          <p class="m-0 text-[14.5px] leading-[1.65] text-[#a7a59e]">
-            Landscapes, streets, weather, and whatever made me reach for a camera. Select any frame to see it without the grid.
-          </p>
-          <div class="mt-5 font-mono text-[10.5px] tracking-[.12em] text-[#6e6c67] uppercase">
-            {String(photos.length).padStart(2, "0")} frames · personal archive
-          </div>
-        </div>
-      </header>
-
-      <section class="border-y border-[#1e1e1c] bg-[#11110f]" aria-label="Photography archive">
-        <div class="pics-grid" data-photo-grid>
-          {photos.map((photo, index) => (
-            <button
-              type="button"
-              class:list={["pics-card", `pics-card--${photo.tile}`]}
-              data-photo-index={index}
-              data-photo-src={photo.src}
-              data-photo-label={photo.label}
-              aria-label={`Open photograph ${index + 1}: ${photo.label}`}
-            >
-              <img
-                src={photo.src}
-                alt={photo.label}
-                loading={index < 6 ? "eager" : "lazy"}
-                fetchpriority={index === 0 ? "high" : "auto"}
-                decoding="async"
-              />
-              <span class="pics-card__meta" aria-hidden="true">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <span>{photo.label}</span>
-              </span>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <div class="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-6 px-5 py-10 sm:px-8 lg:px-16 lg:py-14">
-        <span class="font-mono text-[10.5px] tracking-[.12em] text-[#6e6c67] uppercase">End of contact sheet</span>
-        <a href="/about" class="font-mono text-[11.5px] tracking-[.1em] text-paper uppercase hover:text-accent">← Back to about</a>
+    <section class="mx-auto max-w-[1440px] px-5 pt-12 pb-8 sm:px-8 sm:pt-16 sm:pb-11 lg:px-16 lg:pt-20">
+      <a href="/about" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← About</a>
+      <div class="mt-6 flex flex-wrap items-end justify-between gap-6">
+        <h1 class="m-0 max-w-[20ch] text-[clamp(28px,4.2vw,56px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">
+          All the frames, not just the six.
+        </h1>
+        <span class="font-mono text-[11.5px] tracking-[.1em] text-[#6e6c67] uppercase">{photos.length} photographs · click to view</span>
       </div>
-    </main>
+    </section>
+
+    <section class="px-5 pb-16 sm:px-8 lg:px-16 lg:pb-28">
+      <div class="bento" data-pics-grid>
+        {photos.map((photo) => (
+          <button
+            type="button"
+            class:list={["bento-item", spanClass(photo.index)]}
+            data-pics-item
+            data-src={photo.src}
+            data-alt={photo.label}
+            aria-label={`Open photograph: ${photo.label}`}
+          >
+            <img src={photo.src} alt={photo.label} loading="lazy" decoding="async" />
+            <span class="bento-index" aria-hidden="true">{String(photo.index + 1).padStart(2, "0")}</span>
+          </button>
+        ))}
+      </div>
+    </section>
 
     <Footer />
   </div>
 
-  <dialog class="photo-viewer" data-photo-viewer aria-label="Photo viewer">
-    <div class="photo-viewer__bar">
-      <span class="photo-viewer__count" data-viewer-count>01 / {String(photos.length).padStart(2, "0")}</span>
-      <span class="photo-viewer__label" data-viewer-label></span>
-      <button type="button" class="photo-viewer__close" data-viewer-close aria-label="Close photo viewer">Close <span aria-hidden="true">×</span></button>
+  <div id="pics-lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <button type="button" class="lightbox-btn lightbox-close" data-lb-close aria-label="Close">✕</button>
+    <button type="button" class="lightbox-btn lightbox-prev" data-lb-prev aria-label="Previous photograph">←</button>
+    <button type="button" class="lightbox-btn lightbox-next" data-lb-next aria-label="Next photograph">→</button>
+    <img id="pics-lightbox-img" alt="" />
+    <div class="lightbox-meta">
+      <span id="pics-lightbox-counter"></span>
     </div>
-    <div class="photo-viewer__stage">
-      <button type="button" class="photo-viewer__nav photo-viewer__nav--prev" data-viewer-prev aria-label="Previous photograph">←</button>
-      <img src="" alt="" data-viewer-image />
-      <button type="button" class="photo-viewer__nav photo-viewer__nav--next" data-viewer-next aria-label="Next photograph">→</button>
-    </div>
-    <div class="photo-viewer__hint">Arrow keys to browse · Esc to close</div>
-  </dialog>
+  </div>
 </Layout>
 
-<script>
-  const grid = document.querySelector<HTMLElement>("[data-photo-grid]");
-  const viewer = document.querySelector<HTMLDialogElement>("[data-photo-viewer]");
-  const viewerImage = viewer?.querySelector<HTMLImageElement>("[data-viewer-image]");
-  const viewerLabel = viewer?.querySelector<HTMLElement>("[data-viewer-label]");
-  const viewerCount = viewer?.querySelector<HTMLElement>("[data-viewer-count]");
-  const cards = Array.from(grid?.querySelectorAll<HTMLButtonElement>("[data-photo-index]") ?? []);
-  let currentIndex = 0;
+<style>
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-auto-rows: clamp(110px, 14vw, 190px);
+    gap: 3px;
+    background: #1e1e1c;
+    border: 1px solid #1e1e1c;
+  }
+  .bento-item {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: #050505;
+    cursor: zoom-in;
+  }
+  .bento-item img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.18) contrast(1.02);
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease;
+  }
+  .bento-item:hover img,
+  .bento-item:focus-visible img {
+    transform: scale(1.045);
+    filter: none;
+  }
+  .bento-item:focus-visible {
+    outline: 2px solid #b9ff4d;
+    outline-offset: -2px;
+  }
+  .bento-index {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: #eeece6;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  }
+  .bento-item:hover .bento-index,
+  .bento-item:focus-visible .bento-index {
+    opacity: 1;
+  }
+  .span-2x2 { grid-column: span 2; grid-row: span 2; }
+  .span-2x1 { grid-column: span 2; }
+  .span-1x2 { grid-row: span 2; }
 
-  const showPhoto = (index: number) => {
-    if (!viewerImage || !viewerLabel || !viewerCount || !cards.length) return;
-    currentIndex = (index + cards.length) % cards.length;
-    const card = cards[currentIndex];
-    const src = card.dataset.photoSrc ?? "";
-    const label = card.dataset.photoLabel ?? "Photograph";
-    viewerImage.src = src;
-    viewerImage.alt = label;
-    viewerLabel.textContent = label;
-    viewerCount.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")}`;
-  };
+  @media (max-width: 640px) {
+    .span-2x2, .span-2x1 { grid-column: span 2; }
+    .span-1x2 { grid-row: span 1; }
+  }
 
-  cards.forEach((card, index) => {
-    card.addEventListener("click", () => {
-      if (!viewer) return;
-      showPhoto(index);
-      viewer.showModal();
-    });
-  });
+  @media (prefers-reduced-motion: reduce) {
+    .bento-item img { transition: none; }
+    .bento-item:hover img, .bento-item:focus-visible img { transform: none; }
+  }
 
-  viewer?.querySelector("[data-viewer-close]")?.addEventListener("click", () => viewer.close());
-  viewer?.querySelector("[data-viewer-prev]")?.addEventListener("click", () => showPhoto(currentIndex - 1));
-  viewer?.querySelector("[data-viewer-next]")?.addEventListener("click", () => showPhoto(currentIndex + 1));
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(5, 5, 5, 0.97);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .lightbox.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 86vh;
+    object-fit: contain;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.15s ease;
+  }
+  .lightbox-btn {
+    position: absolute;
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid #2b2b28;
+    color: #eeece6;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .lightbox-btn:hover {
+    border-color: #5a5a54;
+    color: #b9ff4d;
+  }
+  .lightbox-close {
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .lightbox-prev,
+  .lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+  }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+  .lightbox-meta {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: #8c8a84;
+    text-transform: uppercase;
+  }
 
-  viewer?.addEventListener("click", (event) => {
-    if (event.target === viewer) viewer.close();
-  });
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox, .lightbox img { transition: none; }
+  }
 
-  viewer?.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowLeft") showPhoto(currentIndex - 1);
-    if (event.key === "ArrowRight") showPhoto(currentIndex + 1);
-  });
-</script>
+  @media (max-width: 640px) {
+    .lightbox-prev, .lightbox-next { width: 40px; height: 40px; font-size: 13px; }
+    .lightbox-close { width: 36px; height: 36px; }
+  }
+</style>

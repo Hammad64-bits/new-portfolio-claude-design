@@ -3,88 +3,139 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-const categories = ["All", "AI / Agents", "Automation", "Linux / Systems", "Networking / Security", "Cloud / AWS", "Browser / Extensions"];
+const categories = [
+  "All",
+  "AI / Agents",
+  "Developer Tools",
+  "Automation",
+  "Linux / Systems",
+  "Monitoring",
+  "Computer Vision",
+  "Cloud / AWS",
+  "Networking / Security",
+];
 
-const labs = [
+const featured = [
   {
     cat: "AI / Agents",
-    status: "Working",
+    status: "Prototype",
     statusStyle: "accent",
-    href: "/labs/whatsapp-agent",
+    href: "/labs/courtpal",
     video: "iphone_blob",
     driftSeconds: 18,
     opacity: "opacity-90",
     aspect: "aspect-video",
     grow: "flex-[2_1_460px]",
-    title: "WhatsApp AI booking agent",
-    body: "Could an agent hold a real booking conversation on WhatsApp — check availability, make the booking, and know when to stop guessing?",
-    stack: "Node · Supabase · WhatsApp Cloud API · tool calls",
-    big: true,
+    title: "CourtPal — making an AI agent prove a booking happened before it says it did.",
+    body: "A WhatsApp booking-agent prototype for padel courts. Availability, pricing, holds, confirmation and cancellation are backed by the booking system rather than model memory.",
+    stack: "TypeScript · Node.js · Express · Supabase / Postgres · Twilio WhatsApp",
   },
   {
-    cat: "Linux / Systems",
-    status: "Ongoing",
-    statusStyle: "neutral",
+    cat: "Developer Tools",
+    status: "Working",
+    statusStyle: "accent",
+    href: "/labs/git-to-cv",
+    video: "green_boxes",
+    driftSeconds: 24,
+    opacity: "opacity-75",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[340px]",
+    title: "Git-to-CV — I kept forgetting what I built, so I made Git remember for me.",
+    body: "Turns repository history into a searchable career-evidence system — commits distilled into traceable facts, then used to evaluate job requirements without letting anything get invented.",
+    stack: "TypeScript · Git · SQLite / FTS5 · Zod · LLM APIs · DOCX",
+  },
+  {
+    cat: "Automation",
+    status: "Working",
+    statusStyle: "accent",
+    href: "/labs/waqas-work-bot",
     video: "orange_boxes",
     driftSeconds: 22,
     opacity: "opacity-75",
     aspect: "aspect-4/3",
-    grow: "flex-1 basis-[280px]",
-    title: "Linux work automation",
-    body: "A morning routine of browser checks and reports, handed over to systemd timers.",
-    stack: "Bash · systemd · Playwright",
+    grow: "flex-1 basis-[340px]",
+    title: "Waqas Work Bot — automating a boring morning workflow so the computer could be bored instead.",
+    body: "A Linux-hosted browser automation pipeline: authenticated sessions, structured reports and digests, and a durable SMS queue that survives the collector failing.",
+    stack: "Node.js · Selenium · Firefox · systemd · KDE Connect",
+  },
+  {
+    cat: "Monitoring",
+    status: "Prototype",
+    statusStyle: "accent",
+    href: "/labs/figure-sentry",
+    video: "orange_circit",
+    driftSeconds: 26,
+    opacity: "opacity-70",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[300px]",
+    title: "Figure Sentry — a tiny sentry for anime figures that are annoyingly easy to miss.",
+    body: "Watches AmiAmi and Good Smile product pages, remembers the last state, and only speaks up when something actually changes.",
+    stack: "TypeScript · Apify · Playwright · Discord",
+  },
+  {
+    cat: "Computer Vision",
+    status: "Experiment",
+    statusStyle: "neutral",
+    href: "/labs/airswipe",
+    video: "optical_illusion",
+    driftSeconds: 20,
+    opacity: "opacity-60",
+    aspect: "aspect-4/3",
+    grow: "flex-1 basis-[300px]",
+    title: "AirSwipe — what if scrolling a computer meant waving at it?",
+    body: "A webcam hand-tracking experiment that turns movement into desktop input. Less about replacing the mouse, more about what noisy physical input does to interaction design.",
+    stack: "Python · Computer Vision · Desktop Input",
+  },
+];
+
+const smaller = [
+  {
+    cat: "Cloud / AWS",
+    status: "Ongoing",
+    statusStyle: "neutral",
+    title: "AWS Learning Lab",
+    body: "Hands-on work with IAM, S3, EC2, VPCs, subnets, route tables and the CLI — understanding the pieces by wiring them together rather than memorising diagrams.",
+    stack: "AWS CLI · IAM · S3 · EC2 · VPC",
   },
   {
     cat: "Automation",
     status: "Experiment",
     statusStyle: "neutral",
-    video: "orange_circit",
-    driftSeconds: 26,
-    opacity: "opacity-70",
-    aspect: "aspect-4/3",
-    grow: "flex-1 basis-[280px]",
-    title: "Trading bot",
-    body: "Scheduled market checks and paper trades. Dry-run only, deliberately.",
-    stack: "Python · Lambda · EventBridge",
-  },
-  {
-    cat: "Cloud / AWS",
-    status: "Ongoing",
-    statusStyle: "neutral",
-    video: "optical_illusion",
-    driftSeconds: 20,
-    opacity: "opacity-60",
-    aspect: "aspect-4/3",
-    grow: "flex-1 basis-[280px]",
-    title: "AWS learning lab",
-    body: "S3, EC2, IAM and VPC networking, learned by building and breaking them.",
-    stack: "AWS CLI · EC2 · S3 · IAM",
+    title: "Alpaca Paper Trader",
+    body: "A small paper-trading experiment: check market data, generate a deliberately simple signal, submit a paper order. Not presented as a real strategy.",
+    stack: "Python · Alpaca · market data · paper trading",
   },
   {
     cat: "Networking / Security",
     status: "Ongoing",
     statusStyle: "neutral",
-    video: "static_tv",
-    driftSeconds: 24,
-    opacity: "opacity-85",
-    aspect: "aspect-4/3",
-    grow: "flex-1 basis-[280px]",
-    title: "Networking & security lab",
-    body: "Subnetting, service discovery and Wi-Fi tooling — on equipment I own.",
-    stack: "Linux · Nmap · VLSM",
+    title: "Networking & Wireless Lab",
+    body: "Subnetting, service discovery, scanning, packet inspection and Wi-Fi tooling on equipment I own and control. Learning, not professional pentesting.",
+    stack: "Linux · Nmap · Wireshark · Aircrack-ng · VLSM",
   },
   {
-    cat: "Browser / Extensions",
-    status: "Archived",
+    cat: "Linux / Systems",
+    status: "Ongoing",
+    statusStyle: "neutral",
+    title: "Linux Desktop Automation",
+    body: "My desktop as its own automation project: window-manager bindings, app placement, launchers, audio/brightness controls and small shell workflows.",
+    stack: "Linux · shell · i3 · Picom",
+  },
+  {
+    cat: "Developer Tools",
+    status: "Prototype",
+    statusStyle: "neutral",
+    title: "Tank Stars Prototype",
+    body: "A Godot experiment recreating the artillery loop from Tank Stars — movement, aiming, projectile gravity, collisions, damage and health.",
+    stack: "Godot · GDScript",
+  },
+  {
+    cat: "Linux / Systems",
+    status: "Unfinished",
     statusStyle: "faint",
-    video: "static_screen",
-    driftSeconds: 30,
-    opacity: "opacity-70",
-    aspect: "aspect-4/3",
-    grow: "flex-1 basis-[280px]",
-    title: "Gesture scroll extension",
-    body: "Scrolling a page with hand gestures. Fun, and a bad idea for daily use.",
-    stack: "MediaPipe · Chrome APIs",
+    title: "Android / scrcpy Tooling",
+    body: "A small launcher experiment around ADB and scrcpy for USB/Wi-Fi device control, connection checks and retry behaviour.",
+    stack: "Bash · ADB · scrcpy",
   },
 ];
 
@@ -102,12 +153,12 @@ const statusClasses: Record<string, string> = {
     <section id="top" class="mx-auto max-w-[1440px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
       <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
-        <span>Labs</span>
+        <span>Labs / Experiments</span>
       </div>
       <div class="mt-6 flex flex-wrap items-end justify-between gap-8">
         <h1 class="m-0 min-w-0 flex-1 basis-[400px] text-[clamp(28px,4vw,54px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">Work is proof. Labs are curiosity.</h1>
-        <p class="m-0 min-w-0 flex-1 basis-[320px] max-w-[44ch] text-[15px] leading-[1.7] text-[#a7a59e] text-wrap-pretty">
-          Small systems, experiments, automations and rabbit holes — usually built because I wanted to understand how something worked, or because repeating a task manually annoyed me.
+        <p class="m-0 min-w-0 flex-1 basis-[320px] max-w-[46ch] text-[15px] leading-[1.7] text-[#a7a59e] text-wrap-pretty">
+          Small systems, automations, developer tools and technical rabbit holes — usually built because I wanted to understand how something worked, or because repeating a task manually annoyed me enough to automate it. Some became useful tools. Some became prototypes. Some simply answered the question that started them.
         </p>
       </div>
     </section>
@@ -130,65 +181,65 @@ const statusClasses: Record<string, string> = {
       </div>
     </section>
 
-    <section class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-4 px-5 pt-[22px] pb-14 sm:px-8 lg:px-16 lg:pb-25">
-      {labs.map((lab) => (
+    <section class="mx-auto max-w-[1440px] px-5 pt-[22px] sm:px-8 lg:px-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">Featured Labs</span>
+        <span>Five worth a full page each</span>
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-20">
+      {featured.map((lab, i) => (
         <div data-lab-card data-cat={lab.cat} class:list={["min-w-0 overflow-hidden border border-[#1e1e1c]", lab.grow]}>
-          {lab.big ? (
-            <a href={lab.href} class="block hover:border-[#5a5a54]">
-              <span class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
-                <video
-                  src={`/videos/${lab.video}.mp4`}
-                  poster={`/videos/posters/${lab.video}.jpg`}
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  preload="metadata"
-                  class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
-                  style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
-                ></video>
-                <span class="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.05))]"></span>
-                <span class="absolute top-4 left-4 flex items-center gap-2">
-                  <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
-                  <span class="font-mono text-[10px] tracking-[.12em] text-[#cfcdc6] uppercase">{lab.cat}</span>
-                </span>
+          <a href={lab.href} class="block hover:border-[#5a5a54]">
+            <span class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
+              <video
+                src={`/videos/${lab.video}.mp4`}
+                poster={`/videos/posters/${lab.video}.jpg`}
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
+                style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
+              ></video>
+              <span class:list={["absolute inset-0", i === 0 ? "bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.05))]" : "bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.1))]"]}></span>
+              <span class:list={["absolute left-4 flex items-center gap-2", i === 0 ? "top-4" : "top-[14px]"]}>
+                <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
+                <span class="font-mono text-[10px] tracking-[.12em] text-[#cfcdc6] uppercase">{lab.cat}</span>
               </span>
-              <span class="flex flex-col gap-3 p-[22px]">
-                <span class="text-[clamp(19px,2vw,26px)] leading-[1.2] tracking-[-.025em]">{lab.title}</span>
-                <span class="max-w-[48ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">{lab.body}</span>
-                <span class="mt-1 flex flex-wrap items-baseline justify-between gap-[14px] font-mono text-[10.5px] tracking-[.08em] text-[#6e6c67]">
-                  <span>{lab.stack}</span>
-                  <span class="text-accent">Read →</span>
-                </span>
+            </span>
+            <span class:list={["flex flex-col gap-3", i === 0 ? "p-[22px]" : "p-5"]}>
+              <span class:list={[i === 0 ? "text-[clamp(19px,2vw,26px)] leading-[1.2] tracking-[-.025em]" : "text-[17px] leading-[1.25] tracking-[-.02em]"]}>{lab.title}</span>
+              <span class:list={["text-[#a7a59e]", i === 0 ? "max-w-[48ch] text-[14.5px] leading-[1.7]" : "text-[13.5px] leading-[1.65]"]}>{lab.body}</span>
+              <span class="mt-1 flex flex-wrap items-baseline justify-between gap-[14px] font-mono text-[10.5px] tracking-[.08em] text-[#6e6c67]">
+                <span>{lab.stack}</span>
+                <span class="text-accent">Read →</span>
               </span>
-            </a>
-          ) : (
-            <>
-              <span class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
-                <video
-                  src={`/videos/${lab.video}.mp4`}
-                  poster={`/videos/posters/${lab.video}.jpg`}
-                  autoplay
-                  muted
-                  loop
-                  playsinline
-                  preload="metadata"
-                  class:list={["absolute inset-0 h-full w-full object-cover", lab.opacity]}
-                  style={`animation: hh-drift ${lab.driftSeconds}s ease-in-out infinite`}
-                ></video>
-                <span class="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,10,10,.9),rgba(10,10,10,.1))]"></span>
-                <span class="absolute top-[14px] left-[14px] flex items-center gap-2">
-                  <span class:list={["rounded-full border px-[10px] py-[5px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
-                  <span class="font-mono text-[10px] tracking-[.12em] text-[#cfcdc6] uppercase">{lab.cat}</span>
-                </span>
-              </span>
-              <div class="flex flex-col gap-[10px] p-5">
-                <span class="text-[17px] tracking-[-.02em]">{lab.title}</span>
-                <span class="text-[13.5px] leading-[1.65] text-[#a7a59e]">{lab.body}</span>
-                <span class="mt-1 font-mono text-[10.5px] tracking-[.08em] text-[#6e6c67]">{lab.stack}</span>
-              </div>
-            </>
-          )}
+            </span>
+          </a>
+        </div>
+      ))}
+    </section>
+
+    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 pt-9 sm:px-8 lg:px-16">
+      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">Smaller Experiments</span>
+        <span>No dedicated pages yet</span>
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1440px] flex-wrap items-stretch gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-25">
+      {smaller.map((lab) => (
+        <div data-lab-card data-cat={lab.cat} class="flex min-w-0 flex-1 basis-[260px] flex-col gap-[10px] border border-[#1e1e1c] bg-[#070707] p-5">
+          <span class="flex flex-wrap items-center gap-2">
+            <span class:list={["rounded-full border px-[10px] py-[4px] font-mono text-[10px] tracking-[.1em] uppercase", statusClasses[lab.statusStyle]]}>{lab.status}</span>
+            <span class="font-mono text-[10px] tracking-[.1em] text-[#6e6c67] uppercase">{lab.cat}</span>
+          </span>
+          <span class="text-[16px] tracking-[-.015em]">{lab.title}</span>
+          <span class="text-[13.5px] leading-[1.65] text-[#a7a59e]">{lab.body}</span>
+          <span class="mt-auto pt-1 font-mono text-[10.5px] tracking-[.06em] text-[#6e6c67]">{lab.stack}</span>
         </div>
       ))}
     </section>

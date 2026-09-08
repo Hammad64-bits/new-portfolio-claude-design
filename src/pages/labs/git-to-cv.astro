@@ -1,0 +1,160 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const pipeline = [
+  "Git repositories",
+  "discover",
+  "extract authored commits",
+  "distill in overlapping batches",
+  "consolidate duplicate/related facts",
+  "attach controlled capabilities",
+  "validate provenance",
+  "SQLite career database",
+  "search / job matching",
+  "validated resume model",
+  "Markdown + DOCX",
+];
+
+const notJustLogs = [
+  { title: "Authorship is explicit", body: "Repository history is filtered through approved identities rather than assuming every commit in a checkout belongs to me." },
+  { title: "Facts keep provenance", body: "Canonical engineering facts retain the source commit hashes that support them." },
+  { title: "Multiple repos can represent one job", body: "The system groups related repositories into project families instead of pretending every repo is a separate professional project." },
+  { title: "Evidence has different trust levels", body: "Git-backed facts, manual career facts, competencies and background evidence have different rules. Linux competence can help match a skill requirement. It cannot magically become “reduced server costs by 40% using Linux.” No source, no achievement claim." },
+];
+
+const guardrails = [
+  "insufficient tenure is not rounded upward",
+  "generic software experience does not become specific framework experience",
+  "Git commits prove Git usage, not GitFlow or code-review practice",
+  "unsupported technologies in resume bullets are rejected",
+  "unknown evidence IDs are hard failures",
+  "impressive but irrelevant projects can be omitted",
+];
+
+const outputs = [
+  "searchable career facts",
+  "job requirement analysis",
+  "screening support",
+  "tailored skills",
+  "selected experience / projects",
+  "resume.json",
+  "readable Markdown",
+  "ATS-friendly DOCX",
+];
+---
+
+<Layout title="Git-to-CV — Hammad Habib" description="Turns Git repository history into a searchable career-evidence system, then uses that evidence to evaluate job requirements and generate a defensible resume — without letting anything get invented.">
+  <div class="min-h-screen overflow-x-hidden bg-ink">
+    <Header active="labs" />
+
+    <section class="mx-auto max-w-[1000px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
+      <a href="/labs" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Labs</a>
+      <div class="mt-6 flex flex-wrap items-center gap-[10px]">
+        <span class="rounded-full border border-accent px-[11px] py-[5px] font-mono text-[10px] tracking-[.1em] text-accent uppercase">Working</span>
+        <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">Developer Tools</span>
+      </div>
+      <h1 class="mt-[22px] max-w-[22ch] text-[clamp(28px,3.8vw,50px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">Git-to-CV</h1>
+      <p class="mt-[18px] max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+        I kept forgetting what I built, so I made Git remember for me. My Git history is very good at remembering changes and terrible at explaining career experience.
+      </p>
+      <p class="mt-4 max-w-[52ch] text-[15px] leading-[1.7] text-[#a7a59e]">
+        Git-to-CV turns repository history into traceable engineering facts, stores them in a searchable career database, and uses those facts to build job-specific resumes without allowing the model to invent experience.
+      </p>
+      <span class="mt-6 block font-mono text-[13px] leading-[1.9] tracking-[.02em] text-[#a7a59e]">TypeScript · Git · SQLite / FTS5 · Zod · LLM APIs · DOCX generation</span>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] px-5 pb-9 sm:px-8 lg:px-16 lg:pb-14">
+      <div class="texture-hatch flex aspect-video items-end border border-[#1e1e1c] p-4">
+        <span class="font-mono text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">Screenshot — career-fact search / tailored resume output (asset needed)</span>
+      </div>
+    </section>
+
+    <section class="mx-auto flex max-w-[1000px] flex-col gap-9 px-5 pb-10 sm:px-8 lg:px-16 lg:gap-14 lg:pb-16">
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">The problem</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          A commit history might say <span class="text-[#cfcdc6]">fix query</span>, <span class="text-[#cfcdc6]">widget fixes</span>, <span class="text-[#cfcdc6]">refactor inbox</span>, <span class="text-[#cfcdc6]">api changes</span>. Months later I remember almost none of the context. A recruiter wants what was built, what was solved, what was used and why it mattered. I wanted a system that could reconstruct that story while preserving a path back to the evidence.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Pipeline</span>
+        <div class="flex flex-col gap-[2px] border border-dashed border-[#2b2b28] p-5 font-mono text-[11.5px] leading-[1.6] text-[#8c8a84] sm:p-8">
+          {pipeline.map((step, i) => (
+            <>
+              <span class={i === 0 || i === pipeline.length - 1 ? "text-paper" : "text-[#cfcdc6]"}>{step}</span>
+              {i < pipeline.length - 1 && <span class="text-[#3a3a36]">↓</span>}
+            </>
+          ))}
+          <span class="mt-3 text-[10.5px] tracking-[.1em] text-[#6e6c67] uppercase">At one recorded stage, the system could prove Git usage from 826 eligible authored commits across 24 ingested repositories.</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Why this is not just "send Git logs to an LLM"</span>
+        <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+          {notJustLogs.map((item) => (
+            <div class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[10px] bg-ink p-5">
+              <span class="text-[15px] tracking-[-.01em] text-paper">{item.title}</span>
+              <span class="text-[13.5px] leading-[1.65] text-[#a7a59e]">{item.body}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">The career database</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          SQLite acts as the filing cabinet: project families hold repositories and commits, canonical facts hold technologies, capabilities and source hashes, and a full-text index sits over all of it. FTS5/BM25 lets the system retrieve facts relevant to a job requirement instead of throwing the entire history into one enormous prompt.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Fighting model optimism</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          One of the more interesting problems was stopping an LLM from being helpfully wrong — a model will happily classify related experience as a perfect match if you let it. The pipeline runs deterministic validation after model reasoning:
+        </p>
+        <div class="flex flex-col">
+          {guardrails.map((g, i) => (
+            <span class:list={["border-t border-[#1e1e1c] py-[14px] text-[14.5px] leading-[1.6] text-[#a7a59e]", i === guardrails.length - 1 && "border-b"]}>{g}</span>
+          ))}
+        </div>
+        <p class="m-0 max-w-[62ch] text-[15px] leading-[1.75] text-[#a7a59e]">
+          The goal is not the most flattering resume. It is the strongest resume I can actually defend.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Outputs</span>
+        <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+          {outputs.map((o) => (
+            <span class="flex-1 basis-[170px] bg-ink p-[16px_18px] font-mono text-xs tracking-[.04em] text-[#cfcdc6]">{o}</span>
+          ))}
+        </div>
+        <p class="m-0 max-w-[62ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">The renderer does not get to reinterpret evidence. If the content is wrong, the fix belongs upstream.</p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">What I learned</span>
+        <p class="m-0 max-w-[62ch] text-[15.5px] leading-[1.8] text-[#a7a59e]">
+          AI is much more useful in a pipeline when it is surrounded by boring deterministic software. The model is good at interpreting messy language, grouping related work and drafting candidate descriptions. Code is better at IDs, dates, provenance, thresholds, validation, and deciding whether a claim is allowed to exist.
+        </p>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-[1000px] border-t border-[#1e1e1c] px-5 py-9 sm:px-8 lg:px-16 lg:py-16">
+      <span class="font-mono text-[11px] tracking-[.14em] text-[#8c8a84] uppercase">Related Work</span>
+      <a href="/work/revsmith" class="mt-5 flex flex-wrap items-end justify-between gap-5 border border-[#1e1e1c] p-5 hover:border-[#5a5a54] sm:p-7">
+        <span class="flex min-w-0 flex-col gap-[10px]">
+          <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">RevSmith · production</span>
+          <span class="max-w-[26ch] text-[clamp(18px,2vw,26px)] leading-[1.2] tracking-[-.025em] text-wrap-pretty">The same instinct — deterministic validation around what a model is allowed to claim — shows up again in RevSmith's AI agent configuration.</span>
+        </span>
+        <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Case study →</span>
+      </a>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>

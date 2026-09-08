@@ -18,6 +18,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <style>html { background: #0a0a0a; }</style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,6 +28,18 @@ const {
   </head>
   <body class="min-h-screen overflow-x-hidden bg-ink">
     <slot />
+
+    <div id="hh-page-transition" aria-hidden="true" style="display:none; position:fixed; inset:0; z-index:9999; pointer-events:none;">
+      <div style="position:absolute; inset:0; background:#eeece6;"></div>
+      <div data-tp-panel style="position:absolute; top:0; bottom:0; left:0; width:0%; background:#0a0a0a;"></div>
+      <div style="position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); display:flex; justify-content:center; font-family:'Instrument Sans',Helvetica,Arial,sans-serif; font-size:clamp(28px,5vw,64px); font-weight:600; letter-spacing:-.03em; line-height:1;">
+        <span data-tp-letter style="color:#0a0a0a;">H</span><span data-tp-letter style="color:#0a0a0a;">a</span><span data-tp-letter style="color:#0a0a0a;">m</span><span data-tp-letter style="color:#0a0a0a;">m</span><span data-tp-letter style="color:#0a0a0a;">a</span><span data-tp-letter style="color:#0a0a0a;">d</span><span data-tp-letter style="color:#0a0a0a;">.</span>
+      </div>
+      <div data-tp-counter style="position:absolute; top:66%; left:5%; right:5%; display:flex; align-items:center; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:clamp(11px,1.1vw,13px); letter-spacing:.08em; color:#8c8a84; opacity:0;">
+        <span data-tp-percent>0%</span>
+        <span data-tp-tick style="height:1px; background:#3a3a36; width:0;"></span>
+      </div>
+    </div>
   </body>
 </html>
 
