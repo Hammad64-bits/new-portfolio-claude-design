@@ -29,6 +29,15 @@ const {
   <body class="min-h-screen overflow-x-hidden bg-ink">
     <slot />
 
+    <button
+      type="button"
+      data-scroll-top
+      aria-label="Scroll to top"
+      class="fixed right-5 bottom-5 z-40 flex h-11 w-11 items-center justify-center rounded-[2px] border border-[#2b2b28] bg-[#0a0a0a]/90 text-[#9c9a94] backdrop-blur-[6px] hover:border-accent hover:text-accent focus-visible:border-accent focus-visible:text-accent focus-visible:outline-none sm:right-8 sm:bottom-8"
+    >
+      <span aria-hidden="true" class="font-mono text-base leading-none">↑</span>
+    </button>
+
     <div id="hh-page-transition" aria-hidden="true" style="display:none; position:fixed; inset:0; z-index:9999; pointer-events:none;">
       <div style="position:absolute; inset:0; background:#eeece6;"></div>
       <div data-tp-panel style="position:absolute; top:0; bottom:0; left:0; width:0%; background:#0a0a0a;"></div>

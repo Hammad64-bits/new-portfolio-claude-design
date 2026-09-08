@@ -141,6 +141,26 @@ img.object-scale-down:hover {
   }
 }
 
+/* Scroll-to-top button — plain class toggle driven by ScrollTrigger in
+   motion.ts, independent of motion preference (opacity/transform only). */
+[data-scroll-top] {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease, border-color .2s ease, color .2s ease;
+}
+[data-scroll-top].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-top] {
+    transition: opacity .15s ease, border-color .15s ease, color .15s ease;
+    transform: none;
+  }
+}
+
 /* Plain wireframe placeholder — unbuilt content blocks (no media import), matches the source design's own "coming soon" convention */
 .texture-hatch {
   background-image: repeating-linear-gradient(135deg, #111110 0 10px, #0c0c0b 10px 20px);

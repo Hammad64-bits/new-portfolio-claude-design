@@ -293,6 +293,21 @@ function initHeaderScroll() {
   });
 }
 
+function initScrollTop() {
+  const btn = document.querySelector<HTMLButtonElement>("[data-scroll-top]");
+  if (!btn) return;
+  ScrollTrigger.create({
+    start: "top -1",
+    onUpdate: (self) => {
+      btn.classList.toggle("is-visible", self.scroll() > 600);
+    },
+  });
+  btn.addEventListener("click", () => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+  });
+}
+
 export function initMotion() {
   const mm = gsap.matchMedia();
 
@@ -317,6 +332,9 @@ export function initMotion() {
   // Independent of motion preference: a lightweight, non-animated class
   // toggle for header density on scroll (no transform/opacity tween).
   initHeaderScroll();
+
+  // Scroll-to-top button visibility — same plain class-toggle approach.
+  initScrollTop();
 
   // Nav underline indicator: pure CSS transform transition, instant under
   // reduced motion via the stylesheet rule above — runs unconditionally.

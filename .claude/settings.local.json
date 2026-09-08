@@ -3,5 +3,9 @@
     "allow": [
       "Skill(update-config)"
     ]
+  },
+  "skillOverrides": {
+    "sanity-best-practices": "off",
+    "sanity-migration": "off"
   }
 }
