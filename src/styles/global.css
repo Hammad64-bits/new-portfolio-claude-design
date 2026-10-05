@@ -170,3 +170,409 @@ img.object-scale-down:hover {
   background-image: repeating-linear-gradient(135deg, #141413 0 10px, #0f0f0e 10px 20px);
 }
 
+
+/* ==========================================================================
+   Scroll scenes (homepage). Timelines: src/scripts/scenes/*.ts.
+
+   Everything below the base rules is gated by the SAME query as CINEMATIC in
+   scenes/core.ts plus html.js. Scene heights and sticky stages are pure CSS, so
+   nothing reflows when JS initialises; JS only animates transform / opacity /
+   clip-path. Outside the gate (mobile, short screens, reduced motion, no JS)
+   every section is its ordinary static layout.
+   ========================================================================== */
+
+/* Masks for SplitText output and hand-written mask lines */
+.split-word,
+.split-line,
+.mask-line {
+  padding-bottom: .08em;
+  margin-bottom: -.08em;
+}
+.mask-line {
+  display: inline-block;
+  overflow: clip;
+  vertical-align: bottom;
+}
+.mask-line > * {
+  display: inline-block;
+}
+
+/* Cinematic-only furniture is absent in the static layout */
+.hero-next,
+.hero-cue,
+.work-counter,
+.compare-edge,
+.cap-rule,
+.exp-progress,
+.labs-ghost,
+.contact-rule {
+  display: none;
+}
+
+@media (min-width: 1024px) and (min-height: 600px) and (prefers-reduced-motion: no-preference) {
+  html.js {
+    /* Space reserved for the sticky site header inside each stage */
+    --stage-top: 84px;
+    /* Height of the sticky site header row at desktop widths */
+    --header-h: 65px;
+  }
+
+  html.js .scene-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: clip;
+  }
+
+  /* — Scene 01: Hero — */
+  html.js .hero-scene {
+    height: 420svh;
+    /* Start the stage under the sticky header so it is fully framed at scroll 0 */
+    margin-top: calc(-1 * var(--header-h));
+  }
+  html.js .hero-grid {
+    height: 100%;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+    align-items: center;
+    padding-top: var(--stage-top);
+    padding-bottom: 32px;
+  }
+  html.js .hero-title {
+    font-size: clamp(30px, min(4.6vw, 6.4svh), 64px);
+    height: 5.4em;
+    margin-top: 22px;
+  }
+  html.js .hero-actions {
+    margin-top: clamp(20px, 3.4svh, 38px);
+  }
+  html.js .hero-status {
+    margin-top: clamp(20px, 3.8svh, 44px);
+  }
+  html.js .hero-media {
+    align-items: flex-end;
+  }
+  html.js .hero-frame {
+    height: min(calc(100svh - var(--stage-top) - 90px), 760px);
+    width: auto;
+    overflow: visible; /* clip-path does the clipping so it can open outward */
+    clip-path: inset(0px);
+  }
+  html.js .hero-dim {
+    opacity: 0;
+  }
+  html.js .hero-next {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  html.js .hero-next-title {
+    margin-top: 2.2svh;
+    font-size: min(13.4vw, 25svh);
+    line-height: .86;
+    font-weight: 500;
+    letter-spacing: -.055em;
+    white-space: nowrap;
+    color: var(--color-paper);
+  }
+  html.js .hero-cue {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  html.js .hero-cue-line {
+    display: block;
+    width: 1px;
+    height: 34px;
+    background: linear-gradient(#3a3a36, transparent);
+  }
+
+  /* — Scene 02: Selected Work — slides up over the hero's last 100svh — */
+  html.js .work-scene {
+    height: 600svh;
+    margin-top: -100svh;
+  }
+  html.js .work-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: var(--stage-top);
+    padding-bottom: 4svh;
+  }
+  html.js .work-counter {
+    display: inline-flex;
+    gap: .6em;
+    color: var(--color-paper);
+  }
+  html.js .work-counter-mask {
+    display: inline-grid;
+    overflow: clip;
+  }
+  html.js .work-counter-mask > * {
+    grid-area: 1 / 1;
+  }
+  html.js .work-projects {
+    position: relative;
+    flex: 1;
+    margin-top: 2svh;
+  }
+  html.js .project {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    align-items: center;
+    align-content: center;
+    column-gap: 56px;
+  }
+  html.js .project-text {
+    gap: clamp(10px, 1.9svh, 20px);
+  }
+  html.js .project-title {
+    position: relative;
+    z-index: 0;
+    font-size: min(10vw, 17svh);
+    line-height: .84;
+    letter-spacing: -.06em;
+    white-space: nowrap;
+    margin: 1svh 0 .5svh -.04em;
+  }
+  html.js [data-project="vigilant"] .project-title {
+    font-size: min(7.2vw, 11.5svh);
+    line-height: .88;
+  }
+  html.js .project-title-pre {
+    display: block;
+    margin-bottom: 1.6svh;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #8c8a84;
+  }
+  html.js .project-title-line {
+    display: block;
+  }
+  html.js .project-meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+  html.js .project-claim {
+    font-size: clamp(20px, min(1.9vw, 3.6svh), 30px);
+    line-height: 1.18;
+    max-width: 26ch;
+  }
+  html.js .project-text p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  html.js .project-list {
+    flex-wrap: nowrap;
+  }
+  html.js .project-list li {
+    flex-basis: 0;
+    padding: 1.5svh 12px 1.7svh;
+    gap: 6px;
+  }
+  html.js .project-list li span:last-child {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  html.js .project-visual {
+    z-index: 1;
+    align-self: center;
+  }
+  html.js .project-frame {
+    max-height: calc(100svh - var(--stage-top) - 22svh);
+    margin-left: auto;
+  }
+
+  /* Screenshots leave the grid and float around the frame at their own depths */
+  html.js .project-shots {
+    display: block;
+    margin: 0;
+  }
+  html.js .shot {
+    position: absolute;
+    width: 30%;
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .8);
+  }
+  html.js .shot-1 { top: -4%; right: -2.5%; width: 26%; }
+  html.js .shot-2 { bottom: -14%; left: -3.5%; width: 29%; }
+  html.js .shot-3 { bottom: -20%; right: 9%; width: 24%; }
+
+  /* Before/after stack for the scrubbed wipe */
+  html.js .compare {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    max-height: calc(100svh - var(--stage-top) - 18svh);
+    margin-left: auto;
+  }
+  html.js .compare-pane {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+  html.js .compare-after-label {
+    left: auto;
+    right: 12px;
+  }
+  html.js .compare-edge {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background: var(--color-accent);
+    z-index: 2;
+  }
+
+  /* — Scene 03: Capabilities — slides up over the Work stage — */
+  html.js .caps-scene {
+    height: 380svh;
+    margin-top: -100svh;
+  }
+  html.js .caps-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: var(--stage-top);
+    padding-bottom: 5svh;
+  }
+  html.js .caps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: auto 0;
+  }
+  html.js .cap {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) minmax(240px, .5fr);
+    align-items: end;
+    column-gap: 32px;
+    border-top: 0;
+    padding: 2.6svh 0 2.2svh;
+  }
+  html.js .cap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #1e1e1c;
+  }
+  html.js .cap-num {
+    align-self: start;
+    padding-top: .6em;
+    font-size: 11.5px;
+    color: #8c8a84;
+  }
+  html.js .cap-title {
+    font-size: clamp(32px, min(4.8vw, 9svh), 90px);
+    line-height: .95;
+    font-weight: 500;
+    letter-spacing: -.045em;
+    white-space: nowrap;
+  }
+  html.js .cap-detail {
+    gap: 8px;
+    padding-bottom: .5em;
+  }
+  html.js .cap-rule {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--color-accent);
+    transform-origin: 0 50%;
+  }
+
+  /* — Scene 04: Experience — */
+  html.js .exp-progress {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -28px;
+    width: 1px;
+    background: var(--color-accent);
+    transform-origin: 50% 0;
+  }
+
+  /* — Scene 05: Labs — vertical scroll, horizontal travel — */
+  html.js .labs-scene {
+    --lab-h: min(54svh, 32vw);
+    /* track ≈ one 16:9 card + three squares + gaps/padding; scroll it ~1.8× slower than 1:1 */
+    height: calc(100svh + max(80svh, (var(--lab-h) * 4.78 + 200px - 100vw) * 1.8));
+  }
+  html.js .labs-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: var(--stage-top);
+    padding-bottom: 6svh;
+  }
+  html.js .labs-track {
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 24px;
+    margin-top: auto;
+  }
+  html.js .lab {
+    flex: none;
+    height: var(--lab-h);
+    width: auto;
+  }
+  html.js .labs-ghost {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    left: 3vw;
+    top: 50%;
+    transform: translateY(-38%);
+    font-size: min(30svh, 22vw);
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -.06em;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1px #232320;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* — Scene 07: Contact — the composition the page lands on — */
+  html.js .contact-title {
+    max-width: 17ch;
+    font-size: clamp(40px, min(6.2vw, 11svh), 104px);
+    line-height: 1.02;
+    letter-spacing: -.045em;
+  }
+  html.js .contact-rule {
+    display: block;
+    position: absolute;
+    top: -1px;
+    left: 64px;
+    right: 64px;
+    height: 1px;
+    background: var(--color-accent);
+    transform-origin: 0 50%;
+  }
+}

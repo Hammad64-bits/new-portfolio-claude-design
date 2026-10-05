@@ -20,109 +20,123 @@ const steps = [
 ];
 ---
 
-<section id="work" class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
-  <div data-reveal class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
-    <span class="text-paper">01 / Selected Work</span>
-    <span>Two projects · 2023—2025</span>
-  </div>
-
-  <article class="mt-10 flex flex-wrap items-start gap-8 lg:mt-16 lg:gap-[72px]">
-    <div class="flex min-w-0 max-w-[340px] flex-1 basis-[240px] flex-col gap-[22px]">
-      <div class="text-[clamp(26px,2.6vw,38px)] leading-[1.1] font-medium tracking-[-.03em]">RevSmith</div>
-      <div class="flex flex-col gap-[10px] font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
-        <span>2024—2025</span>
-        <span>Software Engineer · Product</span>
-        <span class="text-[#6e6c67]">Next.js · React · TypeScript</span>
-        <span class="text-[#6e6c67]">Supabase · Postgres · Meta APIs</span>
-      </div>
-      <p class="m-0 max-w-[34ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">
-        Started frontend-heavy, grew into APIs, realtime systems, architecture, integrations, data access and auth — product-level engineering inside a small startup team.
-      </p>
-    </div>
-
-    <div class="flex min-w-0 flex-1 basis-[420px] flex-col gap-6 lg:flex-[3] lg:gap-10">
-      <h2 data-reveal class="m-0 max-w-[24ch] text-[clamp(28px,3.6vw,52px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
-        Building an AI customer-support platform inside a small startup team.
-      </h2>
-
-      <div data-reveal class="relative aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505]">
-        <video
-          src="/revsmith/revsmith-demo.mp4"
-          poster="/revsmith/posters/revsmith-demo.jpg"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-          class="absolute inset-0 h-full w-full object-cover object-top"
-        ></video>
-        <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_60%,rgba(5,5,5,.85))]"></div>
-        <!-- <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.12em] text-[#cfcdc6] uppercase">Support inbox — full width</span> -->
+<!--
+  Scene 02. On desktop both projects share one sticky stage and the scroll
+  timeline in src/scripts/scenes/work.ts moves from RevSmith into Vigilant.
+  Everywhere else the two articles simply stack.
+-->
+<section id="work" data-scene="work" class="work-scene relative z-[2] border-t border-[#1e1e1c] bg-ink">
+  <div data-stage class="scene-stage work-stage">
+    <div class="work-inner mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
+      <div data-work-bar class="work-bar flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <span class="text-paper">01 / Selected Work</span>
+        <span aria-hidden="true" class="work-counter">
+          <span class="work-counter-mask"><span data-counter="0">01</span><span data-counter="1">02</span></span>
+          <span class="text-[#4a4a45]">/ 02</span>
+        </span>
+        <span>Two projects · 2023—2025</span>
       </div>
 
-      <div data-reveal-group class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
-        {widgets.map((label, i) => (
-          <div data-reveal-item class="flex min-w-0 flex-1 basis-[150px] flex-col gap-[10px] bg-ink px-5 py-[22px] hover:bg-[#101010]">
-            <span class="font-mono text-[11px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
-            <span class="text-[15.5px] tracking-[-.01em]">{label}</span>
-          </div>
-        ))}
-      </div>
-
-      <div data-reveal-group class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
-        {shots.map((shot) => (
-          <div data-reveal-item class="relative aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
-            <img src={shot.src} alt={shot.label} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
-            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-            <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">{shot.label}</span>
-          </div>
-        ))}
-      </div>
-
-      <a href="/work/revsmith" class="self-start border-b border-[#2b2b28] pb-2 font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">
-        Read the case study →
-      </a>
-    </div>
-  </article>
-
-  <article class="mt-18 border-t border-[#1e1e1c] pt-8 lg:mt-[132px] lg:pt-14">
-    <div class="flex flex-wrap items-start gap-7 lg:gap-16">
-      <div class="min-w-0 max-w-[340px] flex-1 basis-[240px]">
-        <div class="text-[clamp(22px,2.2vw,30px)] font-medium tracking-[-.025em]">SolvoLab / Vigilant Security</div>
-        <div class="mt-[14px] flex flex-wrap gap-4 font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
-          <span>2023—2024</span>
-          <span>UK / Ireland</span>
-          <span class="text-[#6e6c67]">WordPress → Modern Framework · SEO · Linux</span>
-        </div>
-      </div>
-
-      <div class="min-w-0 flex-1 basis-[420px] lg:flex-[3]">
-        <h3 data-reveal class="m-0 max-w-[26ch] text-[clamp(22px,2.4vw,34px)] leading-[1.2] font-medium tracking-[-.028em] text-[#dedbd4] text-wrap-pretty">
-          Modernising and migrating production websites without throwing away years of SEO value.
-        </h3>
-
-        <div data-reveal-group class="mt-7 flex flex-wrap gap-px border-t border-b border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
-          {steps.map((label, i) => (
-            <div data-reveal-item class="flex min-w-0 flex-1 basis-[110px] flex-col gap-2 bg-ink px-4 pt-5 pb-[22px]">
-              <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
-              <span class="text-[13.5px] leading-[1.5] text-[#cfcdc6]">{label}</span>
+      <div class="work-projects">
+        <article data-project="revsmith" class="project mt-10 grid items-start gap-8 lg:mt-16 lg:grid-cols-12 lg:gap-x-[72px]">
+          <div class="project-text flex min-w-0 flex-col gap-[22px] lg:col-span-5">
+            <div data-p-meta class="project-meta flex flex-col gap-[10px] font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+              <span>2024—2025</span>
+              <span>Software Engineer · Product</span>
+              <span class="text-[#6e6c67]">Next.js · React · TypeScript</span>
+              <span class="text-[#6e6c67]">Supabase · Postgres · Meta APIs</span>
             </div>
-          ))}
-        </div>
+            <div data-p-title class="project-title text-[clamp(26px,2.6vw,38px)] leading-[1.1] font-medium tracking-[-.03em]">RevSmith</div>
+            <h2 data-p-claim class="project-claim m-0 max-w-[24ch] text-[clamp(28px,3.6vw,52px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
+              Building an AI customer-support platform inside a small startup team.
+            </h2>
+            <p data-p-body class="m-0 max-w-[40ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">
+              Started frontend-heavy, grew into APIs, realtime systems, architecture, integrations, data access and auth — product-level engineering inside a small startup team.
+            </p>
+            <ol data-p-list class="project-list m-0 flex list-none flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] p-0">
+              {widgets.map((label, i) => (
+                <li class="flex min-w-0 flex-1 basis-[150px] flex-col gap-[10px] bg-ink px-5 py-[22px]">
+                  <span class="font-mono text-[11px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="text-[15.5px] tracking-[-.01em]">{label}</span>
+                </li>
+              ))}
+            </ol>
+            <a data-p-cta href="/work/revsmith" class="self-start border-b border-[#2b2b28] pb-2 font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">
+              Read the case study →
+            </a>
+          </div>
 
-        <div data-reveal-group class="mt-7 flex flex-wrap gap-4">
-          <div data-reveal-item class="relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#1e1e1c] bg-[#050505]">
-            <img src="/vigilant/legacy-uk.png" alt="Vigilant Security — legacy WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
-            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-            <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#9c9a94] uppercase">Before — legacy WordPress</span>
+          <div data-p-visual class="project-visual relative min-w-0 lg:col-span-7">
+            <div data-p-frame class="project-frame relative aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+              <div data-p-media class="absolute inset-0">
+                <video
+                  src="/revsmith/revsmith-demo.mp4"
+                  poster="/revsmith/posters/revsmith-demo.jpg"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  class="absolute inset-0 h-full w-full object-cover object-top"
+                ></video>
+              </div>
+              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_60%,rgba(5,5,5,.85))]"></div>
+            </div>
+
+            <div class="project-shots mt-4 grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+              {shots.map((shot, i) => (
+                <div data-p-shot class:list={["shot relative aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]", `shot-${i + 1}`]}>
+                  <img src={shot.src} alt={shot.label} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+                  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+                  <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">{shot.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div data-reveal-item class="relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#2b2b28] bg-[#050505]">
-            <img src="/vigilant/new-service-page.png" alt="Vigilant Security — rebuilt site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
-            <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-            <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">After — Astro + Sanity</span>
+        </article>
+
+        <article data-project="vigilant" class="project mt-18 grid items-start gap-7 border-t border-[#1e1e1c] pt-8 lg:mt-[132px] lg:grid-cols-12 lg:gap-x-16 lg:pt-14">
+          <div class="project-text flex min-w-0 flex-col gap-[22px] lg:col-span-5">
+            <div data-p-meta class="project-meta flex flex-wrap gap-4 font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+              <span>2023—2024</span>
+              <span>UK / Ireland</span>
+              <span class="text-[#6e6c67]">WordPress → Modern Framework · SEO · Linux</span>
+            </div>
+            <div data-p-title class="project-title text-[clamp(22px,2.2vw,30px)] font-medium tracking-[-.025em]">
+              <span class="project-title-pre">SolvoLab /</span> <span class="project-title-line">Vigilant</span> <span class="project-title-line">Security</span>
+            </div>
+            <h3 data-p-claim class="project-claim m-0 max-w-[26ch] text-[clamp(22px,2.4vw,34px)] leading-[1.2] font-medium tracking-[-.028em] text-[#dedbd4] text-wrap-pretty">
+              Modernising and migrating production websites without throwing away years of SEO value.
+            </h3>
+            <ol data-p-list class="project-list project-steps m-0 flex list-none flex-wrap gap-px border-t border-b border-[#1e1e1c] bg-[#1e1e1c] p-0">
+              {steps.map((label, i) => (
+                <li class="flex min-w-0 flex-1 basis-[110px] flex-col gap-2 bg-ink px-4 pt-5 pb-[22px]">
+                  <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="text-[13.5px] leading-[1.5] text-[#cfcdc6]">{label}</span>
+                </li>
+              ))}
+            </ol>
           </div>
-        </div>
+
+          <!-- Before/after. Side by side by default; in the cinematic scene "after"
+               sits on top of "before" and is wiped in by scroll — the migration itself. -->
+          <div data-p-visual class="project-visual relative min-w-0 lg:col-span-7">
+            <div data-compare class="compare flex flex-wrap gap-4">
+              <div data-compare-before class="compare-pane relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+                <img src="/vigilant/legacy-uk.png" alt="Vigilant Security — legacy WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+                <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+                <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#9c9a94] uppercase">Before — legacy WordPress</span>
+              </div>
+              <div data-compare-after class="compare-pane relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#2b2b28] bg-[#050505]">
+                <img src="/vigilant/new-service-page.png" alt="Vigilant Security — rebuilt site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+                <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+                <span class="compare-after-label absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">After — Astro + Sanity</span>
+              </div>
+              <span data-compare-edge aria-hidden="true" class="compare-edge"></span>
+            </div>
+          </div>
+        </article>
       </div>
     </div>
-  </article>
+  </div>
 </section>

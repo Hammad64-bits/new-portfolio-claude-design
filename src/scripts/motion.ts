@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { scrollToY } from "./smooth";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,11 +13,12 @@ gsap.registerPlugin(ScrollTrigger);
  */
 
 const EASE_OUT = "power3.out";
-const EASE_INOUT = "power2.inOut";
 
 function initReveals() {
   // Single elements: header eyebrows, headings, standalone blocks.
-  const items = gsap.utils.toArray<HTMLElement>("[data-reveal]");
+  // Homepage scroll scenes (src/scripts/scenes) own every element inside them.
+  const free = (el: HTMLElement) => !el.closest("[data-scene]");
+  const items = gsap.utils.toArray<HTMLElement>("[data-reveal]").filter(free);
   items.forEach((el) => {
     gsap.from(el, {
       y: 22,
@@ -32,7 +34,7 @@ function initReveals() {
   });
 
   // Groups: grids/lists whose children stagger in together.
-  const groups = gsap.utils.toArray<HTMLElement>("[data-reveal-group]");
+  const groups = gsap.utils.toArray<HTMLElement>("[data-reveal-group]").filter(free);
   groups.forEach((group) => {
     const children = group.querySelectorAll<HTMLElement>(":scope > [data-reveal-item]");
     if (!children.length) return;
@@ -49,46 +51,6 @@ function initReveals() {
       },
     });
   });
-}
-
-function initHero() {
-  const root = document.querySelector<HTMLElement>("[data-hero-lines]");
-  if (!root) return;
-
-  const lines = gsap.utils.toArray<HTMLElement>(".hero-line", root);
-  const dots = document.querySelectorAll<HTMLElement>("[data-hero-dots] .hero-dot");
-  if (!lines.length) return;
-
-  const hold = Number(root.dataset.holdMs) || 4000;
-  const holdSeconds = hold / 1000;
-
-  gsap.set(lines, { opacity: 0, y: 26 });
-  gsap.set(lines[0], { opacity: 1, y: 0 });
-  if (dots[0]) gsap.set(dots[0], { backgroundColor: "#b9ff4d" });
-
-  const tl = gsap.timeline({ delay: holdSeconds });
-
-  for (let i = 1; i < lines.length; i++) {
-    const prev = lines[i - 1];
-    const curr = lines[i];
-    tl.to(prev, { opacity: 0, y: -26, duration: 0.7, ease: EASE_INOUT }, `step${i}`)
-      .to(curr, { opacity: 1, y: 0, duration: 0.7, ease: EASE_INOUT }, `step${i}`);
-    if (dots.length) {
-      tl.to(
-        dots,
-        {
-          backgroundColor: (dotIndex) => (dotIndex === i ? "#b9ff4d" : "#3a3a36"),
-          duration: 0.3,
-        },
-        `step${i}`
-      );
-    }
-    if (i < lines.length - 1) tl.to({}, { duration: holdSeconds });
-  }
-
-  return () => {
-    tl.kill();
-  };
 }
 
 function initNavIndicator() {
@@ -302,10 +264,7 @@ function initScrollTop() {
       btn.classList.toggle("is-visible", self.scroll() > 600);
     },
   });
-  btn.addEventListener("click", () => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
-  });
+  btn.addEventListener("click", () => scrollToY(0));
 }
 
 export function initMotion() {
@@ -313,20 +272,14 @@ export function initMotion() {
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
     initReveals();
-    const heroCleanup = initHero();
-    return () => {
-      heroCleanup?.();
-    };
   });
 
   mm.add("(prefers-reduced-motion: reduce)", () => {
-    // Static, fully-visible fallback: no timed cycling, no transform offsets.
+    // Static, fully-visible fallback: no transform offsets.
     document.querySelectorAll<HTMLElement>("[data-reveal], [data-reveal-item]").forEach((el) => {
       el.style.opacity = "1";
       el.style.transform = "none";
     });
-    const root = document.querySelector<HTMLElement>("[data-hero-lines]");
-    if (root) root.dataset.step = "0";
   });
 
   // Independent of motion preference: a lightweight, non-animated class
