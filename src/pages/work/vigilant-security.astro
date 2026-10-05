@@ -63,22 +63,22 @@ const fromLab = [
 ---
 
 <Layout title="Vigilant Security — Hammad Habib" description="Modernising and migrating production UK + Ireland websites without throwing away years of SEO value — diagnosis, a real security incident, and a full migration.">
-  <div class="min-h-screen overflow-x-hidden bg-ink">
+  <div data-page-intro class="min-h-screen overflow-x-hidden bg-ink">
     <Header active="work" />
 
     <section class="mx-auto max-w-[1440px] px-5 pt-12 pb-8 sm:px-8 sm:pt-16 sm:pb-13 lg:px-16 lg:pt-22">
-      <a href="/work" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Work</a>
+      <a data-intro-item="eyebrow" href="/work" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Work</a>
 
       <div class="mt-7 flex flex-wrap items-end gap-7 lg:mt-9 lg:gap-18">
-        <h1 class="m-0 min-w-0 flex-1 basis-[420px] text-[clamp(28px,3.8vw,52px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+        <h1 data-intro-item="headline" class="m-0 min-w-0 flex-1 basis-[420px] text-[clamp(28px,3.8vw,52px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
           Modernising and migrating production UK + Ireland websites without throwing away years of SEO value.
         </h1>
-        <div class="flex min-w-0 flex-none basis-[260px] flex-col gap-[14px] font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+        <div data-intro-item="copy" class="flex min-w-0 flex-none basis-[260px] flex-col gap-[14px] font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
           {meta.map((m, i) => <span class:list={[i === 0 && "text-paper", i === 3 && "text-[#6e6c67]"]}>{m}</span>)}
         </div>
       </div>
 
-      <div class="mt-8 flex flex-wrap gap-[14px] lg:mt-11">
+      <div data-intro-item="media" class="mt-8 flex flex-wrap gap-[14px] lg:mt-11">
         <div class="relative min-w-0 flex-1 basis-[300px] overflow-hidden border border-[#1e1e1c] bg-[#050505] aspect-16/10">
           <img src="/vigilant/legacy-uk.png" alt="Legacy Vigilant Security WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
           <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
@@ -93,7 +93,7 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
-      <div class="flex flex-wrap items-start gap-7 lg:gap-18">
+      <div data-reveal class="flex flex-wrap items-start gap-7 lg:gap-18">
         <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">02 / The Starting Point</div>
         <div class="flex min-w-0 flex-1 basis-[440px] flex-col gap-[22px]">
           <p class="m-0 max-w-[46ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
@@ -109,14 +109,14 @@ const fromLab = [
     </section>
 
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-11 sm:py-14 lg:py-20">
-      <div class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-16 lg:px-16">
-        <div class="flex min-w-0 flex-1 basis-[380px] flex-col gap-5">
+      <div data-reveal-group class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-16 lg:px-16">
+        <div data-reveal-item class="flex min-w-0 flex-1 basis-[380px] flex-col gap-5">
           <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">03 / Diagnosis</div>
           <p class="m-0 max-w-[50ch] text-[15px] leading-[1.75] text-[#a7a59e]">
             I worked on the production server directly over SSH — reading what was installed, what was executing on every request, and where the time was actually going. Plugin by plugin, then PHP, then site behaviour under load. The Lighthouse and Core Web Vitals numbers followed from removing causes, not from chasing scores.
           </p>
         </div>
-        <div class="min-w-0 flex-1 basis-[340px] border border-[#1e1e1c] bg-[#050505] p-5 font-mono text-[12.5px] leading-[1.95] text-[#8c8a84] sm:p-7">
+        <div data-reveal-item class="min-w-0 flex-1 basis-[340px] border border-[#1e1e1c] bg-[#050505] p-5 font-mono text-[12.5px] leading-[1.95] text-[#8c8a84] sm:p-7">
           <span class="block text-[#6e6c67]">// what the investigation actually looked at</span>
           <span class="block text-[#cfcdc6]">wp plugin list --status=active</span>
           <span class="block">— inspect what runs on every request</span>
@@ -130,16 +130,16 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
-      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-reveal class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="text-paper">04 / Security Incident</span>
         <span>Handled mid-project</span>
       </div>
       <p class="mt-7 max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty lg:mt-9">
         The site was compromised by a ClickFix-style fake-CAPTCHA injection. It was a live production incident, and it was mine to deal with.
       </p>
-      <div class="mt-7 flex max-w-[900px] flex-col lg:mt-10">
+      <div data-reveal-group class="mt-7 flex max-w-[900px] flex-col lg:mt-10">
         {incidentRows.map((r, i) => (
-          <div class:list={["flex flex-wrap gap-x-7 gap-y-2 border-t border-[#2b2b28] py-4", i === incidentRows.length - 1 && "border-b"]}>
+          <div data-reveal-item class:list={["flex flex-wrap gap-x-7 gap-y-2 border-t border-[#2b2b28] py-4", i === incidentRows.length - 1 && "border-b"]}>
             <span class="flex-none basis-[130px] font-mono text-[11px] tracking-[.1em] text-[#6e6c67] uppercase">{r.label}</span>
             <span class="min-w-0 flex-1 basis-[320px] text-[14.5px] leading-[1.65] text-[#dedbd4]">{r.body}</span>
           </div>
@@ -148,16 +148,16 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
-      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-reveal class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="text-paper">05 / Migration Strategy</span>
         <span>The hard part</span>
       </div>
       <p class="mt-7 max-w-[54ch] text-[15px] leading-[1.7] text-[#a7a59e] lg:mt-9">
         Moving off a CMS-heavy stack is easy. Moving off it without losing rankings, URLs, metadata, redirects, analytics or the client's editorial workflow is the actual project. Every item below had to be inventoried before anything shipped.
       </p>
-      <div class="mt-7 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
+      <div data-reveal-group class="mt-7 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
         {migrationSteps.map((s, i) => (
-          <div class="flex min-w-0 flex-1 basis-[240px] flex-col gap-2 bg-ink p-5">
+          <div data-reveal-item class="flex min-w-0 flex-1 basis-[240px] flex-col gap-2 bg-ink p-5">
             <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
             <span class="text-[15px] tracking-[-.01em]">{s.title}</span>
             <span class="text-[13.5px] leading-[1.6] text-[#a7a59e]">{s.body}</span>
@@ -167,8 +167,8 @@ const fromLab = [
     </section>
 
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-11 sm:py-14 lg:py-20">
-      <div class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-16 lg:px-16">
-        <div class="flex min-w-0 flex-1 basis-[340px] flex-col gap-5">
+      <div data-reveal-group class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-16 lg:px-16">
+        <div data-reveal-item class="flex min-w-0 flex-1 basis-[340px] flex-col gap-5">
           <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">06 / The Rebuild</div>
           <p class="m-0 max-w-[48ch] text-[15px] leading-[1.75] text-[#a7a59e]">
             Astro on the frontend, a component architecture the client's team could actually extend, and a responsive redesign that didn't reinvent the brand. Editorial content and SEO fields moved into Sanity, so the people who own the copy own the copy. UK and Ireland ship from the same foundation.
@@ -179,7 +179,7 @@ const fromLab = [
             ))}
           </div>
         </div>
-        <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[14px]">
+        <div data-reveal-item class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[14px]">
           <div class="relative aspect-16/10 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
             <img src="/vigilant/new-service-page.png" alt="New Vigilant Security site — UK" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
             <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
@@ -203,7 +203,7 @@ const fromLab = [
         <p class="mt-7 max-w-[54ch] text-[15px] leading-[1.75] text-[#a7a59e] lg:mt-9">
           During the CMS migration work, I also built a controlled recovery workflow for production SEO data across the UK and Ireland datasets. The process treated destructive changes as something to prove before executing:
         </p>
-        <div class="mt-7 flex flex-col gap-[2px] border border-dashed border-[#2b2b28] p-5 font-mono text-[11.5px] leading-[1.6] text-[#8c8a84] sm:p-8 lg:mt-9">
+        <div data-reveal class="mt-7 flex flex-col gap-[2px] border border-dashed border-[#2b2b28] p-5 font-mono text-[11.5px] leading-[1.6] text-[#8c8a84] sm:p-8 lg:mt-9">
           <span class="text-paper">backup validation</span>
           <span class="text-[#3a3a36]">↓</span>
           <span class="text-[#cfcdc6]">evidence classification</span>
@@ -238,7 +238,7 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
-      <div class="flex flex-wrap items-start gap-7 lg:gap-16">
+      <div data-reveal class="flex flex-wrap items-start gap-7 lg:gap-16">
         <div class="flex min-w-0 flex-1 basis-[320px] flex-col gap-[18px]">
           <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">08 / Performance</div>
           <div class="flex flex-col">
@@ -266,7 +266,7 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
-      <div class="flex flex-wrap items-start gap-7 lg:gap-18">
+      <div data-reveal class="flex flex-wrap items-start gap-7 lg:gap-18">
         <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">09 / SEO</div>
         <div class="flex min-w-0 flex-1 basis-[440px] flex-col gap-5">
           <p class="m-0 max-w-[44ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
@@ -301,7 +301,7 @@ const fromLab = [
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-11 sm:px-8 lg:px-16 lg:py-20">
       <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">12 / Gallery</div>
-      <div class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
+      <div data-reveal class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
         {gallery.map((g) =>
           g.split ? (
             <div class:list={["relative flex min-w-0 gap-px overflow-hidden border border-[#1e1e1c] bg-[#1e1e1c]", g.aspect, g.grow]}>

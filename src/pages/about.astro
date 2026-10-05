@@ -11,21 +11,21 @@ const photoRow2 = [
 ---
 
 <Layout title="About — Hammad Habib" description="Software engineer with deep frontend experience. Linux, systems, photography, and why things break.">
-  <div class="min-h-screen overflow-x-hidden bg-ink">
+  <div data-page-intro class="min-h-screen overflow-x-hidden bg-ink">
     <Header active="about" />
 
     <section id="top" class="mx-auto max-w-[1440px] px-5 pt-12 pb-10 sm:px-8 sm:pt-16 sm:pb-14 lg:px-16 lg:pt-24 lg:pb-18">
-      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-intro-item="eyebrow" class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
         <span>About</span>
       </div>
-      <h1 class="mt-[26px] max-w-[24ch] text-[clamp(30px,4.4vw,58px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+      <h1 data-intro-item="headline" class="mt-[26px] max-w-[24ch] text-[clamp(30px,4.4vw,58px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
         I like computers more than is strictly reasonable.
       </h1>
     </section>
 
     <section class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-8 px-5 pb-14 sm:px-8 sm:pb-20 lg:px-16 lg:gap-[72px] lg:pb-26">
-      <div class="flex min-w-0 flex-1 basis-[460px] flex-col gap-5 lg:flex-[2]">
+      <div data-intro-item="copy" class="flex min-w-0 flex-1 basis-[460px] flex-col gap-5 lg:flex-[2]">
         <p class="m-0 max-w-[50ch] text-[clamp(16.5px,1.5vw,21px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
           Linux, systems, why things are slow, why things break. Most of what I know started with breaking something first and then needing it to work again.
         </p>
@@ -40,12 +40,12 @@ const photoRow2 = [
         </p>
       </div>
 
-      <div class="flex min-w-0 flex-1 basis-[280px] flex-col gap-3">
+      <div data-intro-item="media" class="flex min-w-0 flex-1 basis-[280px] flex-col gap-3">
         <div class="relative aspect-4/5 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
           <video
             src="/videos/smoker.mp4"
             poster="/videos/posters/smoker.jpg"
-            autoplay
+            data-decorative-video
             muted
             loop
             playsinline
@@ -78,7 +78,7 @@ const photoRow2 = [
 
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-14 sm:py-20 lg:py-26">
       <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
-        <div class="flex flex-wrap items-center justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <div data-reveal class="flex flex-wrap items-center justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
           <div class="flex flex-wrap items-baseline gap-x-8 gap-y-2">
             <span class="text-paper">Photography</span>
             <span>My own photographs · not decoration</span>
@@ -96,11 +96,11 @@ const photoRow2 = [
       </div>
 
       <div class="mt-9 px-5 sm:px-8 lg:mt-14 lg:px-16">
-        <div class="mx-auto flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
-          <div class="relative flex min-w-0 flex-1 basis-[440px] items-end overflow-hidden border border-[#1e1e1c] p-[18px] aspect-3/2 lg:flex-[2]">
+        <div data-reveal-group class="mx-auto flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
+          <div data-reveal-item class="relative flex min-w-0 flex-1 basis-[440px] items-end overflow-hidden border border-[#1e1e1c] p-[18px] aspect-3/2 lg:flex-[2]">
             <img src="/images/photography/photo-01-wheat.jpg" alt="Wheat field at golden hour" class="absolute inset-0 h-full w-full object-cover" />
           </div>
-          <div class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[14px]">
+          <div data-reveal-item class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[14px]">
             <div class="relative flex min-h-[130px] flex-1 items-end overflow-hidden border border-[#1e1e1c] p-4">
               <img src="/images/photography/photo-02-sahmani.jpg" alt="Mountain valley overlook" class="absolute inset-0 h-full w-full object-cover" />
             </div>
@@ -110,9 +110,10 @@ const photoRow2 = [
           </div>
         </div>
 
-        <div class="mx-auto mt-[14px] flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
+        <div data-reveal-group class="mx-auto mt-[14px] flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
           {photoRow2.map((photo) => (
             <div
+              data-reveal-item
               class:list={[
                 "relative flex min-w-0 flex-1 basis-[200px] items-end overflow-hidden border border-[#1e1e1c] p-4 aspect-4/5",
                 photo.offset && "mt-0 lg:mt-10",
@@ -126,7 +127,7 @@ const photoRow2 = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-14 sm:px-8 lg:px-16 lg:py-26">
-      <div class="flex flex-wrap items-end justify-between gap-8">
+      <div data-reveal class="flex flex-wrap items-end justify-between gap-8">
         <h2 class="m-0 max-w-[24ch] flex-1 basis-[420px] text-[clamp(24px,3vw,42px)] leading-[1.12] font-medium tracking-[-.03em] text-wrap-pretty">
           If any of that sounds useful, the work is one page over.
         </h2>

@@ -147,24 +147,24 @@ const statusClasses: Record<string, string> = {
 ---
 
 <Layout title="Labs — Hammad Habib" description="Small systems, experiments, automations and rabbit holes — built to understand how something worked, or because repeating a task manually got annoying.">
-  <div class="min-h-screen overflow-x-hidden bg-ink">
+  <div data-page-intro class="min-h-screen overflow-x-hidden bg-ink">
     <Header active="labs" />
 
     <section id="top" class="mx-auto max-w-[1440px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
-      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-intro-item="eyebrow" class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
         <span>Labs / Experiments</span>
       </div>
       <div class="mt-6 flex flex-wrap items-end justify-between gap-8">
-        <h1 class="m-0 min-w-0 flex-1 basis-[400px] text-[clamp(28px,4vw,54px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">Work is proof. Labs are curiosity.</h1>
-        <p class="m-0 min-w-0 flex-1 basis-[320px] max-w-[46ch] text-[15px] leading-[1.7] text-[#a7a59e] text-wrap-pretty">
+        <h1 data-intro-item="headline" class="m-0 min-w-0 flex-1 basis-[400px] text-[clamp(28px,4vw,54px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">Work is proof. Labs are curiosity.</h1>
+        <p data-intro-item="copy" class="m-0 min-w-0 flex-1 basis-[320px] max-w-[46ch] text-[15px] leading-[1.7] text-[#a7a59e] text-wrap-pretty">
           Small systems, automations, developer tools and technical rabbit holes — usually built because I wanted to understand how something worked, or because repeating a task manually annoyed me enough to automate it. Some became useful tools. Some became prototypes. Some simply answered the question that started them.
         </p>
       </div>
     </section>
 
     <section class="mx-auto max-w-[1440px] px-5 pb-[22px] sm:px-8 lg:px-16">
-      <div data-lab-filters class="flex flex-wrap gap-2 border-t border-[#1e1e1c] pt-5">
+      <div data-intro-item="controls" data-lab-filters class="flex flex-wrap gap-2 border-t border-[#1e1e1c] pt-5">
         {categories.map((cat, i) => (
           <button
             type="button"
@@ -188,15 +188,15 @@ const statusClasses: Record<string, string> = {
       </div>
     </section>
 
-    <section class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-20">
+    <section data-lab-card-group class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-20">
       {featured.map((lab, i) => (
-        <div data-lab-card data-cat={lab.cat} class:list={["min-w-0 overflow-hidden border border-[#1e1e1c]", lab.grow]}>
-          <a href={lab.href} class="block hover:border-[#5a5a54]">
-            <span class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
+        <div data-lab-card data-interactive-lab-card data-cat={lab.cat} class:list={["min-w-0 overflow-hidden border border-[#1e1e1c]", lab.grow]}>
+          <a href={lab.href} class="block">
+            <span data-lab-media class:list={["relative block overflow-hidden bg-[#050505]", lab.aspect]}>
               <video
                 src={`/videos/${lab.video}.mp4`}
                 poster={`/videos/posters/${lab.video}.jpg`}
-                autoplay
+                data-decorative-video
                 muted
                 loop
                 playsinline
@@ -211,7 +211,7 @@ const statusClasses: Record<string, string> = {
               </span>
             </span>
             <span class:list={["flex flex-col gap-3", i === 0 ? "p-[22px]" : "p-5"]}>
-              <span class:list={[i === 0 ? "text-[clamp(19px,2vw,26px)] leading-[1.2] tracking-[-.025em]" : "text-[17px] leading-[1.25] tracking-[-.02em]"]}>{lab.title}</span>
+              <span data-lab-card-title class:list={[i === 0 ? "text-[clamp(19px,2vw,26px)] leading-[1.2] tracking-[-.025em]" : "text-[17px] leading-[1.25] tracking-[-.02em]"]}>{lab.title}</span>
               <span class:list={["text-[#a7a59e]", i === 0 ? "max-w-[48ch] text-[14.5px] leading-[1.7]" : "text-[13.5px] leading-[1.65]"]}>{lab.body}</span>
               <span class="mt-1 flex flex-wrap items-baseline justify-between gap-[14px] font-mono text-[10.5px] tracking-[.08em] text-[#6e6c67]">
                 <span>{lab.stack}</span>
@@ -230,7 +230,7 @@ const statusClasses: Record<string, string> = {
       </div>
     </section>
 
-    <section class="mx-auto flex max-w-[1440px] flex-wrap items-stretch gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-25">
+    <section data-lab-card-group class="mx-auto flex max-w-[1440px] flex-wrap items-stretch gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-25">
       {smaller.map((lab) => (
         <div data-lab-card data-cat={lab.cat} class="flex min-w-0 flex-1 basis-[260px] flex-col gap-[10px] border border-[#1e1e1c] bg-[#070707] p-5">
           <span class="flex flex-wrap items-center gap-2">
@@ -258,31 +258,3 @@ const statusClasses: Record<string, string> = {
     <Footer />
   </div>
 </Layout>
-
-<script>
-  const filterBar = document.querySelector<HTMLElement>("[data-lab-filters]");
-  if (filterBar) {
-    const buttons = Array.from(filterBar.querySelectorAll<HTMLButtonElement>("[data-filter]"));
-    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-lab-card]"));
-
-    buttons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const cat = btn.dataset.filter ?? "All";
-        buttons.forEach((b) => {
-          const on = b === btn;
-          b.dataset.active = on ? "true" : "false";
-          b.classList.toggle("border-paper", on);
-          b.classList.toggle("bg-paper", on);
-          b.classList.toggle("text-ink", on);
-          b.classList.toggle("border-[#2b2b28]", !on);
-          b.classList.toggle("bg-transparent", !on);
-          b.classList.toggle("text-[#9c9a94]", !on);
-        });
-        cards.forEach((card) => {
-          const show = cat === "All" || card.dataset.cat === cat;
-          card.style.display = show ? "" : "none";
-        });
-      });
-    });
-  }
-</script>

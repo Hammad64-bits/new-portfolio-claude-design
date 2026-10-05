@@ -55,6 +55,13 @@ textarea:focus {
   }
 }
 
+/* Keep first-viewport entrance content hidden before the deferred motion module
+   initializes. The inline head guard removes this class after 1.8s if JS fails. */
+html.motion-pending [data-intro-item],
+html.motion-pending [data-hero-enter] {
+  opacity: 0;
+}
+
 /* Nav underline indicator — JS (motion.ts) sets --nav-x/--nav-w/--nav-o per
    hover/active link; CSS owns the actual motion via transform, so it stays
    compositor-only. Base width is 1px, scaleX stretches it to the link width. */
@@ -118,25 +125,34 @@ textarea:focus {
 [data-hero-dots][data-step="2"] .hero-dot-1 { background: #3a3a36; }
 [data-hero-dots][data-step="2"] .hero-dot-2 { background: #b9ff4d; }
 
-/* Photograph/screenshot hover zoom — applies wherever a real <img> (not the
-   decorative background <video> loops, which share object-cover but animate
-   their own transform via hh-drift) sits in an overflow-hidden frame. Scales
-   from the img itself so the effect triggers exactly over the visible photo. */
-img.object-cover,
-img.object-scale-down {
-  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+/* Labs is the expressive tier. Hover motion only applies to linked cards, not
+   every object-cover image across the site. */
+[data-interactive-lab-card] {
+  transition: border-color var(--motion-fast, .2s) ease;
 }
-img.object-cover:hover,
-img.object-scale-down:hover {
-  transform: scale(1.05);
+[data-lab-media],
+[data-lab-card-title] {
+  transition:
+    transform var(--motion-normal, .45s) var(--motion-ease-out, cubic-bezier(.22,1,.36,1)),
+    color var(--motion-fast, .2s) ease;
+}
+[data-interactive-lab-card]:hover {
+  border-color: #5a5a54;
+}
+[data-interactive-lab-card]:hover [data-lab-media] {
+  transform: scale(1.02);
+}
+[data-interactive-lab-card]:hover [data-lab-card-title] {
+  transform: translateY(-2px);
+  color: var(--color-paper);
 }
 @media (prefers-reduced-motion: reduce) {
-  img.object-cover,
-  img.object-scale-down {
-    transition: none;
+  [data-lab-media],
+  [data-lab-card-title] {
+    transition: color var(--motion-fast, .2s) ease;
   }
-  img.object-cover:hover,
-  img.object-scale-down:hover {
+  [data-interactive-lab-card]:hover [data-lab-media],
+  [data-interactive-lab-card]:hover [data-lab-card-title] {
     transform: none;
   }
 }
@@ -169,4 +185,3 @@ img.object-scale-down:hover {
 .texture-hatch-alt {
   background-image: repeating-linear-gradient(135deg, #141413 0 10px, #0f0f0e 10px 20px);
 }
-

@@ -5,27 +5,53 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Site-wide motion system. Single entry point loaded once per page.
- * Everything here is opacity/transform only, and every scroll-triggered
- * animation is registered inside a matchMedia("(prefers-reduced-motion: no-preference)")
+ * Entrance and reveal choreography stays on opacity/transform, and every
+ * scroll-triggered animation is registered inside a matchMedia("(prefers-reduced-motion: no-preference)")
  * context so it never runs — and never touches inline styles — when the
  * visitor has reduced motion enabled.
  */
 
-const EASE_OUT = "power3.out";
-const EASE_INOUT = "power2.inOut";
+const DURATION = {
+  FAST: 0.2,
+  NORMAL: 0.45,
+  REVEAL: 0.65,
+  WIPE: 0.52,
+} as const;
+
+const EASE = {
+  OUT: "power3.out",
+  IN_OUT: "power2.inOut",
+  CSS_OUT: "cubic-bezier(.22,1,.36,1)",
+} as const;
+
+const STAGGER = 0.085;
+const HERO_HOLD_SECONDS = 2.8;
+
+type PreparedMotion = {
+  play: () => void;
+  kill: () => void;
+};
+
+function applyMotionTokens() {
+  const root = document.documentElement;
+  root.style.setProperty("--motion-fast", `${DURATION.FAST}s`);
+  root.style.setProperty("--motion-normal", `${DURATION.NORMAL}s`);
+  root.style.setProperty("--motion-reveal", `${DURATION.REVEAL}s`);
+  root.style.setProperty("--motion-ease-out", EASE.CSS_OUT);
+}
 
 function initReveals() {
   // Single elements: header eyebrows, headings, standalone blocks.
   const items = gsap.utils.toArray<HTMLElement>("[data-reveal]");
   items.forEach((el) => {
     gsap.from(el, {
-      y: 22,
+      y: 32,
       opacity: 0,
-      duration: 0.7,
-      ease: EASE_OUT,
+      duration: DURATION.REVEAL,
+      ease: EASE.OUT,
       scrollTrigger: {
         trigger: el,
-        start: "top 87%",
+        start: "top 75%",
         once: true,
       },
     });
@@ -37,21 +63,21 @@ function initReveals() {
     const children = group.querySelectorAll<HTMLElement>(":scope > [data-reveal-item]");
     if (!children.length) return;
     gsap.from(children, {
-      y: 20,
+      y: 28,
       opacity: 0,
-      duration: 0.6,
-      ease: EASE_OUT,
-      stagger: 0.08,
+      duration: DURATION.REVEAL,
+      ease: EASE.OUT,
+      stagger: STAGGER,
       scrollTrigger: {
         trigger: group,
-        start: "top 85%",
+        start: "top 75%",
         once: true,
       },
     });
   });
 }
 
-function initHero() {
+function prepareHero(): PreparedMotion | undefined {
   const root = document.querySelector<HTMLElement>("[data-hero-lines]");
   if (!root) return;
 
@@ -59,35 +85,243 @@ function initHero() {
   const dots = document.querySelectorAll<HTMLElement>("[data-hero-dots] .hero-dot");
   if (!lines.length) return;
 
-  const hold = Number(root.dataset.holdMs) || 4000;
+  const eyebrow = document.querySelector<HTMLElement>("[data-hero-eyebrow]");
+  const copy = document.querySelector<HTMLElement>("[data-hero-copy]");
+  const actions = gsap.utils.toArray<HTMLElement>("[data-hero-action]");
+  const media = document.querySelector<HTMLElement>("[data-hero-media]");
+  const hold = Number(root.dataset.holdMs) || HERO_HOLD_SECONDS * 1000;
   const holdSeconds = hold / 1000;
 
   gsap.set(lines, { opacity: 0, y: 26 });
   gsap.set(lines[0], { opacity: 1, y: 0 });
   if (dots[0]) gsap.set(dots[0], { backgroundColor: "#b9ff4d" });
 
-  const tl = gsap.timeline({ delay: holdSeconds });
+  if (eyebrow) gsap.set(eyebrow, { opacity: 0, y: 16 });
+  gsap.set(root, { opacity: 0, y: 30 });
+  if (copy) gsap.set(copy, { opacity: 0, y: 20 });
+  if (actions.length) gsap.set(actions, { opacity: 0, y: 14 });
+  if (media) gsap.set(media, { opacity: 0, y: 16, scale: 0.985 });
+
+  const tl = gsap.timeline({ paused: true });
+  if (eyebrow) {
+    tl.to(eyebrow, { opacity: 1, y: 0, duration: DURATION.NORMAL, ease: EASE.OUT }, 0);
+  }
+  tl.to(root, { opacity: 1, y: 0, duration: DURATION.REVEAL, ease: EASE.OUT }, 0.08);
+  if (copy) {
+    tl.to(copy, { opacity: 1, y: 0, duration: DURATION.NORMAL, ease: EASE.OUT }, 0.22);
+  }
+  if (actions.length) {
+    tl.to(
+      actions,
+      { opacity: 1, y: 0, duration: DURATION.NORMAL, ease: EASE.OUT, stagger: STAGGER },
+      0.34
+    );
+  }
+  if (media) {
+    tl.to(media, { opacity: 1, y: 0, scale: 1, duration: DURATION.REVEAL, ease: EASE.OUT }, 0.2);
+  }
+
+  let stepAt = Math.max(1, tl.duration()) + holdSeconds;
 
   for (let i = 1; i < lines.length; i++) {
     const prev = lines[i - 1];
     const curr = lines[i];
-    tl.to(prev, { opacity: 0, y: -26, duration: 0.7, ease: EASE_INOUT }, `step${i}`)
-      .to(curr, { opacity: 1, y: 0, duration: 0.7, ease: EASE_INOUT }, `step${i}`);
+    tl.to(prev, { opacity: 0, y: -26, duration: DURATION.REVEAL, ease: EASE.IN_OUT }, stepAt)
+      .to(curr, { opacity: 1, y: 0, duration: DURATION.REVEAL, ease: EASE.IN_OUT }, stepAt);
     if (dots.length) {
       tl.to(
         dots,
         {
           backgroundColor: (dotIndex) => (dotIndex === i ? "#b9ff4d" : "#3a3a36"),
-          duration: 0.3,
+          duration: DURATION.FAST,
         },
-        `step${i}`
+        stepAt
       );
     }
-    if (i < lines.length - 1) tl.to({}, { duration: holdSeconds });
+    stepAt += DURATION.REVEAL;
+    if (i < lines.length - 1) stepAt += holdSeconds;
   }
 
+  return { play: () => tl.play(0), kill: () => tl.kill() };
+}
+
+function preparePageIntro(): PreparedMotion | undefined {
+  const root = document.querySelector<HTMLElement>("[data-page-intro]");
+  if (!root) return;
+
+  const items = gsap.utils.toArray<HTMLElement>("[data-intro-item]", root);
+  if (!items.length) return;
+
+  items.forEach((item) => {
+    const isMedia = item.dataset.introItem === "media";
+    const isHeadline = item.dataset.introItem === "headline";
+    gsap.set(item, {
+      opacity: 0,
+      y: isHeadline ? 30 : isMedia ? 16 : 18,
+      scale: isMedia ? 0.985 : 1,
+    });
+  });
+
+  const tl = gsap.timeline({ paused: true });
+  items.forEach((item, index) => {
+    const isMedia = item.dataset.introItem === "media";
+    const isHeadline = item.dataset.introItem === "headline";
+    tl.to(
+      item,
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: isHeadline || isMedia ? DURATION.REVEAL : DURATION.NORMAL,
+        ease: EASE.OUT,
+      },
+      index * 0.1
+    );
+  });
+
+  return { play: () => tl.play(0), kill: () => tl.kill() };
+}
+
+function initLabCardReveals() {
+  const groups = gsap.utils.toArray<HTMLElement>("[data-lab-card-group]");
+  groups.forEach((group) => {
+    const cards = Array.from(group.querySelectorAll<HTMLElement>("[data-lab-card]"));
+    if (!cards.length) return;
+    gsap.from(cards, {
+      opacity: 0,
+      y: 36,
+      scale: 0.985,
+      duration: DURATION.REVEAL,
+      ease: EASE.OUT,
+      stagger: STAGGER,
+      clearProps: "opacity,transform",
+      scrollTrigger: {
+        trigger: group,
+        start: "top 76%",
+        once: true,
+      },
+    });
+  });
+}
+
+function initLabFilters() {
+  const filterBar = document.querySelector<HTMLElement>("[data-lab-filters]");
+  if (!filterBar) return;
+
+  const buttons = Array.from(filterBar.querySelectorAll<HTMLButtonElement>("[data-filter]"));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-lab-card]"));
+  let busy = false;
+
+  const updateButtons = (active: HTMLButtonElement) => {
+    buttons.forEach((button) => {
+      const on = button === active;
+      button.dataset.active = on ? "true" : "false";
+      button.classList.toggle("border-paper", on);
+      button.classList.toggle("bg-paper", on);
+      button.classList.toggle("text-ink", on);
+      button.classList.toggle("border-[#2b2b28]", !on);
+      button.classList.toggle("bg-transparent", !on);
+      button.classList.toggle("text-[#9c9a94]", !on);
+    });
+  };
+
+  const showCategory = (category: string) => {
+    cards.forEach((card) => {
+      card.style.display = category === "All" || card.dataset.cat === category ? "" : "none";
+    });
+  };
+
+  const handlers = buttons.map((button) => {
+    const handler = () => {
+      if (busy) return;
+      const category = button.dataset.filter ?? "All";
+      updateButtons(button);
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        showCategory(category);
+        return;
+      }
+
+      busy = true;
+      const visibleCards = cards.filter((card) => getComputedStyle(card).display !== "none");
+      gsap.to(visibleCards, {
+        opacity: 0,
+        y: -6,
+        scale: 0.985,
+        duration: DURATION.FAST,
+        ease: EASE.IN_OUT,
+        stagger: 0.02,
+        overwrite: true,
+        onComplete: () => {
+          showCategory(category);
+          const shownCards = cards.filter((card) => getComputedStyle(card).display !== "none");
+          gsap.fromTo(
+            shownCards,
+            { opacity: 0, y: 14, scale: 0.985 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: DURATION.NORMAL,
+              ease: EASE.OUT,
+              stagger: 0.05,
+              clearProps: "opacity,transform",
+              overwrite: true,
+              onComplete: () => {
+                busy = false;
+              },
+            }
+          );
+        },
+      });
+    };
+    button.addEventListener("click", handler);
+    return () => button.removeEventListener("click", handler);
+  });
+
+  return () => handlers.forEach((remove) => remove());
+}
+
+function initDecorativeVideos() {
+  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>("video[data-decorative-video]"));
+  if (!videos.length) return;
+
+  const nearby = new Set<HTMLVideoElement>();
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  const sync = (video: HTMLVideoElement) => {
+    if (document.hidden || motionQuery.matches || !nearby.has(video)) {
+      video.pause();
+      return;
+    }
+    void video.play().catch(() => undefined);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) nearby.add(video);
+        else nearby.delete(video);
+        sync(video);
+      });
+    },
+    { rootMargin: "300px 0px", threshold: 0.01 }
+  );
+
+  videos.forEach((video) => {
+    video.pause();
+    observer.observe(video);
+  });
+
+  const syncAll = () => videos.forEach(sync);
+  document.addEventListener("visibilitychange", syncAll);
+  motionQuery.addEventListener("change", syncAll);
+
   return () => {
-    tl.kill();
+    observer.disconnect();
+    document.removeEventListener("visibilitychange", syncAll);
+    motionQuery.removeEventListener("change", syncAll);
   };
 }
 
@@ -159,7 +393,6 @@ function initPageTransition() {
   const percentNode = percentEl;
   const tickNode = tickEl;
 
-  const DURATION = 0.52;
   const BAND_START = 38;
   const BAND_END = 62;
   const STEPS = [0, 29, 57, 84, 100];
@@ -200,7 +433,7 @@ function initPageTransition() {
     const state = { p: 0 };
     gsap.to(state, {
       p: 1,
-      duration: DURATION,
+      duration: DURATION.WIPE,
       ease: wipeEase,
       onUpdate: () => render(state.p),
       onComplete: () => window.location.assign(href),
@@ -309,13 +542,24 @@ function initScrollTop() {
 }
 
 export function initMotion() {
+  applyMotionTokens();
   const mm = gsap.matchMedia();
+  const labFilterCleanup = initLabFilters();
+  const videoCleanup = initDecorativeVideos();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
+    const pageIntro = preparePageIntro();
+    const hero = prepareHero();
+    document.documentElement.classList.remove("motion-pending");
+
     initReveals();
-    const heroCleanup = initHero();
+    initLabCardReveals();
+    pageIntro?.play();
+    hero?.play();
+
     return () => {
-      heroCleanup?.();
+      pageIntro?.kill();
+      hero?.kill();
     };
   });
 
@@ -327,6 +571,7 @@ export function initMotion() {
     });
     const root = document.querySelector<HTMLElement>("[data-hero-lines]");
     if (root) root.dataset.step = "0";
+    document.documentElement.classList.remove("motion-pending");
   });
 
   // Independent of motion preference: a lightweight, non-animated class
@@ -346,4 +591,14 @@ export function initMotion() {
 
   // Pics gallery lightbox: no-ops on pages without [data-pics-grid].
   initPicsLightbox();
+
+  window.addEventListener(
+    "pagehide",
+    () => {
+      labFilterCleanup?.();
+      videoCleanup?.();
+      mm.revert();
+    },
+    { once: true }
+  );
 }

@@ -123,17 +123,17 @@ const fromLab = [
 ---
 
 <Layout title="RevSmith — Hammad Habib" description="An AI customer-support SaaS for ecommerce. Frontend-first, then APIs, realtime, auth, integrations and architecture.">
-  <div class="min-h-screen overflow-x-hidden bg-ink">
+  <div data-page-intro class="min-h-screen overflow-x-hidden bg-ink">
     <Header active="work" />
 
     <section class="mx-auto max-w-[1440px] px-5 pt-12 pb-8 sm:px-8 sm:pt-16 sm:pb-13 lg:px-16 lg:pt-22">
-      <a href="/work" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Work</a>
-      <h1 class="mt-6 max-w-[24ch] text-[clamp(30px,4.4vw,58px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">RevSmith</h1>
-      <p class="mt-5 max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
+      <a data-intro-item="eyebrow" href="/work" class="font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase hover:text-accent">← Work</a>
+      <h1 data-intro-item="headline" class="mt-6 max-w-[24ch] text-[clamp(30px,4.4vw,58px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">RevSmith</h1>
+      <p data-intro-item="copy" class="mt-5 max-w-[52ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
         An AI customer-support SaaS for ecommerce, built by a small startup engineering team. I joined frontend-first and left with a good deal of the system under my name.
       </p>
 
-      <div class="mt-8 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-13">
+      <div data-intro-item="content" class="mt-8 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-13">
         {roleMeta.map((m) => (
           <div class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[10px] bg-ink px-5 py-[22px]">
             <span class="font-mono text-[10.5px] tracking-[.12em] text-[#8c8a84] uppercase">{m.label}</span>
@@ -143,7 +143,7 @@ const fromLab = [
         ))}
       </div>
 
-      <div class="relative mt-7 aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505] lg:mt-11">
+      <div data-intro-item="media" class="relative mt-7 aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505] lg:mt-11">
         <video
           src="/revsmith/revsmith-demo.mp4"
           poster="/revsmith/posters/revsmith-demo.jpg"
@@ -156,7 +156,7 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
-      <div class="flex flex-wrap items-start gap-7 lg:gap-18">
+      <div data-reveal class="flex flex-wrap items-start gap-7 lg:gap-18">
         <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">02 / The Product</div>
         <div class="flex min-w-0 flex-1 basis-[460px] flex-col gap-6">
           <p class="m-0 max-w-[48ch] text-[clamp(16px,1.4vw,20px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
@@ -172,7 +172,7 @@ const fromLab = [
     </section>
 
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-16 lg:py-22">
-      <div class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-18 lg:px-16">
+      <div data-reveal class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-7 px-5 sm:px-8 lg:gap-18 lg:px-16">
         <div class="flex-none font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">03 / My Role</div>
         <div class="flex min-w-0 flex-1 basis-[460px] flex-col gap-5">
           <p class="m-0 max-w-[42ch] text-[clamp(18px,1.8vw,26px)] leading-[1.45] tracking-[-.022em] text-paper text-wrap-pretty">
@@ -186,14 +186,14 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
-      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-reveal class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="text-paper">04 / What I Built</span>
         <span>Five surfaces</span>
       </div>
 
       <div class="mt-8 flex flex-col gap-10 lg:mt-14 lg:gap-18">
         {built.map((b) => (
-          <div class:list={["flex flex-wrap items-start gap-7 lg:gap-16", b.imageFirst && "flex-wrap-reverse"]}>
+          <div data-reveal class:list={["flex flex-wrap items-start gap-7 lg:gap-16", b.imageFirst && "flex-wrap-reverse"]}>
             <div class="flex min-w-0 flex-1 basis-[300px] flex-col gap-4">
               <span class="font-mono text-[11px] tracking-[.12em] text-[#6e6c67] uppercase">{b.letter}</span>
               <h3 class="m-0 text-[clamp(20px,2.2vw,30px)] leading-[1.15] font-medium tracking-[-.028em]">{b.title}</h3>
@@ -229,14 +229,14 @@ const fromLab = [
 
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-16 lg:py-22">
       <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
-        <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <div data-reveal class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
           <span class="text-paper">05 / Engineering Problems</span>
           <span>Problem → reasoning → solution → impact</span>
         </div>
 
-        <div class="mt-7 flex max-w-[860px] flex-col lg:mt-12">
+        <div data-reveal-group class="mt-7 flex max-w-[860px] flex-col lg:mt-12">
           {problems.map((p, i) => (
-            <div class:list={["flex flex-col gap-[18px] border-t border-[#2b2b28] py-6 lg:py-9", i === problems.length - 1 && "border-b"]}>
+            <div data-reveal-item class:list={["flex flex-col gap-[18px] border-t border-[#2b2b28] py-6 lg:py-9", i === problems.length - 1 && "border-b"]}>
               <h3 class="m-0 max-w-[34ch] text-[clamp(19px,2vw,26px)] leading-[1.25] font-medium tracking-[-.025em] text-wrap-pretty">{p.title}</h3>
               <div class="flex flex-wrap gap-x-8 gap-y-[14px]">
                 <div class="flex min-w-0 flex-1 basis-[240px] flex-col gap-2">
@@ -259,11 +259,11 @@ const fromLab = [
     </section>
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
-      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-reveal class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="text-paper">06 / Architecture</span>
         <span>Message path</span>
       </div>
-      <div class="mt-7 flex flex-col gap-[22px] border border-[#1e1e1c] p-5 font-mono sm:p-10 lg:mt-11">
+      <div data-reveal class="mt-7 flex flex-col gap-[22px] border border-[#1e1e1c] p-5 font-mono sm:p-10 lg:mt-11">
         <div class="flex flex-wrap items-center gap-[14px]">
           <span class="border border-[#2b2b28] px-4 py-3 text-xs tracking-[.06em] text-paper">Customer</span>
           <span class="text-xs text-[#3a3a36]">→</span>
@@ -293,9 +293,9 @@ const fromLab = [
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
       <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">07 / Product Evolution</div>
-      <div class="mt-6 flex flex-col lg:mt-10">
+      <div data-reveal-group class="mt-6 flex flex-col lg:mt-10">
         {evolution.map((e, i) => (
-          <div class:list={["flex flex-wrap gap-x-8 gap-y-2 border-t border-[#1e1e1c] py-[18px]", i === evolution.length - 1 && "border-b"]}>
+          <div data-reveal-item class:list={["flex flex-wrap gap-x-8 gap-y-2 border-t border-[#1e1e1c] py-[18px]", i === evolution.length - 1 && "border-b"]}>
             <span class="flex-none basis-[150px] font-mono text-[11.5px] tracking-[.06em] text-[#8c8a84]">{e.label}</span>
             <span class="min-w-0 flex-1 basis-[300px] text-[14.5px] leading-[1.6] text-[#dedbd4]">{e.body}</span>
           </div>
@@ -306,7 +306,7 @@ const fromLab = [
     <section class="border-t border-[#1e1e1c] bg-[#070707] py-12 sm:py-16 lg:py-22">
       <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
         <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">08 / Outcome</div>
-        <div class="mt-6 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
+        <div data-reveal class="mt-6 flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] lg:mt-11">
           {outcomes.map((o) => (
             <span class="flex-1 basis-[260px] bg-[#070707] p-5 text-[14.5px] leading-[1.6] text-[#dedbd4]">{o}</span>
           ))}
@@ -316,7 +316,7 @@ const fromLab = [
 
     <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
       <div class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">09 / Gallery</div>
-      <div class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
+      <div data-reveal class="mt-6 flex flex-wrap gap-[14px] lg:mt-10">
         {gallery.map((g) =>
           g.image ? (
             <div class:list={["relative min-w-0 overflow-hidden border border-[#1e1e1c] bg-[#050505]", g.aspect, g.grow]}>

@@ -19,6 +19,12 @@ const {
     <meta name="description" content={description} />
     <title>{title}</title>
     <style>html { background: #0a0a0a; }</style>
+    <script is:inline>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("motion-pending");
+        window.setTimeout(() => document.documentElement.classList.remove("motion-pending"), 1800);
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

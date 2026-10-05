@@ -13,24 +13,24 @@ const links = [
 ---
 
 <Layout title="Contact — Hammad Habib" description="Hiring, a freelance build, or a production problem that should be simple and isn't. Get in touch.">
-  <div class="flex min-h-screen flex-col overflow-x-hidden bg-ink">
+  <div data-page-intro class="flex min-h-screen flex-col overflow-x-hidden bg-ink">
     <Header active="contact" />
 
     <main id="top" class="mx-auto box-border w-full max-w-[1440px] flex-1 px-5 pt-12 pb-14 sm:px-8 sm:pt-16 sm:pb-20 lg:px-16 lg:pt-24 lg:pb-26">
-      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-intro-item="eyebrow" class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
         <span>Contact</span>
       </div>
 
-      <h1 class="mt-[26px] max-w-[22ch] text-[clamp(30px,4.2vw,56px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+      <h1 data-intro-item="headline" class="mt-[26px] max-w-[22ch] text-[clamp(30px,4.2vw,56px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
         Got something worth building? Let's talk.
       </h1>
 
-      <p class="mt-[22px] max-w-[50ch] text-[clamp(15px,1.2vw,17.5px)] leading-[1.65] text-[#a7a59e] text-wrap-pretty">
+      <p data-intro-item="copy" class="mt-[22px] max-w-[50ch] text-[clamp(15px,1.2vw,17.5px)] leading-[1.65] text-[#a7a59e] text-wrap-pretty">
         Hiring, a freelance build, or a production problem that should be simple and isn't. Tell me what you're working on and I'll reply within a day or two.
       </p>
 
-      <div class="mt-10 flex flex-wrap items-start gap-8 lg:mt-18 lg:gap-[72px]">
+      <div data-intro-item="media" class="mt-10 flex flex-wrap items-start gap-8 lg:mt-18 lg:gap-[72px]">
         <ContactForm rows={7} submitLabel="Send it over" class="min-w-0 flex-1 basis-[480px] lg:flex-[2]" />
 
         <aside class="flex min-w-0 flex-1 basis-[260px] flex-col border-t border-[#2b2b28]">
@@ -38,7 +38,7 @@ const links = [
             <video
               src="/videos/hear.mp4"
               poster="/videos/posters/hear.jpg"
-              autoplay
+              data-decorative-video
               muted
               loop
               playsinline
