@@ -28,11 +28,11 @@ const steps = [
 <section id="work" data-scene="work" class="work-scene relative z-[2] border-t border-[#1e1e1c] bg-ink">
   <div data-stage class="scene-stage work-stage">
     <div class="work-inner mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
-      <div data-work-bar class="work-bar flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-work-bar class="home-kicker work-bar flex flex-wrap items-baseline justify-between gap-6 font-mono tracking-[.14em] uppercase">
         <span class="text-paper">01 / Selected Work</span>
         <span aria-hidden="true" class="work-counter">
           <span class="work-counter-mask"><span data-counter="0">01</span><span data-counter="1">02</span></span>
-          <span class="text-[#4a4a45]">/ 02</span>
+          <span class="text-[#aaa8a1]">/ 02</span>
         </span>
         <span>Two projects · 2023—2025</span>
       </div>
@@ -40,28 +40,28 @@ const steps = [
       <div class="work-projects">
         <article data-project="revsmith" class="project mt-10 grid items-start gap-8 lg:mt-16 lg:grid-cols-12 lg:gap-x-[72px]">
           <div class="project-text flex min-w-0 flex-col gap-[22px] lg:col-span-5">
-            <div data-p-meta class="project-meta flex flex-col gap-[10px] font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+            <div data-p-meta class="home-meta project-meta flex flex-col gap-[10px] font-mono tracking-[.08em] uppercase">
               <span>2024—2025</span>
               <span>Software Engineer · Product</span>
-              <span class="text-[#6e6c67]">Next.js · React · TypeScript</span>
-              <span class="text-[#6e6c67]">Supabase · Postgres · Meta APIs</span>
+              <span>Next.js · React · TypeScript</span>
+              <span>Supabase · Postgres · Meta APIs</span>
             </div>
             <div data-p-title class="project-title text-[clamp(26px,2.6vw,38px)] leading-[1.1] font-medium tracking-[-.03em]">RevSmith</div>
             <h2 data-p-claim class="project-claim m-0 max-w-[24ch] text-[clamp(28px,3.6vw,52px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
               Building an AI customer-support platform inside a small startup team.
             </h2>
-            <p data-p-body class="m-0 max-w-[40ch] text-[14.5px] leading-[1.7] text-[#a7a59e]">
+            <p data-p-body class="home-body m-0 max-w-[40ch]">
               Started frontend-heavy, grew into APIs, realtime systems, architecture, integrations, data access and auth — product-level engineering inside a small startup team.
             </p>
             <ol data-p-list class="project-list m-0 flex list-none flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c] p-0">
               {widgets.map((label, i) => (
                 <li class="flex min-w-0 flex-1 basis-[150px] flex-col gap-[10px] bg-ink px-5 py-[22px]">
-                  <span class="font-mono text-[11px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="home-meta font-mono">{String(i + 1).padStart(2, "0")}</span>
                   <span class="text-[15.5px] tracking-[-.01em]">{label}</span>
                 </li>
               ))}
             </ol>
-            <a data-p-cta href="/work/revsmith" class="self-start border-b border-[#2b2b28] pb-2 font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">
+            <a data-p-cta href="/work/revsmith" class="self-start border-b border-[#2b2b28] pb-2 font-mono text-sm tracking-[.1em] text-accent uppercase">
               Read the case study →
             </a>
           </div>
@@ -88,7 +88,7 @@ const steps = [
                 <div data-p-shot class:list={["shot relative aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]", `shot-${i + 1}`]}>
                   <img src={shot.src} alt={shot.label} class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
                   <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-                  <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">{shot.label}</span>
+                  <span class="home-caption absolute bottom-3 left-3 font-mono tracking-[.1em] uppercase">{shot.label}</span>
                 </div>
               ))}
             </div>
@@ -97,10 +97,10 @@ const steps = [
 
         <article data-project="vigilant" class="project mt-18 grid items-start gap-7 border-t border-[#1e1e1c] pt-8 lg:mt-[132px] lg:grid-cols-12 lg:gap-x-16 lg:pt-14">
           <div class="project-text flex min-w-0 flex-col gap-[22px] lg:col-span-5">
-            <div data-p-meta class="project-meta flex flex-wrap gap-4 font-mono text-[11.5px] tracking-[.08em] text-[#8c8a84] uppercase">
+            <div data-p-meta class="home-meta project-meta flex flex-wrap gap-4 font-mono tracking-[.08em] uppercase">
               <span>2023—2024</span>
               <span>UK / Ireland</span>
-              <span class="text-[#6e6c67]">WordPress → Modern Framework · SEO · Linux</span>
+              <span>WordPress → Modern Framework · SEO · Linux</span>
             </div>
             <div data-p-title class="project-title text-[clamp(22px,2.2vw,30px)] font-medium tracking-[-.025em]">
               <span class="project-title-pre">SolvoLab /</span> <span class="project-title-line">Vigilant</span> <span class="project-title-line">Security</span>
@@ -111,8 +111,8 @@ const steps = [
             <ol data-p-list class="project-list project-steps m-0 flex list-none flex-wrap gap-px border-t border-b border-[#1e1e1c] bg-[#1e1e1c] p-0">
               {steps.map((label, i) => (
                 <li class="flex min-w-0 flex-1 basis-[110px] flex-col gap-2 bg-ink px-4 pt-5 pb-[22px]">
-                  <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
-                  <span class="text-[13.5px] leading-[1.5] text-[#cfcdc6]">{label}</span>
+                  <span class="home-meta font-mono">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="text-[15px] leading-[1.5] text-[#dedbd4]">{label}</span>
                 </li>
               ))}
             </ol>
@@ -125,12 +125,12 @@ const steps = [
               <div data-compare-before class="compare-pane relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#1e1e1c] bg-[#050505]">
                 <img src="/vigilant/legacy-uk.png" alt="Vigilant Security — legacy WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
                 <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-                <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#9c9a94] uppercase">Before — legacy WordPress</span>
+                <span class="home-caption absolute bottom-3 left-3 font-mono tracking-[.1em] uppercase">Before — legacy WordPress</span>
               </div>
               <div data-compare-after class="compare-pane relative aspect-21/9 min-w-0 flex-1 basis-[260px] overflow-hidden border border-[#2b2b28] bg-[#050505]">
                 <img src="/vigilant/new-service-page.png" alt="Vigilant Security — rebuilt site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
                 <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-                <span class="compare-after-label absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">After — Astro + Sanity</span>
+                <span class="home-caption compare-after-label absolute bottom-3 left-3 font-mono tracking-[.1em] uppercase">After — Astro + Sanity</span>
               </div>
               <span data-compare-edge aria-hidden="true" class="compare-edge"></span>
             </div>

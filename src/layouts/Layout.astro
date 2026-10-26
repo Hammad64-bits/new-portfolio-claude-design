@@ -29,7 +29,8 @@ const {
       rel="stylesheet"
     />
   </head>
-  <body class="min-h-screen overflow-x-hidden bg-ink">
+  <body id="main" class="min-h-screen overflow-x-hidden bg-ink">
+    <div id="cursor" aria-hidden="true"></div>
     <slot />
 
     <button
@@ -57,5 +58,7 @@ const {
 
 <script>
   import { initMotion } from "../scripts/motion";
+  import "../scripts/cursor";
   initMotion();
+  
 </script>

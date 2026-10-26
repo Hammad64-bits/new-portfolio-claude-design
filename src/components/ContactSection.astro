@@ -2,39 +2,47 @@
 import ContactForm from "./ContactForm.astro";
 ---
 
-<!-- Scene 07. The landing: one scrubbed headline reveal, then stillness (scenes/contact.ts). -->
-<section id="contact" data-scene="contact" class="contact-scene relative mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-18 sm:px-8 lg:px-16 lg:py-[140px]">
-  <span data-contact-rule aria-hidden="true" class="contact-rule"></span>
-  <div data-contact-reveal class="font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">06 / Contact</div>
+<!-- Scene 07. Contact text is visible on arrival. A green corner box (overlay) sits
+     at the bottom-right; as the user scrolls it expands to fill the stage, then
+     two halves split apart to reveal the contact form underneath. -->
+<section id="contact" data-scene="contact" class="contact-scene relative border-t border-[#1e1e1c]">
+  <div data-contact-stage class="scene-stage">
 
-  <h2 data-contact-title class="contact-title mt-8 max-w-[22ch] text-[clamp(30px,4.4vw,62px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty lg:mt-11">
-    Hiring, building, or stuck on something that should work. Start there.
-  </h2>
+    <!-- Contact text — visible from the start, fades as the overlay expands. -->
+    <div data-contact-content class="contact-inner mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
+      <span data-contact-rule aria-hidden="true" class="contact-rule"></span>
+      <div data-contact-reveal class="home-kicker font-mono tracking-[.14em] text-paper uppercase">06 / Contact</div>
 
-  <div data-contact-reveal class="mt-8 flex flex-wrap items-center gap-[14px] lg:mt-13">
-    <a
-      href="mailto:hammadhb225@gmail.com"
-      class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[26px] py-4 text-[15.5px] font-medium text-ink hover:bg-accent"
-    >
-      hammadhb225@gmail.com →
-    </a>
-    <a
-      href="/contact"
-      class="inline-flex items-center gap-[10px] rounded-[2px] border border-[#2b2b28] px-[26px] py-4 text-[15.5px] text-[#cfcdc6] hover:border-[#5a5a54] hover:text-paper"
-    >
-      Download CV ↓
-    </a>
-    <div class="ml-2 flex gap-5 font-mono text-[11.5px] tracking-[.1em] text-[#8c8a84] uppercase">
-      <a href="#" class="text-[#8c8a84] hover:text-accent">GitHub ↗</a>
-      <a href="#" class="text-[#8c8a84] hover:text-accent">LinkedIn ↗</a>
+      <h2 data-contact-title class="contact-title mt-8 max-w-[22ch] text-[clamp(30px,4.4vw,62px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty lg:mt-11">
+        Hiring, building, or stuck on something that should work. Start there.
+      </h2>
+
+      <div data-contact-reveal class="mt-8 flex flex-wrap items-center gap-[14px] lg:mt-13">
+        <a
+          href="mailto:hammadhb225@gmail.com"
+          class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[26px] py-4 text-[15.5px] font-medium text-ink hover:bg-accent"
+        >
+          hammadhb225@gmail.com →
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex items-center gap-[10px] rounded-[2px] border border-[#2b2b28] px-[26px] py-4 text-[15.5px] text-[#cfcdc6] hover:border-[#5a5a54] hover:text-paper"
+        >
+          Download CV ↓
+        </a>
+        <div class="home-meta ml-2 flex gap-5 font-mono tracking-[.1em] uppercase">
+          <a href="#" class="hover:text-accent">GitHub ↗</a>
+          <a href="#" class="hover:text-accent">LinkedIn ↗</a>
+        </div>
+      </div>
     </div>
+
+    <!-- Overlay — corner box (framed, labelled) → full screen → halves split → /contact. -->
+    <div data-contact-overlay class="contact-overlay" aria-hidden="true">
+      <div data-contact-half="left" class="contact-half-l"></div>
+      <div data-contact-half="right" class="contact-half-r"></div>
+      <span data-contact-label class="contact-label">Contact →</span>
+    </div>
+
   </div>
-
-  <ContactForm rows={5} class="mt-11 max-w-[760px] border-t border-[#1e1e1c] pt-8 lg:mt-18 lg:pt-12">
-    <div slot="before-fields" class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11px] tracking-[.12em] text-[#8c8a84] uppercase">
-      <span class="text-paper">Or send a message here</span>
-      <a href="/contact" class="text-[#8c8a84] hover:text-accent">Full contact page →</a>
-    </div>
-    
-  </ContactForm>
 </section>

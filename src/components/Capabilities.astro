@@ -28,19 +28,34 @@ const items = [
 <section data-scene="capabilities" class="caps-scene relative z-[3] border-t border-[#1e1e1c] bg-ink">
   <div data-stage class="scene-stage caps-stage">
     <div class="caps-inner mx-auto max-w-[1440px] px-5 py-16 sm:px-8 lg:px-16 lg:py-28">
-      <div data-caps-bar class="flex flex-wrap items-baseline justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-caps-bar class="home-kicker flex flex-wrap items-baseline justify-between gap-6 font-mono tracking-[.14em] uppercase">
         <span class="text-paper">02 / Capabilities</span>
         <span>Engineering domains</span>
       </div>
 
-      <ol class="caps-list m-0 mt-9 grid list-none grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-6 p-0 lg:mt-14 lg:gap-11">
+      <h2 class="caps-heading mt-10 max-w-[900px] text-[clamp(36px,5vw,72px)] leading-[1.02] font-medium tracking-[-.045em] sm:mt-14">
+        From interface to infrastructure<span class="text-accent">.</span>
+      </h2>
+
+      <ol class="caps-list m-0 mt-12 grid list-none grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-6 p-0 lg:mt-16 lg:gap-11">
         {items.map((item, i) => (
           <li data-cap class="cap relative flex flex-col gap-3 border-t border-[#2b2b28] pt-[22px]">
-            <span class="cap-num font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
-            <span class="cap-title text-[clamp(17px,1.5vw,21px)] tracking-[-.02em]">{item.title}</span>
+            <span class="cap-num font-mono text-base font-medium text-[#c3c1ba]">{String(i + 1).padStart(2, "0")}</span>
+            <span class="cap-title text-[clamp(17px,1.5vw,21px)] tracking-[-.02em]">
+              <span class="sr-only">{item.title}</span>
+              <span class="cap-title-text" aria-hidden="true">
+                {item.title.split(" ").map((word, wordIndex) => (
+                  <span class="cap-title-word">
+                    {Array.from(word).map((letter, letterIndex) => (
+                      <span class="cap-char" style={`--char-index: ${item.title.split(" ").slice(0, wordIndex).join(" ").length + letterIndex}`}>{letter}</span>
+                    ))}
+                  </span>
+                ))}
+              </span>
+            </span>
             <span class="cap-detail flex flex-col gap-3">
-              <span class="cap-body m-0 text-sm leading-[1.65] text-[#a7a59e]">{item.body}</span>
-              <span class="mt-1 font-mono text-[10.5px] tracking-[.06em] text-[#6e6c67]">{item.stack}</span>
+              <span class="cap-body m-0 text-base leading-[1.5] text-[#c3c1ba]">{item.body}</span>
+              <span class="home-meta mt-1 font-mono tracking-[.04em]">{item.stack}</span>
             </span>
             <span data-cap-rule aria-hidden="true" class="cap-rule"></span>
           </li>

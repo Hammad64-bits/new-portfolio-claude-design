@@ -8,6 +8,7 @@ import Experience from "../components/Experience.astro";
 import Labs from "../components/Labs.astro";
 import AboutSection from "../components/AboutSection.astro";
 import ContactSection from "../components/ContactSection.astro";
+import ContactMain from "../components/ContactMain.astro";
 import Footer from "../components/Footer.astro";
 ---
 
@@ -20,6 +21,18 @@ import Footer from "../components/Footer.astro";
   <Labs />
   <AboutSection />
   <ContactSection />
+
+  <!-- Contact page content lives here in the page flow.
+       In cinematic mode, contact.ts hides this on init and reveals it
+       after the scroll animation — no page navigation needed. -->
+  <section
+    id="hh-contact-main"
+    class="min-h-screen overflow-x-clip bg-ink flex flex-col"
+    aria-label="Contact"
+  >
+    <ContactMain />
+  </section>
+
   <Footer />
 </Layout>
 

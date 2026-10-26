@@ -16,6 +16,28 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Shared small-type tiers for the homepage's dark sections. */
+.home-kicker {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #bcbab3;
+}
+.home-meta {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #b5b3ad;
+}
+.home-caption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #dedbd4;
+}
+.home-body {
+  font-size: 16px;
+  line-height: 1.65;
+  color: #c3c1ba;
+}
+
 ::selection {
   background: #b9ff4d;
   color: #0a0a0a;
@@ -23,13 +45,49 @@ body {
 
 input::placeholder,
 textarea::placeholder {
-  color: #5f5d58;
+  color: #9b9992;
 }
 
 input:focus,
 textarea:focus {
   outline: none;
   border-color: #b9ff4d !important;
+}
+
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0);
+  will-change: transform;
+}
+#cursor.is-visible { opacity: 1; }
+#cursor.is-magnetized { box-shadow: 0 0 0 2px rgba(10, 10, 10, .9); }
+#cursor::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  opacity: 0;
+}
+#cursor.is-on-light::after { border-color: var(--color-ink); }
+#cursor.is-pinging::after { animation: cursor-ping .65s ease-out both; }
+
+@keyframes cursor-ping {
+  0% { opacity: .9; transform: scale(.45); }
+  100% { opacity: 0; transform: scale(2.7); }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  #cursor { display: none; }
 }
 
 @keyframes hh-blink {
@@ -170,6 +228,32 @@ img.object-scale-down:hover {
   background-image: repeating-linear-gradient(135deg, #141413 0 10px, #0f0f0e 10px 20px);
 }
 
+/* Each word can wrap naturally while its letters move independently on hover. */
+.cap-title-word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: .23em;
+}
+.cap-title-word:last-child { margin-right: 0; }
+.cap-char {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cap-char {
+    transition: transform .48s cubic-bezier(.22, 1, .36, 1), font-weight .48s cubic-bezier(.22, 1, .36, 1);
+  }
+  .cap-title-text:hover .cap-char {
+    transform: translateY(-.06em) scaleY(1.06);
+    font-weight: 650;
+    transition-delay: calc(var(--char-index) * 14ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cap-char { transition: none; }
+}
+
 
 /* ==========================================================================
    Scroll scenes (homepage). Timelines: src/scripts/scenes/*.ts.
@@ -205,11 +289,12 @@ img.object-scale-down:hover {
 .cap-rule,
 .exp-progress,
 .labs-ghost,
-.contact-rule {
+.contact-rule,
+.contact-overlay {
   display: none;
 }
 
-@media (min-width: 1024px) and (min-height: 600px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 1440px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
   html.js {
     /* Space reserved for the sticky site header inside each stage */
     --stage-top: 84px;
@@ -353,10 +438,10 @@ img.object-scale-down:hover {
     display: block;
     margin-bottom: 1.6svh;
     font-family: var(--font-mono);
-    font-size: 11.5px;
+    font-size: 14px;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: #8c8a84;
+    color: #b5b3ad;
   }
   html.js .project-title-line {
     display: block;
@@ -372,8 +457,8 @@ img.object-scale-down:hover {
     max-width: 26ch;
   }
   html.js .project-text p {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.65;
   }
   html.js .project-list {
     flex-wrap: nowrap;
@@ -384,8 +469,9 @@ img.object-scale-down:hover {
     gap: 6px;
   }
   html.js .project-list li span:last-child {
-    font-size: 13px;
-    line-height: 1.35;
+    font-size: 15px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
   }
   html.js .project-visual {
     z-index: 1;
@@ -450,6 +536,10 @@ img.object-scale-down:hover {
     padding-top: var(--stage-top);
     padding-bottom: 5svh;
   }
+  html.js .caps-heading {
+    margin-top: clamp(20px, 4svh, 40px);
+    font-size: clamp(32px, min(3.5vw, 5svh), 56px);
+  }
   html.js .caps-list {
     display: flex;
     flex-direction: column;
@@ -458,11 +548,11 @@ img.object-scale-down:hover {
   }
   html.js .cap {
     display: grid;
-    grid-template-columns: 72px minmax(0, 1fr) minmax(240px, .5fr);
-    align-items: end;
-    column-gap: 32px;
+    grid-template-columns: 52px minmax(0, 1fr) minmax(220px, 30%);
+    align-items: center;
+    column-gap: clamp(16px, 2vw, 28px);
     border-top: 0;
-    padding: 2.6svh 0 2.2svh;
+    padding: clamp(14px, 2svh, 24px) 0;
   }
   html.js .cap::after {
     content: "";
@@ -474,21 +564,26 @@ img.object-scale-down:hover {
     background: #1e1e1c;
   }
   html.js .cap-num {
-    align-self: start;
-    padding-top: .6em;
-    font-size: 11.5px;
-    color: #8c8a84;
+    align-self: center;
+    font-size: 16px;
+    color: #c3c1ba;
   }
   html.js .cap-title {
-    font-size: clamp(32px, min(4.8vw, 9svh), 90px);
-    line-height: .95;
+    min-width: 0;
+    font-size: clamp(32px, min(3.7vw, 7svh), 68px);
+    line-height: 1.02;
     font-weight: 500;
-    letter-spacing: -.045em;
-    white-space: nowrap;
+    letter-spacing: -.04em;
+    text-wrap: balance;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    html.js .cap:has(.cap-title-text:hover) {
+      opacity: 1 !important;
+    }
   }
   html.js .cap-detail {
     gap: 8px;
-    padding-bottom: .5em;
+    min-width: 0;
   }
   html.js .cap-rule {
     display: block;
@@ -558,7 +653,15 @@ img.object-scale-down:hover {
     user-select: none;
   }
 
-  /* — Scene 07: Contact — the composition the page lands on — */
+  /* — Scene 07: Contact — green corner box expands then halves split → navigates to /contact — */
+  html.js .contact-scene {
+    height: 200svh;
+  }
+  html.js .contact-inner {
+    height: 100%;
+    padding-top: var(--stage-top);
+    padding-bottom: 5svh;
+  }
   html.js .contact-title {
     max-width: 17ch;
     font-size: clamp(40px, min(6.2vw, 11svh), 104px);
@@ -574,5 +677,40 @@ img.object-scale-down:hover {
     height: 1px;
     background: var(--color-accent);
     transform-origin: 0 50%;
+  }
+  html.js .contact-overlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    will-change: clip-path;
+    /* inset box-shadow gets clipped with clip-path, drawing a border around whatever
+       shape is visible — corner box or full screen — for free */
+    box-shadow: inset 0 0 0 1.5px rgba(0, 0, 0, 0.35);
+  }
+  html.js .contact-half-l,
+  html.js .contact-half-r {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background: var(--color-accent);
+  }
+  html.js .contact-half-l { left: 0; }
+  html.js .contact-half-r { right: 0; }
+  html.js .contact-label {
+    display: block;
+    position: absolute;
+    /* center of the initial clip box: inset(72% 0% 0% 65%) → box center ≈ (82.5%, 86%) */
+    bottom: 14%;
+    right: 17.5%;
+    transform: translate(50%, 50%);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    white-space: nowrap;
   }
 }

@@ -25,10 +25,10 @@ export const initExperience = defineScene("experience", (root, mode) => {
         defaults: { ease: "none" },
         scrollTrigger: { trigger: row, start: "top 80%", end: "bottom 20%", scrub: 0.4 },
       })
-      .fromTo(row, { opacity: 0.28 }, { opacity: 1, duration: 1 })
-      .fromTo(title, { scale: 1 }, { scale: 1.12, duration: 1 }, 0)
+      .fromTo(row, { opacity: 0.78 }, { opacity: 1, duration: 1 })
+      .fromTo(title, { scale: 1 }, { scale: 1.04, duration: 1 }, 0)
       .to({}, { duration: 0.4 })
-      .to(row, { opacity: 0.42, duration: 1 })
+      .to(row, { opacity: 0.82, duration: 1 })
       .to(title, { scale: 1, duration: 1 }, "<");
   });
 

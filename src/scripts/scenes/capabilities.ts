@@ -30,12 +30,12 @@ export const initCapabilities = defineScene("capabilities", (root, mode) => {
 
   caps.forEach((cap, i) => {
     const at = 0.2 + i;
-    fromTo(tl, cap, { opacity: 0.18 }, { opacity: 1, duration: 0.45 }, at);
+    fromTo(tl, cap, { opacity: 0.72 }, { opacity: 1, duration: 0.45 }, at);
     fromTo(tl, titles[i], { xPercent: 6 }, { xPercent: 0, duration: 0.6, ease: "power3.out" }, at);
     fromTo(tl, details[i], { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45 }, at + 0.15);
     fromTo(tl, rules[i], { scaleX: 0 }, { scaleX: 1, duration: 0.8 }, at);
     if (i < caps.length - 1) {
-      tl.to(cap, { opacity: 0.38, duration: 0.45 }, at + 0.85);
+      tl.to(cap, { opacity: 0.8, duration: 0.45 }, at + 0.85);
       tl.to(titles[i], { xPercent: -1.5, duration: 0.6 }, at + 0.85);
     }
   });

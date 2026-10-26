@@ -1,0 +1,67 @@
+---
+import ContactForm from "./ContactForm.astro";
+
+const links = [
+  { label: "Direct email", value: "hammadhb225@gmail.com", href: "mailto:hammadhb225@gmail.com", arrow: "→" },
+  { label: "Code", value: "GitHub", href: "#", arrow: "↗" },
+  { label: "Professional", value: "LinkedIn", href: "#", arrow: "↗" },
+  { label: "Résumé", value: "Download CV", href: "#", arrow: "↓" },
+];
+---
+
+<div class="mx-auto box-border w-full max-w-[1440px] flex-1 px-5 pt-12 pb-14 sm:px-8 sm:pt-16 sm:pb-20 lg:px-16 lg:pt-24 lg:pb-26">
+  <div data-ci-eyebrow class="home-kicker flex items-center gap-[14px] font-mono tracking-[.14em] uppercase">
+    <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+    <span>Contact</span>
+  </div>
+
+  <h1 data-ci-heading class="mt-[26px] max-w-[22ch] text-[clamp(30px,4.2vw,56px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+    Got something worth building? Let's talk.
+  </h1>
+
+  <p data-ci-desc class="home-body mt-[22px] max-w-[50ch] text-wrap-pretty">
+    Hiring, a freelance build, or a production problem that should be simple and isn't. Tell me what you're working on and I'll reply within a day or two.
+  </p>
+
+  <div class="mt-10 flex flex-wrap items-start gap-8 lg:mt-18 lg:gap-[72px]">
+
+    <div data-ci-form class="min-w-0 flex-1 basis-[480px] self-start sticky top-6 lg:flex-[2] lg:top-8">
+      <ContactForm rows={7} submitLabel="Send it over" />
+    </div>
+
+    <aside class="flex min-w-0 flex-1 basis-[260px] flex-col border-t border-[#2b2b28]">
+      <div data-ci-video class="relative mt-6 aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+        <video
+          src="/videos/hear.mp4"
+          poster="/videos/posters/hear.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          class="absolute inset-0 h-full w-full object-cover"
+          style="animation: hh-drift 26s ease-in-out infinite"
+        ></video>
+        <span class="home-caption absolute bottom-[10px] left-3 font-mono tracking-[.1em] uppercase">Video / all ears</span>
+      </div>
+      {links.map((link) => (
+        <a
+          data-ci-link
+          href={link.href}
+          class="flex items-baseline justify-between gap-4 border-b border-[#1e1e1c] py-5 hover:text-accent"
+        >
+          <span class="flex flex-col gap-[6px]">
+            <span class="home-meta font-mono tracking-[.1em] uppercase">{link.label}</span>
+            <span class="text-[16px] tracking-[-.01em]">{link.value}</span>
+          </span>
+          <span class="home-meta font-mono">{link.arrow}</span>
+        </a>
+      ))}
+      <div data-ci-link class="home-meta flex items-center gap-[10px] pt-[22px] font-mono tracking-[.06em]">
+        <span class="block h-[6px] w-[6px] rounded-full bg-accent" style="animation: hh-blink 2.4s infinite"></span>
+        <span>Pakistan · replies within 1—2 days</span>
+      </div>
+    </aside>
+
+  </div>
+</div>

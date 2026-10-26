@@ -21,12 +21,12 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
  * is recorded by the matchMedia context and reverted when the mode changes.
  */
 export const CINEMATIC =
-  "(min-width: 1024px) and (min-height: 600px) and (prefers-reduced-motion: no-preference)";
+  "(min-width: 1440px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)";
 
 const CONDITIONS = {
   cinematic: CINEMATIC,
   compact:
-    "(prefers-reduced-motion: no-preference) and (max-width: 1023.98px), (prefers-reduced-motion: no-preference) and (max-height: 599.98px)",
+    "(prefers-reduced-motion: no-preference) and (max-width: 1439.98px), (prefers-reduced-motion: no-preference) and (max-height: 719.98px)",
   reduced: "(prefers-reduced-motion: reduce)",
 };
 
