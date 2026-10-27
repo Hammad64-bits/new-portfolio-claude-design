@@ -1,0 +1,123 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import TravelExplorer from "../components/travel/TravelExplorer";
+---
+
+<Layout title="Travel — Hammad Habib" description="A growing map of places, photographs, and roads travelled across Pakistan.">
+  <div class="min-h-screen overflow-x-clip bg-ink text-paper">
+    <Header active="travel" />
+    <main id="top" class="travel-page">
+      <TravelExplorer client:load />
+    </main>
+    <Footer />
+  </div>
+</Layout>
+
+<style is:global>
+  .travel-page {
+    display: flex;
+    min-height: calc(100svh - 68px);
+    align-items: center;
+    padding: 14px 40px 24px;
+  }
+  .travel-explorer {
+    display: grid;
+    width: min(100%, 1680px);
+    height: min(740px, calc(100svh - 130px));
+    min-height: 600px;
+    grid-template-columns: minmax(250px, 310px) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0 34px;
+    margin: 0 auto;
+  }
+  .travel-copy { grid-column: 1; grid-row: 1; align-self: end; padding: 0 0 24px; }
+  .travel-eyebrow, .travel-index-heading, .travel-card-meta, .travel-seed-note, .travel-hint, .travel-hover-label {
+    font-family: "IBM Plex Mono", monospace;
+    text-transform: uppercase;
+    letter-spacing: .13em;
+  }
+  .travel-eyebrow { display: flex; align-items: center; gap: 11px; color: #8c8a84; font-size: 9px; }
+  .travel-eyebrow span { width: 22px; height: 1px; background: #b9ff4d; }
+  .travel-copy h1 { margin: 22px 0 15px; font-size: clamp(39px, 3.1vw, 48px); line-height: .98; letter-spacing: -.065em; font-weight: 500; }
+  .travel-copy h1 em { color: #b9ff4d; font-style: normal; }
+  .travel-copy > p { max-width: 34ch; margin: 0; color: #a7a59e; font-size: 13px; line-height: 1.65; }
+  .travel-copy-hint { display: flex; align-items: center; gap: 8px; margin-top: 20px; color: #777b73; font: 9px "IBM Plex Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .travel-copy-hint span { color: #b9ff4d; font-size: 13px; }
+  .travel-stage {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 49%, #101a14 0%, #0b0d0c 58%, transparent 78%);
+  }
+  .travel-earth-preview { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; object-fit: contain; clip-path: circle(49% at 50% 50%); pointer-events: none; transition: opacity .4s ease; }
+  .travel-earth-preview.is-ready { opacity: 0; }
+  .travel-stage canvas { position: absolute !important; z-index: 1; inset: 0; display: block; width: 100% !important; height: 100% !important; cursor: grab; touch-action: none; }
+  .travel-stage canvas:active { cursor: grabbing; }
+  .travel-globe-controls { position: absolute; z-index: 3; bottom: 17px; left: 18px; display: flex; gap: 6px; }
+  .travel-globe-controls button, .travel-photo-controls button { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid #373c36; background: #090c0be8; color: #eee; font-size: 19px; cursor: pointer; transition: color .2s, border-color .2s; }
+  .travel-globe-controls button:hover, .travel-photo-controls button:hover { color: #b9ff4d; border-color: #b9ff4d; }
+  .travel-hint { position: absolute; z-index: 2; right: 20px; bottom: 29px; margin: 0; color: #72776f; font-size: 8px; }
+  .travel-hover-label { position: absolute; z-index: 3; top: 16px; left: 50%; padding: 9px 12px; border: 1px solid #343c31; background: #0a0c0be8; color: #b9ff4d; font-size: 9px; transform: translateX(-50%); pointer-events: none; white-space: nowrap; }
+  .travel-index { grid-column: 1; grid-row: 2; min-height: 0; display: flex; flex-direction: column; padding-top: 18px; }
+  .travel-index-heading { display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #282a26; color: #7e8279; font-size: 8px; }
+  .travel-index ul { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; list-style: none; margin: 7px 0 0; padding: 0; }
+  .travel-index li { border-bottom: 1px solid #242521; }
+  .travel-index li button { display: grid; width: 100%; grid-template-columns: 22px 1fr 12px; gap: 5px; align-items: center; padding: 11px 0; border: 0; background: none; text-align: left; color: #c6c7bf; cursor: pointer; font-size: 11px; transition: color .2s; }
+  .travel-index li button:hover, .travel-index li button.is-selected { color: #b9ff4d; }
+  .travel-index-number { color: #666b63; font: 8px "IBM Plex Mono", monospace; }
+  .travel-index-arrow { text-align: right; color: #7f857c; }
+  .travel-seed-note { margin: auto 0 0; padding-top: 14px; color: #686d65; font-size: 7px; line-height: 1.8; }
+  .travel-globe-fallback { position: absolute; z-index: 4; top: 16px; left: 16px; right: 16px; padding: 12px 15px; border: 1px solid #41463d; background: #111510; color: #c9cdc3; font-size: 12px; }
+  .travel-card-backdrop { position: fixed; z-index: 80; inset: 0; display: grid; place-items: center; padding: 20px; background: #000a; backdrop-filter: blur(8px); animation: travel-fade-in .2s ease both; }
+  .travel-card { position: relative; display: grid; width: min(880px, 100%); max-height: min(690px, 90vh); grid-template-columns: minmax(0, 1.2fr) minmax(270px, .8fr); overflow: auto; border: 1px solid #353a33; background: #101210; animation: travel-card-in .35s cubic-bezier(.2,.8,.2,1) both; }
+  .travel-card-close { position: absolute; z-index: 2; top: 14px; right: 14px; width: 38px; height: 38px; border: 1px solid #74776e; background: #080a09d9; color: #fff; font-size: 24px; cursor: pointer; }
+  .travel-card-image { position: relative; min-height: 420px; background: radial-gradient(ellipse, #1c2820, #0b0e0c); }
+  .travel-card-image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .travel-photo-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #cdd0c8; font-size: 14px; }
+  .travel-photo-placeholder small { color: #858a81; font: 9px "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; }
+  .travel-photo-controls { position: absolute; right: 16px; bottom: 16px; left: 16px; display: flex; align-items: center; justify-content: space-between; color: #fff; font: 10px "IBM Plex Mono", monospace; text-shadow: 0 1px 8px #000; }
+  .travel-photo-controls button { width: 34px; height: 34px; }
+  .travel-card-copy { display: flex; flex-direction: column; padding: 54px 32px 30px; }
+  .travel-card-meta { display: flex; flex-direction: column; gap: 8px; color: #888e83; font-size: 8px; }
+  .travel-card-meta span:first-child { color: #b9ff4d; }
+  .travel-card-copy h2 { margin: 28px 0 13px; font-size: clamp(28px, 4vw, 42px); line-height: 1; letter-spacing: -.05em; font-weight: 500; }
+  .travel-card-copy p { margin: 0; color: #a9ada4; font-size: 14px; line-height: 1.7; }
+  .travel-route-note { display: block; margin-top: 18px; color: #80867c; font: 8px/1.6 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: .08em; }
+  .travel-card-done { display: flex; justify-content: space-between; margin-top: auto; padding: 16px 0 0; border: 0; border-top: 1px solid #343831; background: none; color: #d9ddd3; text-align: left; cursor: pointer; font-size: 12px; }
+  .travel-card-done:hover { color: #b9ff4d; }
+  @keyframes travel-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes travel-card-in { from { opacity: 0; transform: translateY(15px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @media (max-width: 900px) and (min-width: 681px) {
+    .travel-page { padding-right: 24px; padding-left: 24px; }
+    .travel-explorer { grid-template-columns: 240px minmax(0, 1fr); gap: 0 20px; }
+  }
+  @media (max-width: 680px) {
+    .travel-page { min-height: auto; align-items: stretch; padding: 28px 16px 48px; }
+    .travel-explorer { height: auto; min-height: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto min(102vw, 420px) auto; gap: 0; }
+    .travel-copy { grid-column: 1; grid-row: 1; align-self: auto; padding: 0 0 18px; }
+    .travel-copy h1 { max-width: 12ch; margin: 16px 0 11px; font-size: clamp(37px, 10vw, 48px); }
+    .travel-copy > p { max-width: 42ch; font-size: 12px; }
+    .travel-copy-hint { margin-top: 13px; font-size: 8px; }
+    .travel-stage { grid-column: 1; grid-row: 2; min-height: 350px; }
+    .travel-index { grid-column: 1; grid-row: 3; padding-top: 18px; }
+    .travel-index ul { gap: 0 18px; }
+    .travel-index li button { padding: 13px 0; font-size: 12px; }
+    .travel-seed-note { margin-top: 16px; }
+    .travel-hint { right: 12px; bottom: 20px; font-size: 7px; letter-spacing: .05em; }
+    .travel-globe-controls { left: 12px; bottom: 10px; }
+    .travel-globe-controls button { width: 32px; height: 32px; }
+    .travel-card { display: flex; flex-direction: column; max-height: 90vh; }
+    .travel-card-image { min-height: min(42vh, 320px); }
+    .travel-card-copy { min-height: 240px; padding: 25px 22px 20px; }
+    .travel-card-copy h2 { margin-top: 18px; }
+    .travel-card-close { top: 10px; right: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .travel-card-backdrop, .travel-card { animation-duration: .01ms; }
+  }
+</style>

@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Weighted wheel scrolling for the homepage scroll scenes.
+ * Weighted wheel scrolling for the site's scroll scenes.
  *
  * Native wheel steps jump ~100px per notch, which flicks straight through
  * short animation beats. Lenis interpolates toward the target instead, and
@@ -24,8 +24,8 @@ export function initSmoothScroll() {
   const mm = gsap.matchMedia();
   mm.add("(prefers-reduced-motion: no-preference)", () => {
     const instance = new Lenis({
-      lerp: 0.075,
-      wheelMultiplier: 0.75,
+      lerp: 0.055,
+      wheelMultiplier: 0.5,
       anchors: true,
       autoRaf: false,
     });

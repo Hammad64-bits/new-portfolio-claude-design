@@ -1,5 +1,4 @@
 import { refreshWhenSettled } from "./scenes/core";
-import { initSmoothScroll } from "./smooth";
 import { initHero } from "./scenes/hero";
 import { initWork } from "./scenes/work";
 import { initCapabilities } from "./scenes/capabilities";
@@ -17,5 +16,4 @@ import { initContact } from "./scenes/contact";
  */
 [initHero, initWork, initCapabilities, initExperience, initLabs, initAbout, initContact].forEach((init) => init());
 
-initSmoothScroll();
 refreshWhenSettled();

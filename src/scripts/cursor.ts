@@ -4,9 +4,7 @@ const finePointer = window.matchMedia(
 );
 
 if (cursor) {
-  const targets = Array.from(
-    document.querySelectorAll<HTMLElement>('a[href], button, [role="button"]'),
-  );
+  const targetSelector = 'a[href], button, [role="button"], [role="link"]';
   const attractDistance = 56;
   const releaseDistance = 88;
 
@@ -51,7 +49,20 @@ if (cursor) {
   const chooseTarget = () => {
     let nearest: HTMLElement | null = null;
     let nearestDistance = attractDistance;
-    for (const target of targets) {
+
+    // Prefer the actual control under the pointer. This keeps the magnetic
+    // state reliable for every route and for links inserted after startup.
+    const underPointer = document
+      .elementFromPoint(pointerX, pointerY)
+      ?.closest(targetSelector) as HTMLElement | null;
+    if (underPointer && isAvailable(underPointer, underPointer.getBoundingClientRect())) {
+      nearest = underPointer;
+      nearestDistance = 0;
+    }
+
+    // Refresh candidates while tracking so dynamically rendered controls are
+    // included instead of relying on a one-time page-load snapshot.
+    for (const target of document.querySelectorAll<HTMLElement>(targetSelector)) {
       const rect = target.getBoundingClientRect();
       if (!isAvailable(target, rect)) continue;
       const distance = distanceToRect(rect);

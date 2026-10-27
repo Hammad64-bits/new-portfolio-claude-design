@@ -25,7 +25,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -42,15 +42,19 @@ const {
       <span aria-hidden="true" class="font-mono text-base leading-none">↑</span>
     </button>
 
-    <div id="hh-page-transition" aria-hidden="true" style="display:none; position:fixed; inset:0; z-index:9999; pointer-events:none;">
-      <div style="position:absolute; inset:0; background:#eeece6;"></div>
-      <div data-tp-panel style="position:absolute; top:0; bottom:0; left:0; width:0%; background:#0a0a0a;"></div>
-      <div style="position:absolute; top:50%; left:0; right:0; transform:translateY(-50%); display:flex; justify-content:center; font-family:'Instrument Sans',Helvetica,Arial,sans-serif; font-size:clamp(28px,5vw,64px); font-weight:600; letter-spacing:-.03em; line-height:1;">
-        <span data-tp-letter style="color:#0a0a0a;">H</span><span data-tp-letter style="color:#0a0a0a;">a</span><span data-tp-letter style="color:#0a0a0a;">m</span><span data-tp-letter style="color:#0a0a0a;">m</span><span data-tp-letter style="color:#0a0a0a;">a</span><span data-tp-letter style="color:#0a0a0a;">d</span><span data-tp-letter style="color:#0a0a0a;">.</span>
-      </div>
-      <div data-tp-counter style="position:absolute; top:66%; left:5%; right:5%; display:flex; align-items:center; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:clamp(11px,1.1vw,13px); letter-spacing:.08em; color:#8c8a84; opacity:0;">
-        <span data-tp-percent>0%</span>
-        <span data-tp-tick style="height:1px; background:#3a3a36; width:0;"></span>
+    <div id="hh-page-transition" class="page-transition-loader" aria-hidden="true" style="display:none">
+      <svg class="page-transition-loader__corners" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+        <path data-loader-frame class="page-transition-loader__stroke page-transition-loader__stroke--black" d="M55 168V52H184 M816 52H945V168 M55 432V548H184 M816 548H945V432" />
+        <path data-loader-frame class="page-transition-loader__stroke page-transition-loader__stroke--white" d="M62 176V60H191 M809 60H938V176 M62 424V540H191 M809 540H938V424" />
+      </svg>
+      <div class="page-transition-loader__content" data-loader-content>
+        <span class="page-transition-loader__word" aria-label="Loading.">
+          {Array.from("Loading.").map((letter) => <span data-loader-letter aria-hidden="true">{letter}</span>)}
+        </span>
+        <span class="page-transition-loader__underlines" aria-hidden="true">
+          <span data-loader-underline class="page-transition-loader__underline page-transition-loader__underline--black"></span>
+          <span data-loader-underline class="page-transition-loader__underline page-transition-loader__underline--white"></span>
+        </span>
       </div>
     </div>
   </body>

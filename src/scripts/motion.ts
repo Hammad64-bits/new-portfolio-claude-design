@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { scrollToY } from "./smooth";
+import { initSmoothScroll, scrollToY } from "./smooth";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,76 +97,52 @@ function initNavIndicator() {
   });
 }
 
-/**
- * Split-panel page-transition wipe (see the loader spec: 520ms, cubic-bezier(.72,0,.18,1),
- * left-to-right only). The site is a classic multi-page Astro build, so this doesn't swap
- * content client-side — it plays the outro wipe over the CURRENT page, then hands off to a
- * real navigation once the panel is fully dark. Because the incoming document's <html> is
- * already painted #0a0a0a (see the inline style in Layout.astro's <head>) before any other
- * CSS loads, that handoff reads as continuous darkness with zero visible seam — matching the
- * source spec's "removing the overlay is invisible" note, with no incoming-side code needed.
- */
+/** Full-screen lime loading card used before same-site page navigation. */
 function initPageTransition() {
-  const overlayEl = document.getElementById("hh-page-transition");
-  const panelEl = overlayEl?.querySelector<HTMLElement>("[data-tp-panel]");
-  const letters = overlayEl ? Array.from(overlayEl.querySelectorAll<HTMLElement>("[data-tp-letter]")) : [];
-  const counterEl = overlayEl?.querySelector<HTMLElement>("[data-tp-counter]");
-  const percentEl = overlayEl?.querySelector<HTMLElement>("[data-tp-percent]");
-  const tickEl = overlayEl?.querySelector<HTMLElement>("[data-tp-tick]");
-  if (!overlayEl || !panelEl || !counterEl || !percentEl || !tickEl || !letters.length) return;
+  const overlay = document.getElementById("hh-page-transition");
+  const content = overlay?.querySelector<HTMLElement>("[data-loader-content]");
+  const frame = overlay ? Array.from(overlay.querySelectorAll<SVGPathElement>("[data-loader-frame]")) : [];
+  const letters = content ? Array.from(content.querySelectorAll<HTMLElement>("[data-loader-letter]")) : [];
+  const underlines = content ? Array.from(content.querySelectorAll<HTMLElement>("[data-loader-underline]")) : [];
+  if (!overlay || !content || !frame.length || !letters.length || underlines.length < 2) return;
 
-  const overlay = overlayEl;
-  const panel = panelEl;
-  const counter = counterEl;
-  const percentNode = percentEl;
-  const tickNode = tickEl;
-
-  const DURATION = 0.52;
-  const BAND_START = 38;
-  const BAND_END = 62;
-  const STEPS = [0, 29, 57, 84, 100];
-
-  // cubic-bezier(.72, 0, .18, 1), sampled by Newton iteration on x — same math as loader-spec.astro.
-  function bez(t: number, p1: number, p2: number) {
-    const u = 1 - t;
-    return 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t;
-  }
-  function wipeEase(x: number) {
-    let t = x;
-    for (let i = 0; i < 6; i++) {
-      const err = bez(t, 0.72, 0.18) - x;
-      const d = 3 * (1 - t) * (1 - t) * 0.72 + 6 * (1 - t) * t * (0.18 - 0.72) + 3 * t * t * (1 - 0.18);
-      if (Math.abs(d) < 1e-5) break;
-      t -= err / d;
-    }
-    return bez(Math.min(1, Math.max(0, t)), 0, 1);
-  }
-
-  function render(p: number) {
-    const pct = p * 100;
-    panel.style.width = pct + "%";
-    letters.forEach((el, i) => {
-      const center = BAND_START + ((i + 0.5) * (BAND_END - BAND_START)) / letters.length;
-      el.style.color = pct > center ? "#eeece6" : "#0a0a0a";
-    });
-    let snapped = 0;
-    for (const s of STEPS) if (pct >= s) snapped = s;
-    percentNode.textContent = snapped + "%";
-    counter.style.opacity = String(Math.min(1, p * 12));
-    tickNode.style.width = `max(0px, min(calc(100% - 5em), calc(${((pct - 5) / 0.9).toFixed(2)}% - 5em)))`;
-  }
+  let transitioning = false;
 
   function playThenGo(href: string) {
+    if (transitioning) return;
+    transitioning = true;
     overlay.style.display = "block";
-    render(0);
-    const state = { p: 0 };
-    gsap.to(state, {
-      p: 1,
-      duration: DURATION,
-      ease: wipeEase,
-      onUpdate: () => render(state.p),
-      onComplete: () => window.location.assign(href),
+    const frameLengths = frame.map((path) => path.getTotalLength());
+
+    gsap.set(content, { autoAlpha: 0 });
+    frame.forEach((path, index) => {
+      gsap.set(path, {
+        strokeDasharray: frameLengths[index],
+        strokeDashoffset: frameLengths[index],
+      });
     });
+    gsap.set(letters, { autoAlpha: 0, y: 22, scale: 0.82, rotation: -8 });
+    gsap.set(underlines, { scaleX: 0 });
+
+    const tl = gsap.timeline({ onComplete: () => window.location.assign(href) });
+    tl.fromTo(
+      overlay,
+      { clipPath: "inset(0% 100% 0% 0%)" },
+      { clipPath: "inset(0% 0% 0% 0%)", duration: 0.34, ease: "power3.inOut" },
+    )
+      .to(frame, { strokeDashoffset: 0, duration: 0.38, stagger: 0.12, ease: "power2.out" })
+      .set(content, { autoAlpha: 1 })
+      .to(letters, {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration: 0.34,
+        stagger: 0.055,
+        ease: "elastic.out(1, 0.45)",
+      })
+      .to(underlines[0], { scaleX: 1, duration: 0.18, ease: "power2.out" })
+      .to(underlines[1], { scaleX: 1, duration: 0.18, ease: "power2.out" });
   }
 
   document.addEventListener("click", (e) => {
@@ -268,6 +244,8 @@ function initScrollTop() {
 }
 
 export function initMotion() {
+  initSmoothScroll();
+
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
