@@ -14,27 +14,127 @@ const capabilities = [
 ---
 
 <Layout title="Work — Hammad Habib" description="Two projects, both still in production: an AI customer-support SaaS built from the inside, and a legacy system diagnosed, secured and rebuilt.">
-  <div class="min-h-screen overflow-x-hidden bg-ink">
+  <div class="min-h-screen overflow-x-clip bg-ink">
     <Header active="work" />
 
-    <section id="top" class="mx-auto max-w-[1440px] px-5 pt-12 pb-9 sm:px-8 sm:pt-16 sm:pb-12 lg:px-16 lg:pt-24 lg:pb-15">
-      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
-        <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
-        <span>Work</span>
+    <!-- ═══════════════════════════════════════════════════════════════
+         HERO — centered --Work + heading + subheading + cyber SVG bg
+    ═══════════════════════════════════════════════════════════════════ -->
+    <div data-work-horizontal-scene class="work-horizontal-scene">
+      <div data-work-horizontal-stage class="work-horizontal-stage">
+        <div data-work-horizontal-track class="work-horizontal-track">
+    <section data-work-hero class="work-hero relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 sm:px-8 lg:px-16">
+
+      <!-- Animated cyber / circuit pattern background -->
+      <div class="work-hero-bg pointer-events-none absolute inset-0" aria-hidden="true">
+        <svg
+          class="work-cyber-svg"
+          xmlns="http://www.w3.org/2000/svg"
+          width="2000"
+          height="2000"
+          viewBox="0 0 2000 2000"
+          fill="none"
+        >
+          <!-- Grid lines -->
+          <g stroke="#1a1f1a" stroke-width="1">
+            <!-- Horizontal lines -->
+            {Array.from({ length: 21 }).map((_, i) => (
+              <line x1="0" y1={i * 100} x2="2000" y2={i * 100} />
+            ))}
+            <!-- Vertical lines -->
+            {Array.from({ length: 21 }).map((_, i) => (
+              <line x1={i * 100} y1="0" x2={i * 100} y2="2000" />
+            ))}
+          </g>
+          <!-- Circuit traces — horizontal segments -->
+          <g stroke="#1e2e1e" stroke-width="1.5" stroke-linecap="round">
+            <line x1="200" y1="300" x2="500" y2="300" />
+            <line x1="500" y1="300" x2="500" y2="500" />
+            <line x1="500" y1="500" x2="900" y2="500" />
+            <line x1="300" y1="700" x2="700" y2="700" />
+            <line x1="700" y1="700" x2="700" y2="900" />
+            <line x1="700" y1="900" x2="1100" y2="900" />
+            <line x1="1000" y1="200" x2="1400" y2="200" />
+            <line x1="1400" y1="200" x2="1400" y2="600" />
+            <line x1="1200" y1="600" x2="1400" y2="600" />
+            <line x1="1500" y1="400" x2="1800" y2="400" />
+            <line x1="1800" y1="400" x2="1800" y2="800" />
+            <line x1="1600" y1="800" x2="1800" y2="800" />
+            <line x1="100" y1="1100" x2="600" y2="1100" />
+            <line x1="600" y1="1100" x2="600" y2="1400" />
+            <line x1="600" y1="1400" x2="1000" y2="1400" />
+            <line x1="900" y1="1200" x2="1300" y2="1200" />
+            <line x1="1300" y1="1200" x2="1300" y2="1600" />
+            <line x1="1300" y1="1600" x2="1700" y2="1600" />
+            <line x1="1500" y1="1000" x2="1900" y2="1000" />
+            <line x1="1900" y1="1000" x2="1900" y2="1300" />
+            <line x1="1700" y1="1300" x2="1900" y2="1300" />
+          </g>
+          <!-- Circuit nodes (dots at junctions) -->
+          <g fill="#243224">
+            <circle cx="500" cy="300" r="4" />
+            <circle cx="500" cy="500" r="4" />
+            <circle cx="900" cy="500" r="4" />
+            <circle cx="700" cy="700" r="4" />
+            <circle cx="700" cy="900" r="4" />
+            <circle cx="1100" cy="900" r="4" />
+            <circle cx="1400" cy="200" r="4" />
+            <circle cx="1400" cy="600" r="4" />
+            <circle cx="1800" cy="400" r="4" />
+            <circle cx="1800" cy="800" r="4" />
+            <circle cx="600" cy="1100" r="4" />
+            <circle cx="600" cy="1400" r="4" />
+            <circle cx="1300" cy="1200" r="4" />
+            <circle cx="1300" cy="1600" r="4" />
+            <circle cx="1900" cy="1000" r="4" />
+            <circle cx="1900" cy="1300" r="4" />
+          </g>
+          <!-- Neon accent nodes -->
+          <g fill="none" stroke="#39ff4433" stroke-width="1">
+            <circle cx="500" cy="300" r="8" />
+            <circle cx="1400" cy="600" r="8" />
+            <circle cx="600" cy="1400" r="8" />
+            <circle cx="1900" cy="1000" r="8" />
+          </g>
+        </svg>
+
+        <!-- Neon pulse line that moves diagonally through the SVG -->
+        <div class="work-neon-pulse" aria-hidden="true"></div>
+        <!-- Secondary softer pulse -->
+        <div class="work-neon-pulse work-neon-pulse--2" aria-hidden="true"></div>
       </div>
-      <h1 class="mt-6 max-w-[24ch] text-[clamp(28px,4vw,54px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
-        Two projects, both still in production.
-      </h1>
-      <p class="mt-5 max-w-[50ch] text-[clamp(15px,1.2vw,17.5px)] leading-[1.65] text-[#a7a59e] text-wrap-pretty">
-        One is a SaaS product I helped build from the inside. The other is a legacy system I had to diagnose, secure and rebuild without losing what it was already worth.
-      </p>
+
+      <!-- Centered text content -->
+      <div class="relative z-10 text-center">
+        <div data-wh-eyebrow class="home-kicker flex items-center justify-center gap-[14px] font-mono tracking-[.14em] uppercase">
+          <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+          <span>Work</span>
+          <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
+        </div>
+        <h1 data-wh-heading aria-label="Two projects. Both still in production." class="work-hero-heading mt-6 max-w-[22ch] text-[clamp(32px,4.5vw,64px)] leading-[1.05] font-medium tracking-[-.04em] text-wrap-pretty">
+          <span data-wh-line aria-hidden="true">Two projects. Both still in production.</span>
+          <span data-wh-line aria-hidden="true">Product engineering, from interface to infrastructure.</span>
+          <span data-wh-line aria-hidden="true">Legacy systems, rebuilt without losing search value.</span>
+          <span data-wh-line aria-hidden="true">Production problems, followed through to a real fix.</span>
+        </h1>
+        <p data-wh-desc class="home-body mx-auto mt-6 max-w-[46ch] text-wrap-pretty">
+          One is a SaaS product I helped build from the inside. The other is a legacy system I had to diagnose, secure and rebuild without losing what it was already worth.
+        </p>
+        <div data-wh-scroll class="mt-10 flex items-center justify-center gap-2 font-mono text-[11px] tracking-[.18em] text-[#3a3a36] uppercase">
+          <span>Scroll</span>
+          <span class="work-scroll-arrow">→</span>
+        </div>
+      </div>
     </section>
 
-    <section class="mx-auto max-w-[1440px] px-5 pb-14 sm:px-8 lg:px-16 lg:pb-25">
+    <!-- ═══════════════════════════════════════════════════════════════
+         01 RevSmith — follows the hero horizontally
+    ═══════════════════════════════════════════════════════════════════ -->
+    <section data-work-01 class="mx-auto max-w-[1440px] px-5 pb-14 sm:px-8 lg:px-16 lg:pb-25">
       <a href="/work/revsmith" class="block border-t border-[#2b2b28] pt-6 lg:pt-10">
-        <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase">
-          <span class="text-paper">01 — RevSmith</span>
-          <span>2024—2025 · Software Engineer · Product</span>
+        <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono tracking-[.12em] uppercase">
+          <span class="home-kicker text-paper">01 — RevSmith</span>
+          <span class="home-meta">2024—2025 · Software Engineer · Product</span>
         </div>
         <h2 class="mt-5 max-w-[26ch] text-[clamp(26px,3.6vw,50px)] leading-[1.1] font-medium tracking-[-.035em] text-wrap-pretty lg:mt-9">
           An AI customer-support platform, built inside a small startup team.
@@ -51,88 +151,444 @@ const capabilities = [
             class="absolute inset-0 h-full w-full object-cover object-top"
           ></video>
           <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_60%,rgba(5,5,5,.85))]"></div>
-          <span class="absolute bottom-4 left-4 font-mono text-[10.5px] tracking-[.12em] text-[#cfcdc6] uppercase">Support inbox — full bleed</span>
+          <span class="home-caption absolute bottom-4 left-4 font-mono tracking-[.12em] uppercase">Support inbox — full bleed</span>
         </div>
         <div class="mt-[22px] flex flex-wrap items-baseline justify-between gap-6">
-          <p class="m-0 max-w-[52ch] text-[15px] leading-[1.7] text-[#a7a59e]">
+          <p class="home-body m-0 max-w-[52ch]">
             Widget, omnichannel inbox, AI agent configuration and the WhatsApp channel — frontend ownership that grew into APIs, realtime, auth and architecture.
           </p>
-          <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Read the case study →</span>
+          <span class="home-kicker font-mono tracking-[.12em] text-accent uppercase">Read the case study →</span>
         </div>
       </a>
     </section>
 
-    <section class="border-t border-b border-[#1e1e1c] bg-[#070707] py-14 sm:py-16 lg:py-24">
-      <a href="/work/vigilant-security" class="mx-auto block max-w-[1440px] px-5 sm:px-8 lg:px-16">
-        <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.12em] text-[#8c8a84] uppercase">
-          <span class="text-paper">02 — Vigilant Security / SolvoLab</span>
-          <span>2023—2024 · UK / Ireland</span>
-        </div>
+    <!-- ═══════════════════════════════════════════════════════════════
+         02 VSS — slides in from right, neon box grows at bottom-left
+    ═══════════════════════════════════════════════════════════════════ -->
+    <!-- In compact mode this remains a regular stacked section. -->
+    <div data-work-02-scene class="work-02-scene">
+      <div class="work-02-stage">
 
-        <div class="mt-6 flex flex-wrap items-start gap-7 lg:mt-10 lg:gap-14">
-          <div class="flex min-w-0 flex-1 basis-[380px] flex-col gap-[22px]">
-            <h2 class="m-0 max-w-[24ch] text-[clamp(24px,3.2vw,44px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
-              Modernising production websites without throwing away years of SEO value.
-            </h2>
-            <p class="m-0 max-w-[48ch] text-[15px] leading-[1.7] text-[#a7a59e]">
-              Legacy WordPress, diagnosed over SSH. A real security incident handled mid-project. Rebuilt on Astro and Sanity across two regional sites, rankings intact.
-            </p>
-            <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
-              {vigilantPills.map((pill) => (
-                <span class="flex-1 basis-[120px] bg-[#070707] p-4 font-mono text-[11px] tracking-[.06em] text-[#cfcdc6]">{pill}</span>
-              ))}
+        <!-- The actual 02 VSS content -->
+        <section data-work-02 class="work-02-content border-t border-b border-[#1e1e1c] bg-[#070707] py-14 sm:py-16 lg:py-24">
+          <a href="/work/vigilant-security" class="mx-auto block max-w-[1440px] px-5 sm:px-8 lg:px-16">
+            <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono tracking-[.12em] uppercase">
+              <span class="home-kicker text-paper">02 — Vigilant Security / SolvoLab</span>
+              <span class="home-meta">2023—2024 · UK / Ireland</span>
             </div>
-            <span class="font-mono text-[11.5px] tracking-[.12em] text-accent uppercase">Read the case study →</span>
-          </div>
 
-          <div class="flex min-w-0 flex-1 basis-[300px] flex-col gap-3">
-            <div class="relative aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
-              <img src="/vigilant/new_website.png" alt="New Vigilant Security site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
-              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-              <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">New site — UK</span>
+            <div class="mt-6 flex flex-wrap items-start gap-7 lg:mt-10 lg:gap-14">
+              <div class="flex min-w-0 flex-1 basis-[380px] flex-col gap-[22px]">
+                <h2 class="m-0 max-w-[24ch] text-[clamp(24px,3.2vw,44px)] leading-[1.12] font-medium tracking-[-.035em] text-wrap-pretty">
+                  Modernising production websites without throwing away years of SEO value.
+                </h2>
+                <p class="home-body m-0 max-w-[48ch]">
+                  Legacy WordPress, diagnosed over SSH. A real security incident handled mid-project. Rebuilt on Astro and Sanity across two regional sites, rankings intact.
+                </p>
+                <div class="flex flex-wrap gap-px border border-[#1e1e1c] bg-[#1e1e1c]">
+                  {vigilantPills.map((pill) => (
+                    <span class="home-meta flex-1 basis-[120px] bg-[#070707] p-4 font-mono tracking-[.06em]">{pill}</span>
+                  ))}
+                </div>
+                <span class="home-kicker font-mono tracking-[.12em] text-accent uppercase">Read the case study →</span>
+              </div>
+
+              <div class="flex min-w-0 flex-1 basis-[300px] flex-col gap-3">
+                <div class="relative aspect-4/3 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+                  <img src="/vigilant/new_website.png" alt="New Vigilant Security site on Astro and Sanity" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+                  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+                  <span class="home-caption absolute bottom-3 left-3 font-mono tracking-[.1em] uppercase">New site — UK</span>
+                </div>
+                <div class="relative aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505]">
+                  <img src="/vigilant/legacy-uk.png" alt="Legacy Vigilant Security WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
+                  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
+                  <span class="home-caption absolute bottom-3 left-3 font-mono tracking-[.1em] uppercase">Legacy WordPress — before</span>
+                </div>
+              </div>
             </div>
-            <div class="relative aspect-video overflow-hidden border border-[#1e1e1c] bg-[#050505]">
-              <img src="/vigilant/legacy-uk.png" alt="Legacy Vigilant Security WordPress site" class="absolute inset-0 h-full w-full object-cover object-top" loading="lazy" />
-              <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_55%,rgba(5,5,5,.85))]"></div>
-              <span class="absolute bottom-3 left-3 font-mono text-[10.5px] tracking-[.1em] text-[#cfcdc6] uppercase">Legacy WordPress — before</span>
-            </div>
-          </div>
-        </div>
-      </a>
-    </section>
-
-    <section class="mx-auto max-w-[1440px] px-5 py-14 sm:px-8 lg:px-16 lg:py-25">
-      <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
-        <span class="text-paper">Capabilities</span>
-        <span>What the work above required</span>
-      </div>
-      <div class="mt-8 grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-6 lg:mt-13 lg:gap-11">
-        {capabilities.map((c, i) => (
-          <div class="flex flex-col gap-[10px] border-t border-[#2b2b28] pt-5">
-            <span class="font-mono text-[10.5px] text-[#6e6c67]">{String(i + 1).padStart(2, "0")}</span>
-            <span class="text-[clamp(16px,1.4vw,19px)] tracking-[-.02em]">{c.title}</span>
-            <span class="font-mono text-[10.5px] tracking-[.06em] text-[#6e6c67]">{c.stack}</span>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-14 sm:px-8 lg:px-16 lg:py-26">
-      <div class="flex flex-wrap items-end justify-between gap-8">
-        <h2 class="m-0 max-w-[24ch] flex-1 basis-[400px] text-[clamp(24px,3vw,42px)] leading-[1.12] font-medium tracking-[-.03em] text-wrap-pretty">
-          Hiring, building, or stuck on something that should work. Start there.
-        </h2>
-        <div class="flex flex-wrap gap-[14px]">
-          <a href="/contact" class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[22px] py-[14px] text-[14.5px] font-medium text-ink hover:bg-accent">
-            Get in touch →
           </a>
-          <a href="/labs" class="inline-flex items-center gap-[10px] rounded-[2px] border border-[#2b2b28] px-[22px] py-[14px] text-[14.5px] text-[#cfcdc6] hover:border-[#5a5a54] hover:text-paper">
-            See the Labs
-          </a>
+        </section>
+
+        <!-- Neon green overlay — lives inside the 02 scene, grows from bottom-left -->
+        <div data-work-cta-overlay class="work-cta-overlay" aria-hidden="true">
+
+          <!-- Dark card — capabilities + CTA, revealed inside the green -->
+          <div data-work-cta-card class="work-cta-card">
+            <div class="mx-auto flex h-full max-w-[1200px] flex-col justify-center gap-12 px-8 py-10 lg:px-16 lg:py-14">
+
+              <div>
+                <div class="home-kicker flex flex-wrap items-baseline justify-between gap-4 font-mono tracking-[.14em] uppercase">
+                  <span class="text-paper">Capabilities</span>
+                  <span>What the work above required</span>
+                </div>
+                <div class="mt-8 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6 lg:gap-10">
+                  {capabilities.map((c, i) => (
+                    <div class="flex flex-col gap-[10px] border-t border-[#2b2b28] pt-5">
+                      <span class="home-meta font-mono">{String(i + 1).padStart(2, "0")}</span>
+                      <span class="text-[clamp(16px,1.4vw,20px)] tracking-[-.02em]">{c.title}</span>
+                      <span class="home-meta font-mono tracking-[.06em]">{c.stack}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="border-t border-[#2b2b28] pt-10">
+                <div class="flex flex-wrap items-end justify-between gap-8">
+                  <h2 class="m-0 max-w-[24ch] flex-1 basis-[360px] text-[clamp(22px,2.6vw,38px)] leading-[1.12] font-medium tracking-[-.03em] text-wrap-pretty">
+                    Hiring, building, or stuck on something that should work. Start there.
+                  </h2>
+                  <div class="flex flex-wrap gap-[14px]">
+                    <a href="/contact" class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[22px] py-[14px] text-[14.5px] font-medium text-ink hover:bg-accent">
+                      Get in touch →
+                    </a>
+                    <a href="/labs" class="inline-flex items-center gap-[10px] rounded-[2px] border border-[#2b2b28] px-[22px] py-[14px] text-[14.5px] text-[#cfcdc6] hover:border-[#5a5a54] hover:text-paper">
+                      See the Labs
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <Footer />
   </div>
 </Layout>
+
+<style is:global>
+  /* ─── Hero ─────────────────────────────────────────────────────── */
+  .work-hero {
+    background: var(--color-ink);
+  }
+  .work-hero-heading {
+    display: grid;
+    min-height: 2.25em;
+    overflow: clip;
+  }
+  .work-hero-heading [data-wh-line] {
+    grid-area: 1 / 1;
+    visibility: hidden;
+  }
+  .work-hero-heading [data-wh-line]:first-child {
+    visibility: visible;
+  }
+  .work-hero-bg {
+    overflow: hidden;
+  }
+  /* SVG moves diagonally: translate(x,y) repeats seamlessly because SVG is 2000×2000 */
+  .work-cyber-svg {
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    opacity: 0.6;
+    animation: cyber-drift 28s linear infinite;
+  }
+  @keyframes cyber-drift {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(-200px, -200px); }
+  }
+
+  /* Neon pulse: a thin glowing line that sweeps diagonally */
+  .work-neon-pulse {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(57, 255, 68, 0) 20%,
+      rgba(57, 255, 68, 0.6) 50%,
+      rgba(57, 255, 68, 0) 80%,
+      transparent 100%
+    );
+    filter: blur(3px);
+    transform: rotate(45deg) scaleY(2);
+    transform-origin: top center;
+    animation: neon-sweep 6s ease-in-out infinite;
+  }
+  .work-neon-pulse--2 {
+    animation-delay: -3s;
+    opacity: 0.4;
+    filter: blur(6px);
+  }
+  @keyframes neon-sweep {
+    0%   { left: -100%; opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { left: 200%; opacity: 0; }
+  }
+
+  .work-scroll-arrow {
+    animation: scroll-bob 2s ease-in-out infinite;
+  }
+  @keyframes scroll-bob {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(4px); }
+  }
+
+  /* ─── Horizontal project sequence ───────────────────────────────── */
+  .work-horizontal-scene,
+  .work-horizontal-stage,
+  .work-horizontal-track,
+  .work-02-scene,
+  .work-02-stage {
+    position: relative;
+  }
+  .work-horizontal-track {
+    display: flex;
+    flex-direction: column;
+  }
+  .work-02-content {}
+
+  /* Green overlay: compact fallback — just a bottom accent border */
+  .work-cta-overlay {
+    border-top: 2px solid var(--color-accent);
+  }
+  .work-cta-card {
+    background: var(--color-ink);
+    min-height: 400px;
+  }
+
+  /* Cinematic desktop: vertical scroll advances the two project panels sideways. */
+  @media (min-width: 1440px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
+    html.js .work-horizontal-scene {
+      margin-top: calc(-1 * var(--header-h, 65px));
+    }
+    html.js .work-horizontal-stage {
+      height: 100svh;
+      overflow: clip;
+    }
+    html.js .work-horizontal-track {
+      height: 100%;
+      width: max-content;
+      flex-direction: row;
+      will-change: transform;
+    }
+    html.js [data-work-hero],
+    html.js [data-work-01],
+    html.js .work-02-scene {
+      box-sizing: border-box;
+      flex: 0 0 100vw;
+      width: 100vw;
+      height: 100svh;
+      overflow: hidden;
+    }
+    html.js [data-work-hero] {
+      min-height: 0;
+    }
+    html.js [data-work-01] {
+      max-width: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    html.js [data-work-01] > a {
+      padding-top: 1rem;
+    }
+    html.js [data-work-01] h2 {
+      margin-top: 1.5rem;
+    }
+    html.js [data-work-01] .aspect-video {
+      height: min(40svh, 400px);
+      aspect-ratio: auto;
+      margin-top: 1.5rem;
+    }
+    html.js [data-work-01] .home-body {
+      margin-top: 1rem;
+    }
+    html.js .work-02-scene {
+      position: relative;
+    }
+    html.js .work-02-stage {
+      position: absolute;
+      inset: 0;
+      overflow: clip;
+    }
+    html.js .work-02-content {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+      scrollbar-width: none;
+    }
+    html.js .work-02-content > a { width: 100%; }
+    html.js .work-02-content > a > div.mt-6 { margin-top: 1.5rem; }
+    html.js .work-02-content [class~="aspect-4/3"] {
+      height: 29svh;
+      aspect-ratio: auto;
+    }
+    html.js .work-02-content .aspect-video {
+      height: 21svh;
+      aspect-ratio: auto;
+    }
+    html.js .work-02-content::-webkit-scrollbar { display: none; }
+
+    html.js .work-cta-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--color-accent);
+      /* Start as a small box at the bottom-left. */
+      clip-path: inset(72% 65% 0% 0%);
+      will-change: clip-path;
+      border-top: none;
+      z-index: 2;
+    }
+    html.js .work-cta-card {
+      position: absolute;
+      inset: 2vw;
+      background: var(--color-ink);
+      min-height: 0;
+      overflow-y: auto;
+      z-index: 3;
+      opacity: 0;
+      scale: 0.96;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const CINEMATIC = "(min-width: 1440px) and (min-height: 720px) and (prefers-reduced-motion: no-preference)";
+
+  // ── Hero entrance (always) ─────────────────────────────────────────
+  const heroEls = [
+    "[data-wh-eyebrow]",
+    "[data-wh-heading]",
+    "[data-wh-desc]",
+    "[data-wh-scroll]",
+  ].map(s => document.querySelector(s)).filter(Boolean) as Element[];
+
+  if (heroEls.length) {
+    gsap.from(heroEls, {
+      y: 32,
+      autoAlpha: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power3.out",
+      delay: 0.1,
+    });
+  }
+
+  const mm = gsap.matchMedia();
+
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
+    const lines = gsap.utils.toArray<HTMLElement>("[data-wh-line]");
+    if (lines.length < 2) return;
+
+    gsap.set(lines, { autoAlpha: 0, y: 22 });
+    gsap.set(lines[0], { autoAlpha: 1, y: 0 });
+
+    const cycle = gsap.timeline({ repeat: -1, delay: 3.4 });
+    lines.forEach((line, index) => {
+      const next = lines[(index + 1) % lines.length];
+      cycle.to(line, { autoAlpha: 0, y: -22, duration: 0.45, ease: "power2.in" });
+      // Wait for the outgoing line to clear before bringing the next one in.
+      cycle.fromTo(next, { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.65, ease: "power3.out" }, ">");
+      cycle.to({}, { duration: 3.1 });
+    });
+
+    return () => cycle.kill();
+  });
+
+  // ── CINEMATIC ────────────────────────────────────────────────────────
+  mm.add(CINEMATIC, () => {
+    // Pin the stage. As the page scrolls down, the project track travels left,
+    // bringing 02 into view from the right.
+    const scene = document.querySelector<HTMLElement>("[data-work-horizontal-scene]");
+    const stage = document.querySelector<HTMLElement>("[data-work-horizontal-stage]");
+    const track = document.querySelector<HTMLElement>("[data-work-horizontal-track]");
+    const overlay  = document.querySelector<HTMLElement>("[data-work-cta-overlay]");
+    const card     = document.querySelector<HTMLElement>("[data-work-cta-card]");
+
+    if (!scene || !stage || !track || !overlay || !card) return;
+
+    const travel = () => Math.max(1, track.scrollWidth - window.innerWidth);
+    gsap.set(track, { x: 0 });
+    gsap.set(overlay, { clipPath: "inset(72% 65% 0% 0%)" });
+    gsap.set(card, { opacity: 0, scale: 0.96 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: scene,
+        pin: stage,
+        pinSpacing: true,
+        start: "top top",
+        // Two panel moves, then a full viewport of scroll for the final reveal.
+        end: () => `+=${travel() * 1.5}`,
+        scrub: 1.2,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    // Phase 1: hero exits left and RevSmith arrives from the right.
+    tl.to(track, {
+      x: () => -travel() / 2,
+      ease: "none",
+      duration: 1,
+    }, 0);
+
+    // Phase 2: RevSmith exits left and VSS arrives from the right, fully visible.
+    tl.to(track, {
+      x: () => -travel(),
+      ease: "none",
+      duration: 1,
+    }, 1);
+
+    // Phase 3: hold on VSS while the green box expands from bottom-left to full frame.
+    tl.fromTo(
+      overlay,
+      { clipPath: "inset(72% 65% 0% 0%)" },
+      { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.inOut", duration: 1 },
+      2
+    );
+
+    // Reveal the capabilities and contact card near the end of the green expansion.
+    tl.to(card, {
+      opacity: 1,
+      scale: 1,
+      ease: "power2.out",
+      duration: 0.5,
+    }, 2.5);
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  });
+
+  // ── COMPACT ──────────────────────────────────────────────────────────
+  mm.add(`not all and ${CINEMATIC}`, () => {
+    [
+      document.querySelector("[data-work-01]"),
+      document.querySelector("[data-work-02]"),
+    ].forEach((el) => {
+      if (!el) return;
+      gsap.from(el, {
+        x: 60,
+        autoAlpha: 0,
+        duration: 0.75,
+        ease: "power2.out",
+        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+      });
+    });
+  });
+
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+</script>

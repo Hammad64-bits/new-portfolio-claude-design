@@ -147,22 +147,24 @@ const statusClasses: Record<string, string> = {
 ---
 
 <Layout title="Labs — Hammad Habib" description="Small systems, experiments, automations and rabbit holes — built to understand how something worked, or because repeating a task manually got annoying.">
-  <div class="min-h-screen overflow-x-hidden bg-ink">
+  <div class="min-h-screen overflow-x-clip bg-ink">
     <Header active="labs" />
 
+    <!-- Hero: eyebrow from left; heading from left, desc from right simultaneously -->
     <section id="top" class="mx-auto max-w-[1440px] px-5 pt-11 pb-7 sm:px-8 sm:pt-15 lg:px-16 lg:pt-22">
-      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-la-eyebrow class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
         <span>Labs / Experiments</span>
       </div>
       <div class="mt-6 flex flex-wrap items-end justify-between gap-8">
-        <h1 class="m-0 min-w-0 flex-1 basis-[400px] text-[clamp(28px,4vw,54px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">Work is proof. Labs are curiosity.</h1>
-        <p class="m-0 min-w-0 flex-1 basis-[320px] max-w-[46ch] text-[15px] leading-[1.7] text-[#a7a59e] text-wrap-pretty">
+        <h1 data-la-heading class="m-0 min-w-0 flex-1 basis-[400px] text-[clamp(28px,4vw,54px)] leading-[1.06] font-medium tracking-[-.035em] text-wrap-pretty">Work is proof. Labs are curiosity.</h1>
+        <p data-la-desc class="m-0 min-w-0 flex-1 basis-[320px] max-w-[46ch] text-[15px] leading-[1.7] text-[#a7a59e] text-wrap-pretty">
           Small systems, automations, developer tools and technical rabbit holes — usually built because I wanted to understand how something worked, or because repeating a task manually annoyed me enough to automate it. Some became useful tools. Some became prototypes. Some simply answered the question that started them.
         </p>
       </div>
     </section>
 
+    <!-- Filter chips: stagger one at a time -->
     <section class="mx-auto max-w-[1440px] px-5 pb-[22px] sm:px-8 lg:px-16">
       <div data-lab-filters class="flex flex-wrap gap-2 border-t border-[#1e1e1c] pt-5">
         {categories.map((cat, i) => (
@@ -181,14 +183,15 @@ const statusClasses: Record<string, string> = {
       </div>
     </section>
 
-    <section class="mx-auto max-w-[1440px] px-5 pt-[22px] sm:px-8 lg:px-16">
+    <!-- Featured Labs: section label then cards one at a time -->
+    <section data-la-featured-label class="mx-auto max-w-[1440px] px-5 pt-[22px] sm:px-8 lg:px-16">
       <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="text-paper">Featured Labs</span>
         <span>Five worth a full page each</span>
       </div>
     </section>
 
-    <section class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-20">
+    <section data-la-featured-cards class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-20">
       {featured.map((lab, i) => (
         <div data-lab-card data-cat={lab.cat} class:list={["min-w-0 overflow-hidden border border-[#1e1e1c]", lab.grow]}>
           <a href={lab.href} class="block hover:border-[#5a5a54]">
@@ -223,14 +226,15 @@ const statusClasses: Record<string, string> = {
       ))}
     </section>
 
-    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 pt-9 sm:px-8 lg:px-16">
+    <!-- Smaller Experiments: same pattern -->
+    <section data-la-smaller-label class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 pt-9 sm:px-8 lg:px-16">
       <div class="flex flex-wrap items-baseline justify-between gap-4 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="text-paper">Smaller Experiments</span>
         <span>No dedicated pages yet</span>
       </div>
     </section>
 
-    <section class="mx-auto flex max-w-[1440px] flex-wrap items-stretch gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-25">
+    <section data-la-smaller-cards class="mx-auto flex max-w-[1440px] flex-wrap items-stretch gap-4 px-5 pt-7 pb-14 sm:px-8 lg:px-16 lg:pb-25">
       {smaller.map((lab) => (
         <div data-lab-card data-cat={lab.cat} class="flex min-w-0 flex-1 basis-[260px] flex-col gap-[10px] border border-[#1e1e1c] bg-[#070707] p-5">
           <span class="flex flex-wrap items-center gap-2">
@@ -244,12 +248,13 @@ const statusClasses: Record<string, string> = {
       ))}
     </section>
 
-    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
+    <!-- CTA: heading from left, link from right -->
+    <section data-la-cta class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-12 sm:px-8 lg:px-16 lg:py-22">
       <div class="flex flex-wrap items-end justify-between gap-8">
-        <h2 class="m-0 max-w-[26ch] flex-1 basis-[400px] text-[clamp(22px,2.6vw,36px)] leading-[1.15] font-medium tracking-[-.03em] text-wrap-pretty">
+        <h2 data-la-cta-h class="m-0 max-w-[26ch] flex-1 basis-[400px] text-[clamp(22px,2.6vw,36px)] leading-[1.15] font-medium tracking-[-.03em] text-wrap-pretty">
           The professional version of most of this lives one page over.
         </h2>
-        <a href="/work" class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[22px] py-[14px] text-[14.5px] font-medium text-ink hover:bg-accent">
+        <a data-la-cta-link href="/work" class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[22px] py-[14px] text-[14.5px] font-medium text-ink hover:bg-accent">
           See the Work →
         </a>
       </div>
@@ -258,6 +263,64 @@ const statusClasses: Record<string, string> = {
     <Footer />
   </div>
 </Layout>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const once = (trigger: Element, start = "top 82%") => ({ trigger, start, once: true });
+
+  // Hero: eyebrow from left
+  const eyebrow = document.querySelector("[data-la-eyebrow]");
+  if (eyebrow) gsap.from(eyebrow, { x: -32, autoAlpha: 0, duration: 0.6, ease: "power2.out", scrollTrigger: once(eyebrow) });
+
+  // Heading from left, desc from right — same trigger, fire together
+  const heading = document.querySelector("[data-la-heading]");
+  const desc = document.querySelector("[data-la-desc]");
+  if (heading) {
+    gsap.from(heading, { x: -40, autoAlpha: 0, duration: 0.75, ease: "power2.out", scrollTrigger: once(heading, "top 85%") });
+    if (desc) gsap.from(desc, { x: 40, autoAlpha: 0, duration: 0.75, ease: "power2.out", scrollTrigger: once(heading, "top 85%") });
+  }
+
+  // Filter chips: stagger from left
+  const chips = Array.from(document.querySelectorAll("[data-filter]"));
+  const filterBar = document.querySelector("[data-lab-filters]");
+  if (chips.length && filterBar) {
+    gsap.from(chips, { x: -20, autoAlpha: 0, duration: 0.4, stagger: 0.04, ease: "power2.out", scrollTrigger: once(filterBar) });
+  }
+
+  // Featured Labs label
+  const featuredLabel = document.querySelector("[data-la-featured-label]");
+  if (featuredLabel) gsap.from(featuredLabel, { x: -28, autoAlpha: 0, duration: 0.6, ease: "power2.out", scrollTrigger: once(featuredLabel) });
+
+  // Featured cards: stagger one at a time
+  const featuredSection = document.querySelector("[data-la-featured-cards]");
+  const featuredCards = featuredSection ? Array.from(featuredSection.querySelectorAll("[data-lab-card]")) : [];
+  if (featuredCards.length && featuredSection) {
+    gsap.from(featuredCards, { y: 32, autoAlpha: 0, duration: 0.65, stagger: 0.1, ease: "power2.out", scrollTrigger: once(featuredSection, "top 88%") });
+  }
+
+  // Smaller Experiments label
+  const smallerLabel = document.querySelector("[data-la-smaller-label]");
+  if (smallerLabel) gsap.from(smallerLabel, { x: -28, autoAlpha: 0, duration: 0.6, ease: "power2.out", scrollTrigger: once(smallerLabel) });
+
+  // Smaller cards: stagger one at a time
+  const smallerSection = document.querySelector("[data-la-smaller-cards]");
+  const smallerCards = smallerSection ? Array.from(smallerSection.querySelectorAll("[data-lab-card]")) : [];
+  if (smallerCards.length && smallerSection) {
+    gsap.from(smallerCards, { y: 24, autoAlpha: 0, duration: 0.5, stagger: 0.07, ease: "power2.out", scrollTrigger: once(smallerSection, "top 88%") });
+  }
+
+  // CTA: heading from left, link from right
+  const ctaSection = document.querySelector("[data-la-cta]");
+  const ctaH = document.querySelector("[data-la-cta-h]");
+  const ctaLink = document.querySelector("[data-la-cta-link]");
+  if (ctaSection && ctaH) gsap.from(ctaH, { x: -32, autoAlpha: 0, duration: 0.7, ease: "power2.out", scrollTrigger: once(ctaSection) });
+  if (ctaSection && ctaLink) gsap.from(ctaLink, { x: 32, autoAlpha: 0, duration: 0.7, ease: "power2.out", scrollTrigger: once(ctaSection) });
+
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+</script>
 
 <script>
   const filterBar = document.querySelector<HTMLElement>("[data-lab-filters]");

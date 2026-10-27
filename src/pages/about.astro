@@ -11,21 +11,24 @@ const photoRow2 = [
 ---
 
 <Layout title="About — Hammad Habib" description="Software engineer with deep frontend experience. Linux, systems, photography, and why things break.">
-  <div class="min-h-screen overflow-x-hidden bg-ink">
+  <!-- overflow-x-clip (not hidden) so sticky children work -->
+  <div class="min-h-screen overflow-x-clip bg-ink">
     <Header active="about" />
 
+    <!-- Eyebrow from left, then heading from left -->
     <section id="top" class="mx-auto max-w-[1440px] px-5 pt-12 pb-10 sm:px-8 sm:pt-16 sm:pb-14 lg:px-16 lg:pt-24 lg:pb-18">
-      <div class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+      <div data-ab-eyebrow class="flex items-center gap-[14px] font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
         <span class="block h-px w-[26px] bg-[#3a3a36]"></span>
         <span>About</span>
       </div>
-      <h1 class="mt-[26px] max-w-[24ch] text-[clamp(30px,4.4vw,58px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
+      <h1 data-ab-heading class="mt-[26px] max-w-[24ch] text-[clamp(30px,4.4vw,58px)] leading-[1.08] font-medium tracking-[-.035em] text-wrap-pretty">
         I like computers more than is strictly reasonable.
       </h1>
     </section>
 
+    <!-- Text from left + video from right simultaneously. Text is sticky. -->
     <section class="mx-auto flex max-w-[1440px] flex-wrap items-start gap-8 px-5 pb-14 sm:px-8 sm:pb-20 lg:px-16 lg:gap-[72px] lg:pb-26">
-      <div class="flex min-w-0 flex-1 basis-[460px] flex-col gap-5 lg:flex-[2]">
+      <div data-ab-text class="flex min-w-0 flex-1 basis-[460px] flex-col gap-5 self-start sticky top-6 lg:flex-[2] lg:top-8">
         <p class="m-0 max-w-[50ch] text-[clamp(16.5px,1.5vw,21px)] leading-[1.6] tracking-[-.015em] text-[#dedbd4] text-wrap-pretty">
           Linux, systems, why things are slow, why things break. Most of what I know started with breaking something first and then needing it to work again.
         </p>
@@ -40,7 +43,7 @@ const photoRow2 = [
         </p>
       </div>
 
-      <div class="flex min-w-0 flex-1 basis-[280px] flex-col gap-3">
+      <div data-ab-media class="flex min-w-0 flex-1 basis-[280px] flex-col gap-3">
         <div class="relative aspect-4/5 overflow-hidden border border-[#1e1e1c] bg-[#050505]">
           <video
             src="/videos/smoker.mp4"
@@ -60,15 +63,16 @@ const photoRow2 = [
       </div>
     </section>
 
-    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-10 sm:px-8 lg:px-16 lg:py-16">
+    <!-- Currently: label from left, status items stagger -->
+    <section data-ab-currently class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-10 sm:px-8 lg:px-16 lg:py-16">
       <div class="flex flex-wrap items-start gap-6 lg:gap-12">
-        <span class="flex-none pt-1 font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">Currently</span>
+        <span data-ab-currently-label class="flex-none pt-1 font-mono text-[11.5px] tracking-[.14em] text-paper uppercase">Currently</span>
         <div class="flex min-w-0 flex-1 basis-[420px] flex-col gap-[14px]">
-          <div class="flex items-baseline gap-3">
+          <div data-ab-currently-item class="flex items-baseline gap-3">
             <span class="mt-[-2px] block h-[6px] w-[6px] flex-none rounded-full bg-accent" style="animation: hh-blink 2.4s infinite"></span>
             <span class="text-[clamp(15.5px,1.3vw,18px)] leading-[1.55] text-[#dedbd4]">Building client and product work at SolvoLab — migrations, performance, servers.</span>
           </div>
-          <div class="flex items-baseline gap-3">
+          <div data-ab-currently-item class="flex items-baseline gap-3">
             <span class="mt-[-2px] block h-[6px] w-[6px] flex-none rounded-full bg-[#3a3a36]"></span>
             <span class="text-[clamp(15.5px,1.3vw,18px)] leading-[1.55] text-[#a7a59e]">Learning more about networking and infrastructure than a frontend engineer needs to.</span>
           </div>
@@ -76,9 +80,10 @@ const photoRow2 = [
       </div>
     </section>
 
-    <section class="border-t border-[#1e1e1c] bg-[#070707] py-14 sm:py-20 lg:py-26">
+    <!-- Photography: header from left, photos stagger -->
+    <section data-ab-photo-section class="border-t border-[#1e1e1c] bg-[#070707] py-14 sm:py-20 lg:py-26">
       <div class="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-16">
-        <div class="flex flex-wrap items-center justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
+        <div data-ab-photo-header class="flex flex-wrap items-center justify-between gap-6 font-mono text-[11.5px] tracking-[.14em] text-[#8c8a84] uppercase">
           <div class="flex flex-wrap items-baseline gap-x-8 gap-y-2">
             <span class="text-paper">Photography</span>
             <span>My own photographs · not decoration</span>
@@ -89,30 +94,37 @@ const photoRow2 = [
           >
             See more <span aria-hidden="true">→</span>
           </a>
+          <a
+            href="/travel"
+            class="inline-flex items-center gap-3 border border-[#353531] px-4 py-3 text-paper transition-colors hover:border-accent hover:bg-accent hover:text-ink focus-visible:border-accent focus-visible:outline-none"
+          >
+            Travel map <span aria-hidden="true">↗</span>
+          </a>
         </div>
-        <p class="mt-[22px] max-w-[48ch] text-[15px] leading-[1.7] text-[#a7a59e]">
+        <p data-ab-photo-desc class="mt-[22px] max-w-[48ch] text-[15px] leading-[1.7] text-[#a7a59e]">
           Shooting is how I practise looking at things properly. It's the same attention I bring to an interface: what's in frame, what got left out, where the eye lands first.
         </p>
       </div>
 
       <div class="mt-9 px-5 sm:px-8 lg:mt-14 lg:px-16">
-        <div class="mx-auto flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
-          <div class="relative flex min-w-0 flex-1 basis-[440px] items-end overflow-hidden border border-[#1e1e1c] p-[18px] aspect-3/2 lg:flex-[2]">
+        <div data-ab-photo-row class="mx-auto flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
+          <div data-ab-photo class="relative flex min-w-0 flex-1 basis-[440px] items-end overflow-hidden border border-[#1e1e1c] p-[18px] aspect-3/2 lg:flex-[2]">
             <img src="/images/photography/photo-01-wheat.jpg" alt="Wheat field at golden hour" class="absolute inset-0 h-full w-full object-cover" />
           </div>
           <div class="flex min-w-0 flex-1 basis-[220px] flex-col gap-[14px]">
-            <div class="relative flex min-h-[130px] flex-1 items-end overflow-hidden border border-[#1e1e1c] p-4">
+            <div data-ab-photo class="relative flex min-h-[130px] flex-1 items-end overflow-hidden border border-[#1e1e1c] p-4">
               <img src="/images/photography/photo-02-sahmani.jpg" alt="Mountain valley overlook" class="absolute inset-0 h-full w-full object-cover" />
             </div>
-            <div class="relative flex min-h-[130px] flex-1 items-end overflow-hidden border border-[#1e1e1c] p-4">
+            <div data-ab-photo class="relative flex min-h-[130px] flex-1 items-end overflow-hidden border border-[#1e1e1c] p-4">
               <img src="/images/photography/photo-03-peacock.jpg" alt="Peacock on a porch bench" class="absolute inset-0 h-full w-full object-cover" />
             </div>
           </div>
         </div>
 
-        <div class="mx-auto mt-[14px] flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
+        <div data-ab-photo-row class="mx-auto mt-[14px] flex max-w-[1560px] flex-wrap items-stretch gap-[14px]">
           {photoRow2.map((photo) => (
             <div
+              data-ab-photo
               class:list={[
                 "relative flex min-w-0 flex-1 basis-[200px] items-end overflow-hidden border border-[#1e1e1c] p-4 aspect-4/5",
                 photo.offset && "mt-0 lg:mt-10",
@@ -125,12 +137,13 @@ const photoRow2 = [
       </div>
     </section>
 
-    <section class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-14 sm:px-8 lg:px-16 lg:py-26">
+    <!-- CTA: heading from left, buttons from right -->
+    <section data-ab-cta class="mx-auto max-w-[1440px] border-t border-[#1e1e1c] px-5 py-14 sm:px-8 lg:px-16 lg:py-26">
       <div class="flex flex-wrap items-end justify-between gap-8">
-        <h2 class="m-0 max-w-[24ch] flex-1 basis-[420px] text-[clamp(24px,3vw,42px)] leading-[1.12] font-medium tracking-[-.03em] text-wrap-pretty">
+        <h2 data-ab-cta-h class="m-0 max-w-[24ch] flex-1 basis-[420px] text-[clamp(24px,3vw,42px)] leading-[1.12] font-medium tracking-[-.03em] text-wrap-pretty">
           If any of that sounds useful, the work is one page over.
         </h2>
-        <div class="flex flex-wrap gap-[14px]">
+        <div data-ab-cta-links class="flex flex-wrap gap-[14px]">
           <a
             href="/#work"
             class="inline-flex items-center gap-[10px] rounded-[2px] bg-paper px-[22px] py-[14px] text-[14.5px] font-medium text-ink hover:bg-accent"
@@ -150,3 +163,64 @@ const photoRow2 = [
     <Footer />
   </div>
 </Layout>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  const once = (trigger: Element, start = "top 82%") => ({ trigger, start, once: true });
+
+  // Eyebrow from left
+  const eyebrow = document.querySelector("[data-ab-eyebrow]");
+  if (eyebrow) gsap.from(eyebrow, { x: -32, autoAlpha: 0, duration: 0.6, ease: "power2.out", scrollTrigger: once(eyebrow) });
+
+  // Heading from left (after eyebrow settles)
+  const heading = document.querySelector("[data-ab-heading]");
+  if (heading) gsap.from(heading, { x: -40, autoAlpha: 0, duration: 0.75, delay: 0.1, ease: "power2.out", scrollTrigger: once(heading) });
+
+  // Text column from left + video column from right, same trigger
+  const textCol = document.querySelector("[data-ab-text]");
+  const mediaCol = document.querySelector("[data-ab-media]");
+  if (textCol) {
+    gsap.from(textCol, { x: -48, autoAlpha: 0, duration: 0.8, ease: "power2.out", scrollTrigger: once(textCol, "top 80%") });
+    if (mediaCol) gsap.from(mediaCol, { x: 48, autoAlpha: 0, duration: 0.8, ease: "power2.out", scrollTrigger: once(textCol, "top 80%") });
+  }
+
+  // Currently: label from left, then items stagger
+  const currentlySection = document.querySelector("[data-ab-currently]");
+  const currentlyLabel = document.querySelector("[data-ab-currently-label]");
+  const currentlyItems = Array.from(document.querySelectorAll("[data-ab-currently-item]"));
+  if (currentlySection && currentlyLabel) {
+    gsap.from(currentlyLabel, { x: -28, autoAlpha: 0, duration: 0.6, ease: "power2.out", scrollTrigger: once(currentlySection) });
+    if (currentlyItems.length) {
+      gsap.from(currentlyItems, { x: -24, autoAlpha: 0, duration: 0.55, stagger: 0.1, ease: "power2.out", scrollTrigger: once(currentlySection) });
+    }
+  }
+
+  // Photography: header from left, desc from right, then photos stagger
+  const photoHeader = document.querySelector("[data-ab-photo-header]");
+  const photoDesc = document.querySelector("[data-ab-photo-desc]");
+  if (photoHeader) {
+    gsap.from(photoHeader, { x: -32, autoAlpha: 0, duration: 0.65, ease: "power2.out", scrollTrigger: once(photoHeader) });
+    if (photoDesc) gsap.from(photoDesc, { x: 32, autoAlpha: 0, duration: 0.65, ease: "power2.out", scrollTrigger: once(photoHeader) });
+  }
+
+  // Photo rows: stagger photos within each row
+  const photoRows = Array.from(document.querySelectorAll("[data-ab-photo-row]"));
+  photoRows.forEach((row) => {
+    const photos = Array.from(row.querySelectorAll("[data-ab-photo]"));
+    if (photos.length) {
+      gsap.from(photos, { y: 24, autoAlpha: 0, duration: 0.6, stagger: 0.1, ease: "power2.out", scrollTrigger: once(row, "top 88%") });
+    }
+  });
+
+  // CTA: heading from left, buttons from right
+  const ctaSection = document.querySelector("[data-ab-cta]");
+  const ctaH = document.querySelector("[data-ab-cta-h]");
+  const ctaLinks = document.querySelector("[data-ab-cta-links]");
+  if (ctaSection && ctaH) gsap.from(ctaH, { x: -32, autoAlpha: 0, duration: 0.7, ease: "power2.out", scrollTrigger: once(ctaSection) });
+  if (ctaSection && ctaLinks) gsap.from(ctaLinks, { x: 32, autoAlpha: 0, duration: 0.7, ease: "power2.out", scrollTrigger: once(ctaSection) });
+
+  document.fonts?.ready.then(() => ScrollTrigger.refresh());
+</script>
